@@ -50,7 +50,7 @@ const BottomNavigator = ({navigation}) => {
         keyboardHidesTabBar: true,
         showLabel: false,
         style: {
-          backgroundColor: COLORS.GRAY.T1,
+          // backgroundColor: COLORS.GRAY.T1,
           height: height / 12,
           borderTopWidth: 0,
         },
