@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {StatusBar} from 'react-native';
-import {NavigationContainer, DarkTheme} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -19,8 +19,8 @@ const AppNavigator = () => {
   return (
     <NavigationContainer theme={isDarkMode ? dark : light}>
       <StatusBar
-        barStyle={DarkTheme.dark ? 'light-content' : 'dark-content'}
-        backgroundColor={DarkTheme.dark ? '#000' : '#fff'}
+        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+        backgroundColor={isDarkMode ? '#000' : '#fff'}
       />
       <Stack.Navigator initialRouteName="MainScreen">
         <Stack.Screen
