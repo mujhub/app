@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import {ScrollView} from 'react-native';
-import SceneBuilder from '../components/Shared/SceneBuilder';
+
+import {SceneBuilder, Type} from '../components/Shared/';
 
 const Scene5 = () => {
   return (
     <SceneBuilder>
       <ScrollView>
-        <Text>Scene5</Text>
+        <Type>Scene5</Type>
       </ScrollView>
     </SceneBuilder>
   );
