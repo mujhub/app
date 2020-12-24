@@ -3,3 +3,5 @@ export const DMS_LOGIN = 'https://dms.jaipur.manipal.edu/loginform.aspx';
 export const DMS_CAPTCHA =
   'https://dms.jaipur.manipal.edu/generatecaptcha.aspx';
 export const DMS_PROFILE = 'https://dms.jaipur.manipal.edu/studentprofile.aspx';
+export const DMS_ATTENDANCE =
+  'https://dms.jaipur.manipal.edu/studentattendancesummary.aspx';

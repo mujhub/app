@@ -4,7 +4,7 @@ import {WebView} from 'react-native-webview';
 
 import {PrimaryButton, InputBox} from '../Shared/';
 
-import {URLS} from '../../constants/';
+import {URLS, SCRIPTS} from '../../constants/';
 
 const {height, width} = Dimensions.get('screen');
 
@@ -19,6 +19,8 @@ const LoginForm = (props) => {
       />
       <InputBox
         value={props.password}
+        textContentType="password"
+        secureTextEntry={true}
         onChangeText={(value) => props.setPassword(value)}
         placeholder={'Enter Password'}
       />
@@ -60,8 +62,16 @@ const LoginForm = (props) => {
 
       <PrimaryButton
         onPress={() => {
-          props.MainWVRef.current.injectJavaScript(props.loginScript);
-        }}>
+          props.MainWVRef.current.injectJavaScript(
+            SCRIPTS.returnLoginScript(
+              props.username,
+              props.password,
+              props.captcha,
+            ),
+          );
+        }}
+        loading={props.isLoading}
+        loadingText={'Loading'}>
         Login
       </PrimaryButton>
     </>
