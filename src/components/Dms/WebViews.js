@@ -9,11 +9,13 @@ import {URLS, SCRIPTS} from '../../constants';
 
 const WebViews = (props) => {
   useEffect(() => {
-    //   Load attendance page after sucessful login
+    //   Load attendance page after successful login
     if (props.data.isLoggedIn) {
       props.AttWVRef.current.injectJavaScript(
         `document.location.replace("${URLS.DMS_ATTENDANCE}")`,
       );
+    } else {
+      props.setData({...props.data, attendance: {data: null}});
     }
   }, [props.data.isLoggedIn]);
 

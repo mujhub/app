@@ -57,10 +57,12 @@ export const getAttendanceScript = `
 let attendance = {data:null};
 try{
 	let raw = document.getElementById('ContentPlaceHolder1_grdAttendanceDetails').innerText;
-	raw = JSON.parse('[["' + raw.replaceAll('\\n', '"],["').replaceAll("\\t", '","') + '"]]');
+	// raw = JSON.parse('[["' + raw.replaceAll('\\n', '"],["').replaceAll("\\t", '","') + '"]]');
+	raw = JSON.parse('[["' + raw.replace(/\\n/g, '"],["').replace(/\\t/g, '","') + '"]]');
 	attendance.data = raw;
-}catch(_){
-	attendance.data = null;
+}catch(e){
+	attendance.data = e.message;
+	// attendance.data = "\\n/, '').replace(/\\t/";
 }
 window.ReactNativeWebView.postMessage(JSON.stringify({attendance}));
 true;`;
