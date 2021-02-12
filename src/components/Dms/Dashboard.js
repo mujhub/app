@@ -1,6 +1,6 @@
 import React from 'react';
 import {PrimaryButton, Type} from '../Shared';
-import {SCRIPTS} from '../../constants/';
+import {logoutScript} from '../../constants/scripts';
 
 const Dashboard = (props) => {
   return (
@@ -9,7 +9,7 @@ const Dashboard = (props) => {
 
       <PrimaryButton
         onPress={() => {
-          props.MainWVRef.current.injectJavaScript(SCRIPTS.logoutScript);
+          props.MainWVRef.current.injectJavaScript(logoutScript);
         }}>
         Logout
       </PrimaryButton>

@@ -5,7 +5,8 @@ import {Switch} from 'react-native-paper';
 
 import {PrimaryButton} from '../Shared';
 
-import {URLS, SCRIPTS} from '../../constants';
+import * as URLS from '../../constants/urls';
+import {getUserScript, getAttendanceScript} from '../../constants/scripts';
 
 const WebViews = (props) => {
   useEffect(() => {
@@ -44,7 +45,7 @@ const WebViews = (props) => {
           style={{marginTop: 10, height: 250, width: 375}}
           source={{uri: URLS.DMS_PROFILE}}
           onLoadEnd={() => {
-            props.MainWVRef.current.injectJavaScript(SCRIPTS.getUserScript);
+            props.MainWVRef.current.injectJavaScript(getUserScript);
             if (!props.data.isLoggedIn) props.CaptchaWVRef.current.reload(); //	update captcha after reload
           }}
           //   Updates the loading state and current URL
@@ -70,9 +71,7 @@ const WebViews = (props) => {
           onLoadEnd={() => {
             //   Update attendance data after successful login
             if (props.data.isLoggedIn)
-              props.AttWVRef.current.injectJavaScript(
-                SCRIPTS.getAttendanceScript,
-              );
+              props.AttWVRef.current.injectJavaScript(getAttendanceScript);
           }}
           onMessage={(event) => {
             let wvData = JSON.parse(event.nativeEvent.data);

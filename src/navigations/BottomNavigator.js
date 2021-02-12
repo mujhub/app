@@ -6,7 +6,8 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {HomeScene, DmsScene, MenuScene, Scene4} from '../scenes/';
-import {COLORS, STRINGS} from '../constants/';
+// import {COLORS, STRINGS} from '../constants/';
+import {PRIMARY} from '../constants/colors';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -19,7 +20,7 @@ const HomeStackScreen = ({navigation}) => {
       <Stack.Screen
         name="HomeScreen"
         component={HomeScene}
-        options={{title: STRINGS.APP_NAME, headerShown: false}}
+        options={{headerShown: false}}
         initialParams={{load: true}}
       />
     </Stack.Navigator>
@@ -45,12 +46,11 @@ const BottomNavigator = ({navigation}) => {
         },
       })}
       tabBarOptions={{
-        activeTintColor: COLORS.PRIMARY,
+        activeTintColor: PRIMARY,
         inactiveTintColor: 'gray',
         keyboardHidesTabBar: true,
         showLabel: false,
         style: {
-          // backgroundColor: COLORS.GRAY.T1,
           height: height / 12,
           borderTopWidth: 0,
         },

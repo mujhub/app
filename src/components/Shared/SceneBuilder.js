@@ -3,8 +3,6 @@ import {Dimensions} from 'react-native';
 import {View, Text} from 'react-native';
 import {useTheme} from '@react-navigation/native';
 
-import {COLORS} from '../../constants';
-
 const {width, height} = Dimensions.get('window');
 
 const SceneBorder = (props) => {

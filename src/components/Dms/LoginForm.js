@@ -4,7 +4,8 @@ import {WebView} from 'react-native-webview';
 
 import {PrimaryButton, InputBox} from '../Shared/';
 
-import {URLS, SCRIPTS} from '../../constants/';
+import {returnLoginScript} from '../../constants/scripts';
+import * as URLS from '../../constants/urls';
 
 const {height, width} = Dimensions.get('screen');
 
@@ -63,11 +64,7 @@ const LoginForm = (props) => {
       <PrimaryButton
         onPress={() => {
           props.MainWVRef.current.injectJavaScript(
-            SCRIPTS.returnLoginScript(
-              props.username,
-              props.password,
-              props.captcha,
-            ),
+            returnLoginScript(props.username, props.password, props.captcha),
           );
         }}
         loading={props.isLoading}
