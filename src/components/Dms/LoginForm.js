@@ -6,6 +6,7 @@ import {PrimaryButton, InputBox} from '../Shared/';
 
 import {returnLoginScript} from '../../constants/scripts';
 import * as URLS from '../../constants/urls';
+import {DMS} from '../../constants/strings';
 
 const {height, width} = Dimensions.get('screen');
 
@@ -13,17 +14,16 @@ const LoginForm = (props) => {
   return (
     <>
       <InputBox
-        style={{borderRadius: 15, margin: 5}}
         value={props.username}
         onChangeText={(value) => props.setUsername(value)}
-        placeholder={'Enter Registration Number'}
+        label={DMS.USERNAME}
       />
       <InputBox
         value={props.password}
         textContentType="password"
         secureTextEntry={true}
         onChangeText={(value) => props.setPassword(value)}
-        placeholder={'Enter Password'}
+        label={DMS.PASSWORD}
       />
 
       <View
@@ -51,14 +51,14 @@ const LoginForm = (props) => {
               `document.location.replace('${URLS.DMS_ROOT}');true;`,
             );
           }}>
-          Refresh
+          {DMS.RELOAD}
         </PrimaryButton>
       </View>
 
       <InputBox
         value={props.captcha}
         onChangeText={(value) => props.setCaptcha(value)}
-        placeholder={'Enter Captcha'}
+        label={DMS.CAPTCHA}
       />
 
       <PrimaryButton
@@ -68,8 +68,8 @@ const LoginForm = (props) => {
           );
         }}
         loading={props.isLoading}
-        loadingText={'Loading'}>
-        Login
+        loadingText={DMS.LOADING}>
+        {DMS.ACTION}
       </PrimaryButton>
     </>
   );
