@@ -11,14 +11,15 @@ import {
 } from '../components/Shared/';
 
 const HomeScene = () => {
-  const {switchTheme} = useContext(CustomTheme);
+  const {setTheme} = useContext(CustomTheme);
 
   return (
     <SceneBuilder>
       <ScrollView>
         <Type>Home</Type>
-        <PrimaryButton onPress={switchTheme}>Switch</PrimaryButton>
-        <InputBox value={'Hi mom'} />
+        <PrimaryButton onPress={() => setTheme(0)}>Light</PrimaryButton>
+        <PrimaryButton onPress={() => setTheme(1)}>Dark</PrimaryButton>
+        <PrimaryButton onPress={() => setTheme(2)}>Amoled</PrimaryButton>
       </ScrollView>
     </SceneBuilder>
   );

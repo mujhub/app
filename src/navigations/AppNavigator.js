@@ -20,7 +20,8 @@ const AppNavigator = () => {
     <NavigationContainer theme={isDarkMode ? dark : light}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={isDarkMode ? '#000' : '#fff'}
+        backgroundColor="transparent"
+        translucent
       />
       <Stack.Navigator initialRouteName="MainScreen">
         <Stack.Screen

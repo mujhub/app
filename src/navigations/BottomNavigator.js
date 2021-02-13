@@ -5,9 +5,10 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {HomeScene, DmsScene, MenuScene, Scene4} from '../scenes/';
-// import {COLORS, STRINGS} from '../constants/';
-import {PRIMARY} from '../constants/colors';
+import {useTheme} from 'react-native-paper';
+
+import {HomeScene, DmsScene, MenuScene} from '../scenes/';
+import {PRIMARY, GRAY} from '../constants/colors';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,37 +29,43 @@ const HomeStackScreen = ({navigation}) => {
 };
 
 const BottomNavigator = ({navigation}) => {
+  const {colors} = useTheme();
   return (
     <Tab.Navigator
+      initialRouteName={'Home'}
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           if (route.name === 'Home') {
-            iconName = 'home-sharp';
+            iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Menu') {
-            iconName = 'restaurant';
+            iconName = focused ? 'fast-food' : 'fast-food-outline';
           } else if (route.name === 'Dms') {
-            iconName = 'document';
-          } else if (route.name === 'Scene4') {
-            iconName = 'apps';
+            iconName = focused ? 'business' : 'business-outline';
           }
-          return <Icon name={iconName} size={size} color={color} />;
+          return (
+            <Icon
+              name={iconName}
+              size={focused ? size + 1 : size - 1}
+              color={color}
+            />
+          );
         },
       })}
       tabBarOptions={{
-        activeTintColor: PRIMARY,
-        inactiveTintColor: 'gray',
+        activeTintColor: colors.active,
+        inactiveTintColor: colors.disabled,
         keyboardHidesTabBar: true,
         showLabel: false,
         style: {
           height: height / 12,
           borderTopWidth: 0,
+          backgroundColor: colors.bottomNavigation,
         },
       }}>
-      <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="Menu" component={MenuScene} />
+      <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="Dms" component={DmsScene} />
-      <Tab.Screen name="Scene4" component={Scene4} />
     </Tab.Navigator>
   );
 };
