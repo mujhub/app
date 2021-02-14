@@ -22,12 +22,12 @@ const WebViews = (props) => {
 
   return (
     <>
-      <Switch
+      {/* <Switch
         value={props.devMode}
         onValueChange={() => {
           props.setDevMode(!props.devMode);
         }}
-      />
+      /> */}
 
       <View style={{opacity: props.devMode ? 1 : 0}}>
         <PrimaryButton

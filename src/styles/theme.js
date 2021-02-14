@@ -38,7 +38,7 @@ export const dark = {
     active: GRAY.T4,
     placeholder: GRAY.T6,
     helper: GRAY.T6,
-    bottomNavigation: GRAY.T9,
+    bottomNavigation: BACKGROUND.PRIMARY,
   },
 };
 

@@ -1,11 +1,11 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 
-import {SceneBuilder, Type} from '../components/Shared/';
+import {SceneBuilder, Type, Header} from '../components/Shared/';
 
 import {LoginForm, Dashboard, WebViews} from '../components/Dms';
 
-const DmsScene = () => {
+const DmsScene = ({navigation}) => {
   const MainWVRef = useRef();
   const AttWVRef = useRef();
   const CaptchaWVRef = useRef();
@@ -35,46 +35,49 @@ const DmsScene = () => {
   });
 
   return (
-    <SceneBuilder>
-      <ScrollView>
-        <Type>DMS</Type>
+    <>
+      <SceneBuilder>
+        <Header isBack heading="DMS" navigation={navigation} />
+        <View>
+          {!data.isLoggedIn && (
+            <LoginForm
+              username={username}
+              password={password}
+              captcha={captcha}
+              setUsername={setUsername}
+              setPassword={setPassword}
+              setCaptcha={setCaptcha}
+              MainWVRef={MainWVRef}
+              CaptchaWVRef={CaptchaWVRef}
+              isLoading={isLoading}
+            />
+          )}
 
-        {!data.isLoggedIn && (
-          <LoginForm
-            username={username}
-            password={password}
-            captcha={captcha}
-            setUsername={setUsername}
-            setPassword={setPassword}
-            setCaptcha={setCaptcha}
+          {data.isLoggedIn && (
+            <Dashboard
+              MainWVRef={MainWVRef}
+              data={data}
+              isLoading={isLoading}
+            />
+          )}
+
+          {/* <Type>{`Loading: ${isLoading} ; 
+Data: ${JSON.stringify(data)}`}</Type> */}
+
+          <WebViews
+            data={data}
+            setData={setData}
+            devMode={devMode}
+            setDevMode={setDevMode}
             MainWVRef={MainWVRef}
             CaptchaWVRef={CaptchaWVRef}
-            isLoading={isLoading}
+            AttWVRef={AttWVRef}
+            setIsLoading={setIsLoading}
+            setCurrURL={setCurrURL}
           />
-        )}
-
-        {data.isLoggedIn && (
-          <Dashboard MainWVRef={MainWVRef} data={data} isLoading={isLoading} />
-        )}
-
-        <Type>{`Loading: ${isLoading} ; 
-Data: ${JSON.stringify(data)}`}</Type>
-
-        <WebViews
-          data={data}
-          setData={setData}
-          devMode={devMode}
-          setDevMode={setDevMode}
-          MainWVRef={MainWVRef}
-          CaptchaWVRef={CaptchaWVRef}
-          AttWVRef={AttWVRef}
-          setIsLoading={setIsLoading}
-          setCurrURL={setCurrURL}
-        />
-
-        <View style={{height: 100}}></View>
-      </ScrollView>
-    </SceneBuilder>
+        </View>
+      </SceneBuilder>
+    </>
   );
 };
 

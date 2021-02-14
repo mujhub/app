@@ -1,5 +1,5 @@
-import React, {useState, useRef} from 'react';
-import {View, TextInput, Text, Dimensions} from 'react-native';
+import React, {useState, useRef, useEffect} from 'react';
+import {View, TextInput, Text, Dimensions, Keyboard} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ROUNDNESS} from '../../styles/theme';
@@ -27,6 +27,16 @@ const InputBox = (props) => {
     setValue(text);
     if (props.onChangeText) props.onChangeText(text);
   };
+
+  useEffect(() => {
+    const keyboardHideListener = Keyboard.addListener('keyboardDidHide', () => {
+      inputRef.current.blur();
+    });
+
+    return () => {
+      keyboardHideListener.remove();
+    };
+  }, []);
 
   return (
     <View
