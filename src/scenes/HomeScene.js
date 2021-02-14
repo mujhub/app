@@ -17,9 +17,9 @@ const HomeScene = () => {
     <SceneBuilder>
       <ScrollView>
         <Type>Home</Type>
-        <PrimaryButton onPress={() => setTheme(0)}>Light</PrimaryButton>
-        <PrimaryButton onPress={() => setTheme(1)}>Dark</PrimaryButton>
-        <PrimaryButton onPress={() => setTheme(2)}>Amoled</PrimaryButton>
+        <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
+        <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>
+        <PrimaryButton onPress={() => setTheme(3)}>Amoled</PrimaryButton>
       </ScrollView>
     </SceneBuilder>
   );
