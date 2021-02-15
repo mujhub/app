@@ -19,6 +19,7 @@ const Header = ({navigation, isBack, heading, style}) => {
   return (
     <View
       style={{
+        marginBottom: 8,
         flexDirection: 'row',
         justifyContent: 'space-between',
         backgroundColor: colors.background,
