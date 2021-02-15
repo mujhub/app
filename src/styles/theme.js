@@ -62,4 +62,4 @@ export const amoled = {
   },
 };
 
-export const ROUNDNESS = 20;
+export const ROUNDNESS = 16;
