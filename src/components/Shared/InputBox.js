@@ -41,13 +41,13 @@ const InputBox = (props) => {
   return (
     <View
       style={{
-        marginVertical: 10,
+        // marginVertical: 16,
         marginTop: 25,
         ...props.viewStyle,
       }}>
       <View
         style={{
-          borderRadius: ROUNDNESS / 2,
+          borderRadius: ROUNDNESS / 4,
           borderWidth: 0.5,
           borderColor: colors.border,
         }}>
@@ -57,7 +57,7 @@ const InputBox = (props) => {
             height: 45,
             color: colors.text,
             fontSize: width / 24,
-            borderRadius: ROUNDNESS / 2,
+            borderRadius: ROUNDNESS / 4,
             paddingHorizontal: ROUNDNESS / 2,
             paddingVertical: ROUNDNESS / 2,
             backgroundColor: colors.surface,
@@ -74,7 +74,7 @@ const InputBox = (props) => {
       <Text
         style={{
           position: 'absolute',
-          left: ROUNDNESS / 2,
+          left: ROUNDNESS,
           top: !isFocused && value === '' ? 12 : -20,
           color:
             !isFocused && value === '' ? colors.placeholder : colors.helper,
