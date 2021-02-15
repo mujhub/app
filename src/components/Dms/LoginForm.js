@@ -1,8 +1,9 @@
 import React, {useRef} from 'react';
 import {View, Dimensions} from 'react-native';
 import {WebView} from 'react-native-webview';
-
 import {PrimaryButton, InputBox, Type} from '../Shared/';
+
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {returnLoginScript} from '../../constants/scripts';
 import * as URLS from '../../constants/urls';
@@ -25,39 +26,59 @@ const LoginForm = (props) => {
         onChangeText={(value) => props.setPassword(value)}
         label={DMS.PASSWORD}
       />
-      <View style={{margin: 10}}>
+      <View style={{marginTop: 16}}>
         <Type>SECURITY CAPTCHA</Type>
         <View
           style={{
+            display: 'flex',
             alignItems: 'center',
             flexDirection: 'row',
-            justifyContent: 'space-around',
+            justifyContent: 'space-between',
           }}>
-          <View pointerEvents="none">
-            <WebView
-              ref={props.CaptchaWVRef}
+          <View
+            style={{
+              borderRadius: 4,
+              flexGrow: 1,
+              alignItems: 'center',
+              backgroundColor: '#ffffff',
+              marginRight: 16,
+            }}>
+            <View
+              pointerEvents="none"
               style={{
-                height: width * 0.15,
-                width: width * 0.5,
-              }}
-              source={{uri: URLS.DMS_CAPTCHA}}
-              injectedJavaScript={`document.getElementsByTagName('img')[0].style = "width:${
-                width * 0.5
-              }px"`}
-            />
+                height: 40,
+                width: width * 0.3,
+              }}>
+              <WebView
+                ref={props.CaptchaWVRef}
+                style={{
+                  margin: -4,
+                  width: width * 0.4,
+                }}
+                source={{uri: URLS.DMS_CAPTCHA}}
+                injectedJavaScript={`document.getElementsByTagName('img')[0].style = "width:${
+                  width * 0.5
+                }px"`}
+              />
+            </View>
           </View>
           <PrimaryButton
+            mode="outlined"
             onPress={() => {
               props.MainWVRef.current.injectJavaScript(
                 `document.location.replace('${URLS.DMS_ROOT}');true;`,
               );
             }}>
-            {DMS.RELOAD}
+            {/* {DMS.RELOAD} */}
+            <Icon name="refresh" size={20} />
           </PrimaryButton>
         </View>
       </View>
 
       <InputBox
+        style={{
+          marginBottom: 16, // margin for button
+        }}
         value={props.captcha}
         onChangeText={(value) => props.setCaptcha(value)}
         label={DMS.CAPTCHA}
