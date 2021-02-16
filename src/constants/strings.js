@@ -9,3 +9,21 @@ export const DMS = {
   LOADING: 'Loading',
   RELOAD: 'Refresh',
 };
+
+export const FOOD = {
+  HEADING: 'Food',
+};
+
+export const HOME = {
+  HEADING: 'Home',
+};
+
+export const ACADEMICS = {
+  HEADING: 'Academics',
+};
+
+export const OUTLETS = {
+  HEADING: 'Eateries',
+  OPEN: 'Open',
+  CLOSE: 'Close',
+};

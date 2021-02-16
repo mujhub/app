@@ -49,7 +49,7 @@ const InputBox = (props) => {
         style={{
           borderRadius: ROUNDNESS / 4,
           borderWidth: 0.5,
-          borderColor: colors.border,
+          borderColor: !isFocused ? colors.border : colors.primary,
         }}>
         <TextInput
           {...props}

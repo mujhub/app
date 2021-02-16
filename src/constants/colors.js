@@ -25,7 +25,7 @@ export const ORANGE = {
   T4: '#ff6d00',
 };
 export const GRAY = {
-  T1: '#fff',
+  T1: '#ffffff',
   T2: '#f7fafc',
   T3: '#edf2f7',
   T4: '#e2e8f0',
@@ -34,5 +34,15 @@ export const GRAY = {
   T7: '#4a5568',
   T8: '#2d3748',
   T9: '#1a202c',
-  T10: '#000',
+  T10: '#000000',
+};
+
+export const VIBRANTS = {
+  GREEN1: '#219653',
+  GREEN2: '#27AE60',
+  PURPLE1: '#9B51E0',
+  PURPLE2: '#BB6BD9',
+  RED: '#EB5757',
+  BLUE: '#56CCF2',
+  YELLOW: '#F2C94C',
 };
