@@ -50,6 +50,7 @@ const DmsScene = ({navigation}) => {
               MainWVRef={MainWVRef}
               CaptchaWVRef={CaptchaWVRef}
               isLoading={isLoading}
+              error={data.msg}
             />
           )}
 

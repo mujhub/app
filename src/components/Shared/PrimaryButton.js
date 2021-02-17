@@ -13,6 +13,7 @@ const PrimaryButton = (props) => {
         marginVertical: 8,
         borderRadius: ROUNDNESS / 4,
         height: 40,
+        ...props.style,
       }}
       disabled={props.loading}>
       {props.loading ? props.loadingText : props.children}

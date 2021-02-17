@@ -1,23 +1,59 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {View, Dimensions} from 'react-native';
 import {WebView} from 'react-native-webview';
 import {PrimaryButton, InputBox, Type} from '../Shared/';
-
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useTheme} from 'react-native-paper';
 
 import {returnLoginScript} from '../../constants/scripts';
 import * as URLS from '../../constants/urls';
 import {DMS} from '../../constants/strings';
+import {VIBRANTS} from '../../constants/colors';
 
 const {height, width} = Dimensions.get('screen');
 
 const LoginForm = (props) => {
+  const {colors} = useTheme();
+
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = () => {
+    if (!props.username) {
+      setErrors({username: DMS.NULL_USERNAME});
+      return;
+    }
+    if (!props.password) {
+      setErrors({password: DMS.NULL_PASSWORD});
+      return;
+    }
+    if (!props.captcha) {
+      setErrors({captcha: DMS.NULL_CAPTCHA});
+      return;
+    }
+    props.MainWVRef.current.injectJavaScript(
+      returnLoginScript(props.username, props.password, props.captcha),
+    );
+  };
+
+  useEffect(() => {
+    if (Object.keys(errors).length > 0) {
+      const timer = setTimeout(() => {
+        setErrors({});
+      }, 3000);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [errors]);
+
   return (
     <View style={{marginHorizontal: 10}}>
       <InputBox
         value={props.username}
         onChangeText={(value) => props.setUsername(value)}
         label={DMS.USERNAME}
+        error={errors.username}
+        isRequired={true}
       />
       <InputBox
         value={props.password}
@@ -25,9 +61,11 @@ const LoginForm = (props) => {
         secureTextEntry={true}
         onChangeText={(value) => props.setPassword(value)}
         label={DMS.PASSWORD}
+        error={errors.password}
+        isRequired={true}
       />
       <View style={{marginTop: 16}}>
-        <Type>SECURITY CAPTCHA</Type>
+        <Type style={{color: colors.disabled}}>SECURITY CAPTCHA</Type>
         <View
           style={{
             display: 'flex',
@@ -46,19 +84,16 @@ const LoginForm = (props) => {
             <View
               pointerEvents="none"
               style={{
-                height: 40,
+                height: width * 0.1,
                 width: width * 0.3,
               }}>
               <WebView
                 ref={props.CaptchaWVRef}
-                style={{
-                  margin: -4,
-                  width: width * 0.4,
-                }}
+                style={{margin: -4}}
                 source={{uri: URLS.DMS_CAPTCHA}}
                 injectedJavaScript={`document.getElementsByTagName('img')[0].style = "width:${
-                  width * 0.5
-                }px"`}
+                  width * 0.3 + 8
+                }px; height:${width * 0.1 + 8}px;true;"`}
               />
             </View>
           </View>
@@ -70,30 +105,49 @@ const LoginForm = (props) => {
               );
             }}>
             {/* {DMS.RELOAD} */}
-            <Icon name="refresh" size={20} />
+            <Icon name="refresh" size={width / 20} />
           </PrimaryButton>
         </View>
       </View>
 
       <InputBox
-        style={{
-          marginBottom: 16, // margin for button
-        }}
         value={props.captcha}
         onChangeText={(value) => props.setCaptcha(value)}
         label={DMS.CAPTCHA}
+        autoCapitalize="none"
+        error={errors.captcha}
+        isRequired={true}
       />
 
+      <Type
+        style={{
+          marginTop: 32,
+          margin: 2,
+          color: VIBRANTS.RED + '99',
+          fontSize: width / 28,
+          alignSelf: 'center',
+        }}>
+        {props.error}
+      </Type>
+
       <PrimaryButton
-        onPress={() => {
-          props.MainWVRef.current.injectJavaScript(
-            returnLoginScript(props.username, props.password, props.captcha),
-          );
-        }}
+        onPress={handleSubmit}
         loading={props.isLoading}
         loadingText={DMS.LOADING}>
         {DMS.ACTION}
       </PrimaryButton>
+
+      <View style={{flexDirection: 'row', width: '90%', marginVertical: 25}}>
+        <Icon
+          size={width / 24}
+          style={{margin: 10}}
+          name={'information-circle'}
+          color={colors.disabled}
+        />
+        <Type style={{color: colors.disabled, fontSize: width / 28}}>
+          {DMS.LOGIN_FOOTER}
+        </Type>
+      </View>
     </View>
   );
 };

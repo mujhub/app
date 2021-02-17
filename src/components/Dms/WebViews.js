@@ -29,7 +29,9 @@ const WebViews = (props) => {
         }}
       /> */}
 
-      <View style={{opacity: props.devMode ? 1 : 0}}>
+      <View
+        style={{opacity: props.devMode ? 1 : 0}}
+        pointerEvents={props.devMode ? 'auto' : 'none'}>
         <PrimaryButton
           onPress={() => {
             props.MainWVRef.current.injectJavaScript(

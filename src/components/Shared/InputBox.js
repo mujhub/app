@@ -3,6 +3,7 @@ import {View, TextInput, Text, Dimensions, Keyboard} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ROUNDNESS} from '../../styles/theme';
+import {VIBRANTS} from '../../constants/colors';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -41,7 +42,6 @@ const InputBox = (props) => {
   return (
     <View
       style={{
-        // marginVertical: 16,
         marginTop: 25,
         ...props.viewStyle,
       }}>
@@ -49,7 +49,11 @@ const InputBox = (props) => {
         style={{
           borderRadius: ROUNDNESS / 4,
           borderWidth: 0.5,
-          borderColor: !isFocused ? colors.border : colors.primary,
+          borderColor: !props.error
+            ? !isFocused
+              ? colors.border
+              : colors.primary
+            : VIBRANTS.RED,
         }}>
         <TextInput
           {...props}
@@ -71,6 +75,11 @@ const InputBox = (props) => {
           onChangeText={(text) => handleType(text)}
         />
       </View>
+      {props.error && (
+        <Text style={{color: VIBRANTS.RED, marginHorizontal: 10}}>
+          {props.error}
+        </Text>
+      )}
       <Text
         style={{
           position: 'absolute',
@@ -83,7 +92,9 @@ const InputBox = (props) => {
         onPress={() => {
           inputRef.current.focus();
         }}>
-        {props.label ? props.label.toUpperCase() : null}
+        {props.label
+          ? props.label.toUpperCase() + (props.isRequired ? ' *' : '')
+          : null}
       </Text>
     </View>
   );
