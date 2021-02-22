@@ -11,7 +11,7 @@ const SceneBuilder = (props) => {
     <View
       style={{
         minHeight: height,
-        marginTop: Platform.OS === 'android' ? StatusBar.currentHeight : 30,
+        paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 30,
         backgroundColor: colors.background,
       }}>
       <View style={{marginHorizontal: 15, marginVertical: 10}}>

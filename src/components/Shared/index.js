@@ -7,3 +7,8 @@ export {default as ListItem} from './ListItem';
 export {default as ItemSeparator} from './ItemSeparator';
 export {default as ListFooter} from './ListFooter';
 export {default as Badge} from './Badge';
+export {default as DataTable} from './DataTable';
+export {default as Card} from './Card';
+export {default as BottomSheet} from './BottomSheet';
+export {default as DialogBox} from './DialogBox';
+export {default as ThemedModal} from './ThemedModal';

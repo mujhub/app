@@ -5,7 +5,7 @@ import {useTheme} from 'react-native-paper';
 const Type = (props) => {
   const {colors} = useTheme();
   return (
-    <Text style={{color: colors.text, ...props.style}} {...props}>
+    <Text {...props} style={{color: colors.text, ...props.style}}>
       {props.children}
     </Text>
   );
