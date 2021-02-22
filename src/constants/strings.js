@@ -31,4 +31,16 @@ export const DMS = {
   NULL_USERNAME: 'Registration number can not be empty',
   NULL_PASSWORD: 'Password can not be empty',
   NULL_CAPTCHA: 'Captcha can not be empty',
+  GREET: 'Welcome',
+  FOOTER:
+    "We're constantly improving the DMS integration. Make sure you keep the app updated!",
+};
+
+export const ATTENDANCE = {
+  HEADING: 'Attendance Summary',
+  BELOW_THRESHOLD_SINGULAR: 'Attend the next class to get back on track.',
+  BELOW_THRESHOLD: 'Attend ${v} more classes to get back on track.',
+  ABOVE_THRESHOLD_SINGULAR: 'You may miss the next class.',
+  ABOVE_THRESHOLD: 'You may miss the next ${v} classes.',
+  EQUAL_THRESHOLD: "Just on track. Don't miss the next class.",
 };

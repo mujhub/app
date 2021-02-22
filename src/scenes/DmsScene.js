@@ -1,7 +1,13 @@
 import React, {useRef, useState} from 'react';
 import {ScrollView, View} from 'react-native';
 
-import {SceneBuilder, Type, Header} from '../components/Shared/';
+import {
+  SceneBuilder,
+  Type,
+  Header,
+  DialogBox,
+  ThemedModal,
+} from '../components/Shared/';
 
 import {LoginForm, Dashboard, WebViews} from '../components/Dms';
 
@@ -34,10 +40,23 @@ const DmsScene = ({navigation}) => {
     attendance: {},
   });
 
+  const [settingsModal, setSettingsModal] = useState(false);
+
   return (
     <>
+      <ThemedModal
+        visible={settingsModal}
+        setVisible={setSettingsModal}></ThemedModal>
+
       <SceneBuilder>
-        <Header isBack heading="DMS" navigation={navigation} />
+        <Header
+          heading="DMS"
+          navigation={navigation}
+          iconName="settings-sharp"
+          iconAction={() => {
+            setSettingsModal(true);
+          }}
+        />
         <View>
           {!data.isLoggedIn && (
             <LoginForm

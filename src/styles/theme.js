@@ -6,19 +6,20 @@ export const light = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: GRAY.T3,
+    background: GRAY.T4,
     text: GRAY.T10,
     primary: PRIMARY,
     accent: ACCENT,
     notification: ACCENT,
     border: 'transparent',
-    card: GRAY.T2,
+    card: GRAY.T3,
     surface: GRAY.T4,
     disabled: GRAY.T6,
     active: GRAY.T7,
     placeholder: GRAY.T6,
     helper: GRAY.T8,
     bottomNavigation: GRAY.T1,
+    elevated: GRAY.T3,
   },
 };
 
@@ -39,6 +40,7 @@ export const dark = {
     placeholder: GRAY.T6,
     helper: GRAY.T6,
     bottomNavigation: BACKGROUND.PRIMARY,
+    elevated: GRAY.T9,
   },
 };
 
@@ -52,13 +54,14 @@ export const amoled = {
     accent: ACCENT,
     notification: ACCENT,
     border: GRAY.T6,
-    card: GRAY.T9,
+    card: GRAY.T10,
     surface: GRAY.T10,
     disabled: GRAY.T7,
     active: GRAY.T4,
     placeholder: GRAY.T7,
     helper: GRAY.T6,
     bottomNavigation: GRAY.T10,
+    elevated: GRAY.T9,
   },
 };
 
