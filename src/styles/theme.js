@@ -13,7 +13,7 @@ export const light = {
     notification: ACCENT,
     border: 'transparent',
     card: GRAY.T3,
-    surface: GRAY.T4,
+    surface: GRAY.T5,
     disabled: GRAY.T6,
     active: GRAY.T7,
     placeholder: GRAY.T6,

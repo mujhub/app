@@ -1,7 +1,10 @@
 import React, {useContext} from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -9,9 +12,10 @@ import {light, dark, amoled} from '../styles/theme';
 import {CustomTheme} from '../contexts/CustomTheme';
 
 import BottomNavigator from './BottomNavigator';
-import {Scene5, Scene6} from '../scenes/';
+import {MenuScene, SearchMenuScene} from '../scenes/';
 
 const Stack = createStackNavigator();
+const {width, height} = Dimensions.get('screen');
 
 const AppNavigator = () => {
   const {isDarkMode} = useContext(CustomTheme);
@@ -23,20 +27,27 @@ const AppNavigator = () => {
         backgroundColor="transparent"
         translucent
       />
-      <Stack.Navigator initialRouteName="MainScreen">
+      <Stack.Navigator
+        initialRouteName="MainScreen"
+        screenOptions={{
+          gestureEnabled: true,
+          gestureDirection: 'horizontal',
+          gestureResponseDistance: {horizontal: width / 3},
+          cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+        }}>
         <Stack.Screen
           name="MainScreen"
           component={BottomNavigator}
           options={{headerShown: false, title: 'MUJ Hub'}}
         />
         <Stack.Screen
-          name="Scene5"
-          component={Scene5}
+          name="MenuScene"
+          component={MenuScene}
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="Scene6"
-          component={Scene6}
+          name="SearchMenuScene"
+          component={SearchMenuScene}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

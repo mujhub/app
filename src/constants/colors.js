@@ -46,3 +46,9 @@ export const VIBRANTS = {
   BLUE: '#56CCF2',
   YELLOW: '#F2C94C',
 };
+
+export const TYPE = {
+  VEG: '#239957',
+  EGG: '#FFD300',
+  NON: '#A71111',
+};

@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import {useTheme} from 'react-native-paper';
 
-import {HomeScene, DmsScene, MenuScene} from '../scenes/';
+import {HomeScene, DmsScene, EateriesScene} from '../scenes/';
 import {PRIMARY, GRAY} from '../constants/colors';
 
 const Stack = createStackNavigator();
@@ -63,7 +63,7 @@ const BottomNavigator = ({navigation}) => {
           backgroundColor: colors.bottomNavigation,
         },
       }}>
-      <Tab.Screen name="Menu" component={MenuScene} />
+      <Tab.Screen name="Menu" component={EateriesScene} />
       <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="Dms" component={DmsScene} />
     </Tab.Navigator>

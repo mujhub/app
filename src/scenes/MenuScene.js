@@ -1,134 +1,197 @@
-import React from 'react';
-import {ScrollView, FlatList, Text, View} from 'react-native';
-
+import React, {useState, useEffect, useContext} from 'react';
 import {
-  SceneBuilder,
-  Type,
-  Header,
-  ListItem,
-  ItemSeparator,
-  ListFooter,
-} from '../components/Shared/';
-import {VIBRANTS} from '../constants/colors';
-import {
-  TouchableHighlight,
-  TouchableWithoutFeedback,
+  View,
+  Text,
+  Alert,
+  StatusBar,
+  Platform,
+  Dimensions,
   TouchableOpacity,
-} from 'react-native-gesture-handler';
-import {FOOD, OUTLETS} from '../constants/strings';
+  ScrollView,
+} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const dummyEateries = [
+import {CustomTheme} from '../contexts/CustomTheme';
+import OutletHero from '../components/Menu/OutletHero';
+import OutletHeader from '../components/Menu/OutletHeader';
+import MenuList from '../components/Menu/MenuList';
+import {InputBox} from '../components/Shared';
+import SearchBox from '../components/Menu/SearchBox';
+
+const {width, height} = Dimensions.get('screen');
+
+const data = [
   {
-    id: '1',
-    name: 'Indie Vibes',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.BLUE,
-    featured: true,
+    id: 0,
+    name: 'Vegetable Biryani',
+    type: 0,
+    description: 'Leo vel orci porta non pulvinar neque laoreet. ',
+    price: 89,
+    category: 'Biryani',
   },
   {
-    id: '2',
-    name: 'The Foodies Bar',
-    time: '11am - 2am',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.GREEN1,
-    featured: true,
+    id: 1,
+    name: 'Chicken Biryani',
+    type: 2,
+    description: 'Pellentesque id nibh tortor id aliquet lectus.',
+    price: 149,
+    category: 'Biryani',
   },
   {
-    id: '3',
-    name: 'All in One Mart',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.GREEN2,
-    featured: 0,
+    id: 2,
+    name: 'Lamb Biryani',
+    type: 2,
+    description: 'Pellentesque id nibh tortor id aliquet lectus.',
+    price: 169,
+    category: 'Biryani',
   },
   {
-    id: '4',
-    name: 'The Perfect Mall',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.PURPLE1,
-    featured: false,
+    id: 3,
+    name: 'Egg Roll',
+    type: 1,
+    price: [25, 35],
+    category: 'Roll',
   },
   {
-    id: '5',
-    name: 'The Facebook',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.PURPLE2,
-    featured: false,
+    id: 4,
+    name: 'Paneer Roll',
+    type: 0,
+    price: [35, 45],
+    category: 'Roll',
   },
   {
-    id: '6',
-    name: 'Dev Sweets',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.RED,
-    featured: false,
+    id: 5,
+    name: 'Chimken Roll',
+    type: 2,
+    price: [45, 75, 125],
+    category: 'Roll',
   },
   {
-    id: '7',
-    name: 'Dev Sweets',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.YELLOW,
-    featured: false,
+    id: 6,
+    name: 'Noodles Roll',
+    type: 0,
+    price: [25, 35],
+    category: 'Roll',
   },
   {
-    id: '8',
-    name: 'Dev Sweets',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.YELLOW,
-    featured: false,
+    id: 7,
+    name: 'Schezwan Roll',
+    type: 2,
+    price: 45,
+    category: 'Roll',
   },
   {
-    id: '9',
-    name: 'Dev Sweets',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.YELLOW,
-    featured: false,
+    id: 8,
+    name: 'Egg Cheese Roll',
+    type: 1,
+    price: 65,
+    category: 'Roll',
   },
   {
-    id: '10',
-    name: 'Dev Sweets',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.YELLOW,
-    featured: false,
+    id: 9,
+    name: 'Malai Kofta',
+    type: 0,
+    description:
+      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
+    price: 149,
+    category: 'MAIN COURSE',
   },
   {
-    id: '11',
-    name: 'Dev Sweets',
-    time: '11am - 11pm',
-    desc: 'All the Delhi Specials',
-    tint: VIBRANTS.YELLOW,
-    featured: false,
+    id: 10,
+    name: 'Chole Curry',
+    type: 0,
+    description:
+      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
+    price: 165,
+    category: 'MAIN COURSE',
+  },
+  {
+    id: 11,
+    name: 'Murgh Mussallam (4 pcs.)',
+    type: 2,
+    description:
+      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
+    price: 275,
+    category: 'MAIN COURSE',
+  },
+  {
+    id: 12,
+    name: 'Palak Paneer',
+    type: 0,
+    description:
+      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
+    price: 175,
+    category: 'MAIN COURSE',
+  },
+  {
+    id: 13,
+    name: 'Egg Curry',
+    type: 1,
+    description:
+      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
+    price: 165,
+    category: 'MAIN COURSE',
   },
 ];
 
 const MenuScene = ({navigation}) => {
-  const renderer = ({item}) => (
-    <TouchableOpacity activeOpacity={0.75} onPress={null}>
-      <ListItem navigation={navigation} data={item} />
-    </TouchableOpacity>
-  );
+  const {colors} = useTheme();
+  const {isDarkMode} = useContext(CustomTheme);
 
-  const eateriesHeader = () => <Type>{OUTLETS.HEADING}</Type>;
-  const eateriesFooter = () => <ListFooter msg="That's all folks!" />;
+  const [scrollYPosition, setScrollYPosition] = useState(0);
+  const [hasScrolled, setHasScrolled] = useState(false);
+  const [headerColor, setHeaderColor] = useState('transparent');
+  const [headingTint, setHeadingTint] = useState(255);
+
+  const handleOnScroll = (event) => {
+    if (event.nativeEvent.contentOffset.y < height / 2) {
+      setScrollYPosition(event.nativeEvent.contentOffset.y);
+    }
+  };
+
+  const handleBack = () => {
+    navigation.goBack();
+  };
+
+  const handleParallaxImageScrolled = (scrolled) => {
+    if (scrolled) {
+      setHasScrolled(true);
+      setHeaderColor(colors.elevated);
+      setHeadingTint(isDarkMode ? 255 : 0);
+    } else {
+      setHasScrolled(false);
+      setHeaderColor('transparent');
+    }
+  };
+
   return (
-    <SceneBuilder>
-      <Header isBack heading={FOOD.HEADING} navigation={navigation} />
-      <FlatList
-        ListHeaderComponent={eateriesHeader}
-        ListFooterComponent={eateriesFooter}
-        data={dummyEateries}
-        renderItem={renderer}
-        ItemSeparatorComponent={ItemSeparator}
-        showsVerticalScrollIndicator={false}
+    <ScrollView onScroll={handleOnScroll} stickyHeaderIndices={[1]}>
+      <OutletHero
+        yOffset={scrollYPosition}
+        onParallaxImageScrolled={handleParallaxImageScrolled}
+        headingTint={headingTint}
+        setHeadingTint={setHeadingTint}
       />
-    </SceneBuilder>
+
+      <View
+        style={{
+          position: 'absolute',
+          width,
+          backgroundColor: headerColor,
+        }}>
+        <OutletHeader
+          headerColor={headerColor}
+          handleBack={handleBack}
+          headingTint={headingTint}
+          hasScrolled={hasScrolled}
+        />
+      </View>
+
+      <View style={{minHeight: height}}>
+        <MenuList data={data} navigation={navigation} />
+      </View>
+    </ScrollView>
   );
 };
 

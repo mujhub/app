@@ -8,15 +8,23 @@ import {
   Type,
   PrimaryButton,
   InputBox,
+  Header,
 } from '../components/Shared/';
+import MessMenuCard from '../components/Home/MessMenuCard';
+import {HOME} from '../constants/strings';
 
-const HomeScene = () => {
+const HomeScene = ({navigation}) => {
   const {setTheme} = useContext(CustomTheme);
 
   return (
     <SceneBuilder>
+      <Header
+        heading={HOME.HEADING}
+        navigation={navigation}
+        iconName="settings-sharp"
+      />
       <ScrollView>
-        <Type>Home</Type>
+        <MessMenuCard />
         <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
         <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>
         <PrimaryButton onPress={() => setTheme(3)}>Amoled</PrimaryButton>
