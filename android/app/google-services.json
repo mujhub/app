@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "378472565561",
+    "firebase_url": "https://muj-hub.firebaseio.com",
+    "project_id": "muj-hub",
+    "storage_bucket": "muj-hub.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378472565561:android:564f8e23bf5723ad75b6e8",
+        "android_client_info": {
+          "package_name": "com.mujhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378472565561-1kgkl8g9mm5vo61sacn27thls0atsh5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeCoCt1jZ24yQdc5Ec9WI4ZExPs3mQzF8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "378472565561-1kgkl8g9mm5vo61sacn27thls0atsh5b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

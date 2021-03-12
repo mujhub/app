@@ -36,6 +36,11 @@ export const DMS = {
     "We're constantly improving the DMS integration. Make sure you keep the app updated!",
 };
 
+export const MESS = {
+  HEADING: "Today's Mess Menu",
+  NULL_MENU: 'Not yet updated.',
+};
+
 export const ATTENDANCE = {
   HEADING: 'Attendance Summary',
   BELOW_THRESHOLD_SINGULAR: 'Attend the next class to get back on track.',
