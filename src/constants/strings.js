@@ -39,6 +39,8 @@ export const DMS = {
 export const MESS = {
   HEADING: "Today's Mess Menu",
   NULL_MENU: 'Not yet updated.',
+  EXPAND_CARD: 'VIEW ALL',
+  CONTRACT_CARD: 'CLOSE',
 };
 
 export const ATTENDANCE = {

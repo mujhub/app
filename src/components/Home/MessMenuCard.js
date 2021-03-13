@@ -21,23 +21,23 @@ const {width, height} = Dimensions.get('screen');
 
 const MessMenuCard = () => {
   const {colors} = useTheme();
-  const collapsedCardRef = useRef();
+  const contractedCardRef = useRef();
   const expandedCardRef = useRef();
   const cardHeight = useRef(new Animated.Value(0)).current;
   const textOpacity = useRef(new Animated.Value(0)).current;
   const [isLoading, setIsLoading] = useState(false);
 
   // ANIMATION
-  const ANIMATION_DURATION = 300;
-  const [collapsedCardHeight, setCollapsedCardHeight] = useState(0);
+  const ANIMATION_DURATION = 200;
+  const [contractedCardHeight, setContractedCardHeight] = useState(0);
   const [expandedCardHeight, setExpandedCardHeight] = useState(0);
   const [hasCardExpanded, setCardExpanded] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
-      if (collapsedCardRef.current) {
-        collapsedCardRef.current.measure((_x, _y, _ox, oy) => {
-          setCollapsedCardHeight(oy + 25);
+      if (contractedCardRef.current) {
+        contractedCardRef.current.measure((_x, _y, _ox, oy) => {
+          setContractedCardHeight(oy + 25);
         });
       }
       if (expandedCardRef.current) {
@@ -49,8 +49,8 @@ const MessMenuCard = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    animateCollapseCard();
-  }, [collapsedCardHeight, expandedCardHeight]);
+    animateContractCard();
+  }, [contractedCardHeight, expandedCardHeight]);
 
   const animateExpandCard = () => {
     Animated.timing(cardHeight, {
@@ -66,9 +66,9 @@ const MessMenuCard = () => {
     }).start();
   };
 
-  const animateCollapseCard = () => {
+  const animateContractCard = () => {
     Animated.timing(cardHeight, {
-      toValue: collapsedCardHeight,
+      toValue: contractedCardHeight,
       duration: ANIMATION_DURATION,
       useNativeDriver: false,
     }).start();
@@ -82,7 +82,7 @@ const MessMenuCard = () => {
 
   const toggleExpand = () => {
     if (hasCardExpanded) {
-      animateCollapseCard();
+      animateContractCard();
     } else {
       animateExpandCard();
     }
@@ -91,54 +91,60 @@ const MessMenuCard = () => {
 
   // DATA
 
-  const CURR_MEAL = 0;
+  const [ongoingMeal, setOngoingMeal] = useState(0);
   const [menuData, setMenuData] = useState([]);
   const [updatedAt, setUpdatedAt] = useState('');
 
-  const CollapsedCardData = () => {
-    return Object.keys(menuData).map((category, i) =>
-      i === CURR_MEAL ? (
-        <View key={i.toString()}>
-          <Type
-            style={{
-              fontSize: width / 22,
-              fontWeight: 'bold',
-              marginTop: 15,
-            }}>
-            {menuData[category].name
-              ? menuData[category].name.toUpperCase() + ' MENU'
-              : ''}
-          </Type>
-          <Type
-            style={{
-              fontSize: width / 28,
-              color: colors.disabled,
-              fontWeight: 'bold',
-            }}>
-            {menuData[category].startsAt && menuData[category].endsAt
-              ? `${menuData[category].startsAt} - ${menuData[category].endsAt}`
-              : ''}
-          </Type>
-          {menuData[category].isSpecial ? (
-            <Badge name="star" color={VIBRANTS.YELLOW} />
-          ) : null}
-          <Type style={{marginTop: 10, fontSize: width / 26}}>
-            {menuData[category].menu.length > 0 ? (
-              menuData[category].menu.map((item, i) =>
-                i < menuData[category].menu.length - 1 ? item + ', ' : item,
-              )
-            ) : (
-              <Type>{MESS.NULL_MENU}</Type>
-            )}
-          </Type>
-        </View>
-      ) : null,
+  const ContractedCardData = () => {
+    return (
+      <View style={{minWidth: '100%'}}>
+        {Object.keys(menuData).map((category, i) =>
+          i === ongoingMeal ? (
+            <View key={i.toString()}>
+              <Type
+                style={{
+                  fontSize: width / 22,
+                  fontWeight: 'bold',
+                  marginTop: 15,
+                }}>
+                {menuData[category].name
+                  ? menuData[category].name.toUpperCase() + ' MENU'
+                  : ''}
+              </Type>
+              <Type
+                style={{
+                  fontSize: width / 28,
+                  color: colors.disabled,
+                  fontWeight: 'bold',
+                }}>
+                {menuData[category].startsAt && menuData[category].endsAt
+                  ? `${menuData[category].startsAt} - ${menuData[category].endsAt}`
+                  : ''}
+              </Type>
+
+              <Type style={{marginTop: 10, fontSize: width / 26}}>
+                {menuData[category].menu.length > 0 ? (
+                  menuData[category].menu.map((item, i) =>
+                    i < menuData[category].menu.length - 1 ? item + ', ' : item,
+                  )
+                ) : (
+                  <Type>{MESS.NULL_MENU}</Type>
+                )}
+              </Type>
+
+              {menuData[category].isSpecial ? (
+                <Badge name="star" color={VIBRANTS.YELLOW} />
+              ) : null}
+            </View>
+          ) : null,
+        )}
+      </View>
     );
   };
 
   const ExpandedCardData = () => {
     return Object.keys(menuData).map((category, i) => (
-      <View key={i.toString()}>
+      <View key={i.toString()} style={{width: '100%'}}>
         <View style={{flexDirection: 'row', marginBottom: 5}}>
           <Type
             style={{
@@ -202,10 +208,34 @@ const MessMenuCard = () => {
     const res = await getMessMenu();
     console.log(JSON.stringify(res.data()));
     const data = res.data();
+
     setMenuData(data.meals ? data.meals : []);
     setUpdatedAt(data.updatedAt);
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    try {
+      let dt = new Date();
+      let currHour = dt.getHours();
+      setOngoingMeal(menuData.length > 0 ? menuData.length - 1 : 0);
+      for (let i = 0; i < menuData.length; i++) {
+        const meal = menuData[i];
+        if (!meal.endsAt) break;
+        if (!meal.menu) break;
+        if (!meal.menu.length) break;
+
+        if (meal.endsAt.slice(0, 2) >= currHour) {
+          if (meal.menu.length === 0) {
+            setOngoingMeal(i > 0 ? i - 1 : i);
+          } else {
+            setOngoingMeal(i);
+          }
+          break;
+        }
+      }
+    } catch (error) {}
+  }, [menuData]);
 
   useEffect(() => {
     getData();
@@ -235,7 +265,7 @@ const MessMenuCard = () => {
         ]}>
         <Animated.View
           collapsable={false}
-          ref={collapsedCardRef}
+          ref={contractedCardRef}
           style={[
             {
               padding: 20,
@@ -246,7 +276,7 @@ const MessMenuCard = () => {
             },
           ]}>
           <UpdatedAtDate />
-          <CollapsedCardData />
+          <ContractedCardData />
         </Animated.View>
 
         <Animated.View
@@ -289,7 +319,7 @@ const MessMenuCard = () => {
               ) : (
                 <Icon name="chevron-up" size={width / 25} />
               )}
-              {!hasCardExpanded ? 'VIEW ALL' : 'CLOSE'}
+              {!hasCardExpanded ? MESS.EXPAND_CARD : MESS.CONTRACT_CARD}
             </Type>
           </View>
         </TouchableWithoutFeedback>
