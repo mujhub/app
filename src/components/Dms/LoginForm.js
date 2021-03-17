@@ -9,11 +9,17 @@ import {returnLoginScript} from '../../constants/scripts';
 import * as URLS from '../../constants/urls';
 import {DMS} from '../../constants/strings';
 import {VIBRANTS} from '../../constants/colors';
+import MMKVStorage from 'react-native-mmkv-storage';
+
+const MMKV = new MMKVStorage.Loader().initialize();
 
 const {height, width} = Dimensions.get('screen');
 
 const LoginForm = (props) => {
   const {colors} = useTheme();
+
+  const [localusername, setLocalUsername] = useState('');
+  const [localpassword, setLocalPassword] = useState('');
 
   const [errors, setErrors] = useState({});
 
@@ -46,9 +52,26 @@ const LoginForm = (props) => {
     }
   }, [errors]);
 
+  useEffect(() => {
+    const getCreds = async () => {
+      if (await MMKV.getStringAsync('username')) {
+        const username = await MMKV.getStringAsync('username');
+        const password = await MMKV.getStringAsync('password');
+        setLocalUsername(username);
+        setLocalPassword(password);
+        //As the user doesnt type creds/ so onChange event is not trigerred
+        props.setUsername(username);
+        props.setPassword(password);
+      }
+    };
+
+    getCreds();
+  }, []);
+
   return (
     <View style={{marginHorizontal: 10}}>
       <InputBox
+        defaultValue={localusername}
         value={props.username}
         onChangeText={(value) => props.setUsername(value)}
         label={DMS.USERNAME}
@@ -56,6 +79,7 @@ const LoginForm = (props) => {
         isRequired={true}
       />
       <InputBox
+        defaultValue={localpassword}
         value={props.password}
         textContentType="password"
         secureTextEntry={true}

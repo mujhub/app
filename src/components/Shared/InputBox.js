@@ -11,6 +11,7 @@ const InputBox = (props) => {
   const {colors} = useTheme();
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState('');
+  const [count, setCount] = useState(0);
 
   const inputRef = useRef();
 
@@ -25,6 +26,7 @@ const InputBox = (props) => {
   };
 
   const handleType = (text) => {
+    setCount((count) => count + 1);
     setValue(text);
     if (props.onChangeText) props.onChangeText(text);
   };
@@ -67,7 +69,13 @@ const InputBox = (props) => {
             backgroundColor: colors.surface,
             ...props.style,
           }}
-          value={value}
+          value={
+            count > 0
+              ? value
+              : !value && props.defaultValue
+              ? props.defaultValue
+              : value
+          }
           ref={inputRef}
           onBlur={handleBlur}
           onFocus={handleFocus}
@@ -84,10 +92,12 @@ const InputBox = (props) => {
         style={{
           position: 'absolute',
           left: ROUNDNESS,
-          top: !isFocused && value === '' ? 12 : -20,
+          top: !isFocused && value === '' && !props.defaultValue ? 12 : -20,
           color:
-            !isFocused && value === '' ? colors.placeholder : colors.helper,
-          fontSize: !isFocused && value === '' ? 16 : 12,
+            !isFocused && value === '' && !props.defaultValue
+              ? colors.placeholder
+              : colors.helper,
+          fontSize: !isFocused && value === '' && !props.defaultValue ? 16 : 12,
         }}
         onPress={() => {
           inputRef.current.focus();
