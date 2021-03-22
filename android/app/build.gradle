@@ -189,6 +189,8 @@ android {
 dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
+    implementation project(':react-native-linear-gradient')
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

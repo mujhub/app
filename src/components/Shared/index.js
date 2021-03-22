@@ -12,3 +12,5 @@ export {default as Card} from './Card';
 export {default as BottomSheet} from './BottomSheet';
 export {default as DialogBox} from './DialogBox';
 export {default as ThemedModal} from './ThemedModal';
+export {default as TextCard} from '../SDR/TextCard';
+export {default as ImageCard} from '../SDR/ImageCard';

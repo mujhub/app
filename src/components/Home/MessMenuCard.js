@@ -222,8 +222,6 @@ const MessMenuCard = () => {
       for (let i = 0; i < menuData.length; i++) {
         const meal = menuData[i];
         if (!meal.endsAt) break;
-        if (!meal.menu) break;
-        if (!meal.menu.length) break;
 
         if (meal.endsAt.slice(0, 2) >= currHour) {
           if (meal.menu.length === 0) {

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {ScrollView} from 'react-native';
+import {ScrollView, View} from 'react-native';
 
 import {CustomTheme} from '../contexts/CustomTheme';
 
@@ -12,6 +12,7 @@ import {
 } from '../components/Shared/';
 import MessMenuCard from '../components/Home/MessMenuCard';
 import {HOME} from '../constants/strings';
+import SDRBuilder from '../components/Home/SDRBuilders/SDRBuilder';
 
 const HomeScene = ({navigation}) => {
   const {setTheme} = useContext(CustomTheme);
@@ -23,11 +24,12 @@ const HomeScene = ({navigation}) => {
         navigation={navigation}
         iconName="settings-sharp"
       />
-      <ScrollView>
-        <MessMenuCard />
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <SDRBuilder navigation={navigation} />
         <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
         <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>
         <PrimaryButton onPress={() => setTheme(3)}>Amoled</PrimaryButton>
+        <View style={{height: 120}} />
       </ScrollView>
     </SceneBuilder>
   );
