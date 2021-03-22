@@ -75,6 +75,10 @@ const DmsScene = ({navigation}) => {
 
           {data.isLoggedIn && (
             <Dashboard
+              userCredentials={{
+                username,
+                password,
+              }}
               MainWVRef={MainWVRef}
               data={data}
               isLoading={isLoading}

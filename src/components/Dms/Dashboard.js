@@ -2,6 +2,9 @@ import React, {useState, useRef, useEffect} from 'react';
 import {FlatList, Dimensions, Text, View, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MMKVStorage from 'react-native-mmkv-storage';
+// import {cryptPass} from '../../utils/crypt';
+const MMKV = new MMKVStorage.Loader().initialize();
 
 import {PrimaryButton, Type, DataTable, Card} from '../Shared';
 import InfoCard from './InfoCard';
@@ -14,6 +17,17 @@ const {width, height} = Dimensions.get('screen');
 
 const Dashboard = (props) => {
   const {colors} = useTheme();
+
+  useEffect(() => {
+    const saveCreds = async () => {
+      const {username, password} = props.userCredentials;
+      if (!(await MMKV.getStringAsync('username'))) {
+        await MMKV.setStringAsync('username', username);
+        await MMKV.setStringAsync('password', password);
+      }
+    };
+    saveCreds();
+  }, []);
 
   const displayIndices = [1, 6, 8, 9];
   const displayWidths = [45, 15, 15, 25];
