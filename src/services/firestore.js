@@ -9,3 +9,12 @@ export const getHomeComponents = () => {
 export const getMessMenu = () => {
   return db.collection('mess').doc('menuData').get();
 };
+
+export const getEateries = () => {
+  return db.collection('eateries').doc('info-data').get();
+};
+
+export const getEateryBySlug = (slug) => {
+  if (!slug) return;
+  return db.collection('eateries').doc(slug).get();
+};

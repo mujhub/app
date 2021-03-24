@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {CustomTheme} from '../../contexts/CustomTheme';
 import {Type, ItemSeparator} from '../Shared';
 import {VIBRANTS, PRIMARY} from '../../constants/colors';
+import {isOpen} from '../../utils/misc';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -24,16 +25,17 @@ const OutletHero = ({
   onParallaxImageScrolled,
   headingTint,
   setHeadingTint,
+  outletInfo,
 }) => {
   const data = {
-    // cover:
-    //   'https://images.unsplash.com/photo-1571951753447-4841fa61ed5c?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1950&q=80',
-    cover:
-      'https://www.rennie.co.uk/static/media/images/content/articles/foods-to-avoid-spicy-food.jpg',
-    title: 'Indian Food Hotel',
-    description:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porttitor leo a diam sollicitudin.',
-    location: 'B2 Ground Floor',
+    title: '',
+    description: '',
+    location: '',
+    opens_at: '',
+    closes_at: '',
+    offers: [],
+    ...outletInfo,
+    cover: 'https://picsum.photos/300/300/?blur',
   };
 
   const {isDarkMode} = useContext(CustomTheme);
@@ -45,6 +47,15 @@ const OutletHero = ({
   const [statusColor, setStatusColor] = useState('#0005');
   const [statusStyle, setStatusStyle] = useState('light-content');
   const [isReadMore, setIsReadMore] = useState(true);
+
+  const [isOutletOpen, setIsOutletOpen] = useState(true);
+
+  useEffect(() => {
+    console.log('====', JSON.stringify(outletInfo));
+    setIsOutletOpen(
+      isOpen({opens_at: data.opens_at, closes_at: data.closes_at}),
+    );
+  }, [outletInfo]);
 
   useEffect(() => {
     // console.log(yOffset);
@@ -113,7 +124,7 @@ const OutletHero = ({
                 textAlign: 'center',
               }}
               viewStyle={{margin: 10}}>
-              Indian Food Hotel
+              {data.title}
             </Type>
           </View>
         </View>
@@ -125,11 +136,14 @@ const OutletHero = ({
                 style={{
                   fontWeight: 'bold',
                   fontSize: width / 28,
-                  color: VIBRANTS.GREEN2,
+                  color: isOutletOpen ? VIBRANTS.GREEN2 : VIBRANTS.RED,
                   marginTop: 10,
                 }}>
-                Open Now
-                <Text style={{color: colors.disabled}}> - 11am - 11pm</Text>
+                {isOutletOpen ? 'Open Now' : 'Closed'}
+                <Text
+                  style={{
+                    color: colors.disabled,
+                  }}>{` - ${data.opens_at} - ${data.closes_at}`}</Text>
               </Text>
 
               <Text
@@ -152,31 +166,32 @@ const OutletHero = ({
                   {isReadMore && (
                     <Text
                       style={{fontSize: width / 28, color: colors.disabled}}>
-                      {' ...more'}
+                      {data.description.length > 80 ? ' ...more' : ''}
                     </Text>
                   )}
                 </Text>
               </TouchableOpacity>
 
               <View style={{marginTop: 20}}>
-                <ItemSeparator widthPercentage="100%" opacityHex="ff" />
-                <View style={{marginVertical: 20}}>
-                  <Type style={{color: VIBRANTS.GREEN1, fontWeight: 'bold'}}>
-                    Limited Time Offer
-                  </Type>
-
-                  <Type>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Mattis elementum odio egestas est commodo, netus fusce sit
-                    amet.
-                  </Type>
-                </View>
+                {data.offers.length > 0 &&
+                  data.offers.map((offer, i) => (
+                    <View key={i.toString()}>
+                      <ItemSeparator widthPercentage="100%" opacityHex="ff" />
+                      <View style={{marginVertical: 20}}>
+                        <Type
+                          style={{color: VIBRANTS.GREEN1, fontWeight: 'bold'}}>
+                          {offer.heading}
+                        </Type>
+                        <Type>{offer.body}</Type>
+                      </View>
+                    </View>
+                  ))}
                 <ItemSeparator widthPercentage="100%" opacityHex="ff" />
               </View>
             </View>
           </View>
 
-          <View
+          <TouchableOpacity
             activeOpacity={0.75}
             style={{
               position: 'absolute',
@@ -192,7 +207,7 @@ const OutletHero = ({
               elevation: 5,
             }}>
             <Icon name="call" size={width / 18} color="white" />
-          </View>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </>

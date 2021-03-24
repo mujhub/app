@@ -16,126 +16,13 @@ import {CustomTheme} from '../contexts/CustomTheme';
 import OutletHero from '../components/Menu/OutletHero';
 import OutletHeader from '../components/Menu/OutletHeader';
 import MenuList from '../components/Menu/MenuList';
-import {InputBox} from '../components/Shared';
+import {InputBox, Type} from '../components/Shared';
 import SearchBox from '../components/Menu/SearchBox';
+import {getEateryBySlug} from '../services/firestore';
 
 const {width, height} = Dimensions.get('screen');
 
-const data = [
-  {
-    id: 0,
-    name: 'Vegetable Biryani',
-    type: 0,
-    description: 'Leo vel orci porta non pulvinar neque laoreet. ',
-    price: 89,
-    category: 'Biryani',
-  },
-  {
-    id: 1,
-    name: 'Chicken Biryani',
-    type: 2,
-    description: 'Pellentesque id nibh tortor id aliquet lectus.',
-    price: 149,
-    category: 'Biryani',
-  },
-  {
-    id: 2,
-    name: 'Lamb Biryani',
-    type: 2,
-    description: 'Pellentesque id nibh tortor id aliquet lectus.',
-    price: 169,
-    category: 'Biryani',
-  },
-  {
-    id: 3,
-    name: 'Egg Roll',
-    type: 1,
-    price: [25, 35],
-    category: 'Roll',
-  },
-  {
-    id: 4,
-    name: 'Paneer Roll',
-    type: 0,
-    price: [35, 45],
-    category: 'Roll',
-  },
-  {
-    id: 5,
-    name: 'Chimken Roll',
-    type: 2,
-    price: [45, 75, 125],
-    category: 'Roll',
-  },
-  {
-    id: 6,
-    name: 'Noodles Roll',
-    type: 0,
-    price: [25, 35],
-    category: 'Roll',
-  },
-  {
-    id: 7,
-    name: 'Schezwan Roll',
-    type: 2,
-    price: 45,
-    category: 'Roll',
-  },
-  {
-    id: 8,
-    name: 'Egg Cheese Roll',
-    type: 1,
-    price: 65,
-    category: 'Roll',
-  },
-  {
-    id: 9,
-    name: 'Malai Kofta',
-    type: 0,
-    description:
-      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
-    price: 149,
-    category: 'MAIN COURSE',
-  },
-  {
-    id: 10,
-    name: 'Chole Curry',
-    type: 0,
-    description:
-      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
-    price: 165,
-    category: 'MAIN COURSE',
-  },
-  {
-    id: 11,
-    name: 'Murgh Mussallam (4 pcs.)',
-    type: 2,
-    description:
-      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
-    price: 275,
-    category: 'MAIN COURSE',
-  },
-  {
-    id: 12,
-    name: 'Palak Paneer',
-    type: 0,
-    description:
-      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
-    price: 175,
-    category: 'MAIN COURSE',
-  },
-  {
-    id: 13,
-    name: 'Egg Curry',
-    type: 1,
-    description:
-      'Leo vel orci porta non pulvinar neque laoreet. Sed blandit libero volutpat sed. Eu volutpat odio facilisis mauris. Pellentesque id nibh tortor id aliquet lectus.',
-    price: 165,
-    category: 'MAIN COURSE',
-  },
-];
-
-const MenuScene = ({navigation}) => {
+const MenuScene = ({navigation, route}) => {
   const {colors} = useTheme();
   const {isDarkMode} = useContext(CustomTheme);
 
@@ -165,6 +52,41 @@ const MenuScene = ({navigation}) => {
     }
   };
 
+  const [isLoadingMenu, setIsLoadingMenu] = useState(true);
+  const [outletInfo, setOutletInfo] = useState(null);
+  const [outletMenu, setOutletMenu] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      setIsLoadingMenu(true);
+      let slug = route.params.slug;
+      if (!slug) return;
+      const res = await getEateryBySlug(slug);
+      if (!res.exists) return;
+      let data = res.data();
+      console.log(JSON.stringify(data));
+      let info = data.info;
+      if (info) setOutletInfo(info);
+      let menu = data.menu;
+      if (menu) setOutletMenu(menu);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoadingMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    if (!route.params) navigation.goBack();
+    else if (!route.params.slug) navigation.goBack();
+
+    if (route.params.info) setOutletInfo(route.params.info);
+    fetchData();
+  }, []);
+
+  if (!route.params) return null;
+  if (!route.params.slug) return null;
+
   return (
     <ScrollView onScroll={handleOnScroll} stickyHeaderIndices={[1]}>
       <OutletHero
@@ -172,6 +94,7 @@ const MenuScene = ({navigation}) => {
         onParallaxImageScrolled={handleParallaxImageScrolled}
         headingTint={headingTint}
         setHeadingTint={setHeadingTint}
+        outletInfo={outletInfo}
       />
 
       <View
@@ -185,11 +108,16 @@ const MenuScene = ({navigation}) => {
           handleBack={handleBack}
           headingTint={headingTint}
           hasScrolled={hasScrolled}
+          outletInfo={outletInfo}
         />
       </View>
 
       <View style={{minHeight: height}}>
-        <MenuList data={data} navigation={navigation} />
+        {!isLoadingMenu ? (
+          <MenuList data={outletMenu} navigation={navigation} />
+        ) : (
+          <Type>Loading...</Type>
+        )}
       </View>
     </ScrollView>
   );

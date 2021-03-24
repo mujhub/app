@@ -6,6 +6,7 @@ import {useTheme} from 'react-native-paper';
 import {Type} from '../Shared';
 import {VIBRANTS, TYPE} from '../../constants/colors';
 import SearchBox from './SearchBox';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -48,6 +49,8 @@ const MenuList = ({data, navigation, isSearching}) => {
         break;
 
       default:
+        // icon = 'ellipse';
+        // color = TYPE.VEG;
         break;
     }
     return (
@@ -90,12 +93,14 @@ const MenuList = ({data, navigation, isSearching}) => {
             marginHorizontal: 10,
           }}>
           <Type style={{fontSize: width / 22}}>MENU</Type>
-          <Icon
-            name="search"
-            size={width / 18}
-            color={colors.text}
-            onPress={handleSearch}
-          />
+          <TouchableOpacity
+            style={{flexDirection: 'row'}}
+            onPress={handleSearch}>
+            <Icon name="search" size={width / 18} color={colors.text} />
+            <Type style={{fontSize: width / 24, marginHorizontal: 10}}>
+              SEARCH
+            </Type>
+          </TouchableOpacity>
         </View>
       ) : (
         <SearchBox
@@ -176,7 +181,7 @@ const MenuList = ({data, navigation, isSearching}) => {
                         </Type>
                       </View>
                     </View>
-                    {item.description && (
+                    {`${item.description}`.length > 0 ? (
                       <View style={{marginBottom: 15}}>
                         <Type
                           style={{
@@ -184,10 +189,10 @@ const MenuList = ({data, navigation, isSearching}) => {
                             margin: 2,
                             marginLeft: width / 28 + 12,
                           }}>
-                          {item.description}
+                          {item.description ? item.description : ''}
                         </Type>
                       </View>
-                    )}
+                    ) : null}
                   </View>
                 )}
               </View>

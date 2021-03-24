@@ -5,7 +5,17 @@ import {Type} from '../Shared';
 
 const {width, height} = Dimensions.get('screen');
 
-const OutletHeader = ({headerColor, handleBack, headingTint, hasScrolled}) => {
+const OutletHeader = ({
+  headerColor,
+  handleBack,
+  headingTint,
+  hasScrolled,
+  outletInfo,
+}) => {
+  const data = {
+    title: '',
+    ...outletInfo,
+  };
   return (
     <View
       style={{
@@ -33,7 +43,7 @@ const OutletHeader = ({headerColor, handleBack, headingTint, hasScrolled}) => {
             fontWeight: 'bold',
           }}
           viewStyle={{margin: 10}}>
-          {hasScrolled ? 'Indian Food Hotel' : 'Welcome to'}
+          {hasScrolled ? data.title : 'Welcome to'}
         </Type>
       </View>
 

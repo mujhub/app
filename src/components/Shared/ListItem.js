@@ -26,12 +26,12 @@ const ListItem = ({navigation, data}) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        {data.featured === true && (
+        {data.is_featured === true && (
           <Badge name="star" color={VIBRANTS.YELLOW} />
         )}
 
         <Type style={{fontSize: width / 18, color: colors.text + 'aa'}}>
-          {data.name ? nameInitials(data.name) : null}
+          {data.title ? nameInitials(data.title) : null}
         </Type>
       </View>
       <View
@@ -48,14 +48,15 @@ const ListItem = ({navigation, data}) => {
             flex: 1,
           }}>
           <Type style={{fontSize: width / 24, color: colors.text}}>
-            {data.name}
+            {data.title}
           </Type>
           <Type style={{fontSize: width / 26, color: colors.disabled}}>
-            {data.time}
+            {`${data.opens_at} - ${data.closes_at}`}
           </Type>
         </View>
         <Type style={{fontSize: width / 26, color: colors.disabled}}>
-          {data.desc}
+          {data.description.substr(0, 25)}
+          {data.description.length > 25 ? '...' : ''}
         </Type>
       </View>
     </View>
