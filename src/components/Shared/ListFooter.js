@@ -6,7 +6,7 @@ const {width, height} = Dimensions.get('screen');
 
 const ListFooter = ({msg}) => {
   return (
-    <View style={{paddingBottom: height / 4}}>
+    <View style={{paddingBottom: height / 2}}>
       <Type>{msg}</Type>
     </View>
   );

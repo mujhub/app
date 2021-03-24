@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, FlatList, Text, View} from 'react-native';
+import {ScrollView, FlatList, Text, View, Keyboard} from 'react-native';
 
 import {
   SceneBuilder,
@@ -8,8 +8,10 @@ import {
   ListItem,
   ItemSeparator,
   ListFooter,
+  FloatingButton,
+  InputBox,
 } from '../components/Shared';
-import {VIBRANTS} from '../constants/colors';
+import {VIBRANTS, PRIMARY} from '../constants/colors';
 import {
   TouchableHighlight,
   TouchableWithoutFeedback,
@@ -22,6 +24,7 @@ import {scoreSort} from '../utils/eateries';
 
 const EateriesScene = ({navigation}) => {
   const [eateries, setEateries] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -50,6 +53,11 @@ const EateriesScene = ({navigation}) => {
         // navigation.navigate('MenuScene');
       }}>
       <ListItem navigation={navigation} data={item} />
+      <ListItem navigation={navigation} data={item} />
+      <ListItem navigation={navigation} data={item} />
+      <ListItem navigation={navigation} data={item} />
+      <ListItem navigation={navigation} data={item} />
+      <ListItem navigation={navigation} data={item} />
     </TouchableOpacity>
   );
 
@@ -60,22 +68,47 @@ const EateriesScene = ({navigation}) => {
   );
   const eateriesFooter = () => <ListFooter msg="That's all folks!" />;
   return (
-    <SceneBuilder>
-      <Header
-        heading={FOOD.HEADING}
-        navigation={navigation}
-        iconName="settings-sharp"
-      />
-      <FlatList
-        ListHeaderComponent={eateriesHeader}
-        ListFooterComponent={eateriesFooter}
-        data={scoreSort(eateries)}
-        keyExtractor={(eatery) => eatery.slug}
-        renderItem={renderer}
-        ItemSeparatorComponent={ItemSeparator}
-        showsVerticalScrollIndicator={false}
-      />
-    </SceneBuilder>
+    <>
+      <SceneBuilder>
+        <Header
+          heading={FOOD.HEADING}
+          navigation={navigation}
+          iconName="settings-sharp"
+        />
+
+        <InputBox
+          value={'Search'}
+          // onChangeText={(value) => setSearchQuery(value)}
+          label={OUTLETS.SEARCH_BOX_PLACEHOLDER}
+          onFocus={() => {
+            setIsSearching(true);
+          }}
+          viewStyle={{marginBottom: 15, marginTop: 15, padding: 2}}
+          cancellable={isSearching}
+          onCancel={() => {
+            setIsSearching(false);
+            Keyboard.dismiss();
+          }}
+        />
+
+        {!isSearching && (
+          <FlatList
+            ListHeaderComponent={eateriesHeader}
+            ListFooterComponent={eateriesFooter}
+            data={scoreSort(eateries)}
+            keyExtractor={(eatery) => eatery.slug}
+            renderItem={renderer}
+            ItemSeparatorComponent={ItemSeparator}
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+      </SceneBuilder>
+      {!isSearching && (
+        <FloatingButton icon="scan" iconColor="white" color={PRIMARY}>
+          <Type style={{marginHorizontal: 8}}>{OUTLETS.SCANNER_TEXT}</Type>
+        </FloatingButton>
+      )}
+    </>
   );
 };
 

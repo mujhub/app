@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 
 import {ROUNDNESS} from '../../styles/theme';
 import {VIBRANTS} from '../../constants/colors';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -106,6 +107,22 @@ const InputBox = (props) => {
           ? props.label.toUpperCase() + (props.isRequired ? ' *' : '')
           : null}
       </Text>
+      {props.cancellable && (
+        <Text
+          onPress={props.onCancel}
+          style={{
+            position: 'absolute',
+            right: ROUNDNESS,
+            top: 12,
+            color: colors.helper,
+            fontSize: 16,
+            padding: 2,
+            paddingLeft: 10,
+            // backgroundColor: 'red',
+          }}>
+          <Icon name="close-circle" size={22} />
+        </Text>
+      )}
     </View>
   );
 };

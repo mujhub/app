@@ -17,6 +17,8 @@ export const OUTLETS = {
   HEADING: 'Eateries',
   OPEN: 'Open',
   CLOSE: 'Close',
+  SEARCH_BOX_PLACEHOLDER: 'Search Items across eateries',
+  SCANNER_TEXT: 'SCAN MENU QR',
 };
 
 export const DMS = {
