@@ -21,10 +21,19 @@ import {FOOD, OUTLETS} from '../constants/strings';
 
 import {getEateries} from '../services/firestore';
 import {scoreSort} from '../utils/eateries';
+import FloatingPill from '../components/Eateries/FloatingPill';
+import SearchBox from '../components/Eateries/SearchBox';
+import SearchResults from '../components/Eateries/SearchResults';
 
 const EateriesScene = ({navigation}) => {
   const [eateries, setEateries] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Keyboard.addListener('keyboardDidHide', () => {
+  //   setSearchQuery('');
+  //   setIsSearching(false);
+  // });
 
   useEffect(() => {
     fetchData();
@@ -76,20 +85,16 @@ const EateriesScene = ({navigation}) => {
           iconName="settings-sharp"
         />
 
-        <InputBox
-          value={'Search'}
-          // onChangeText={(value) => setSearchQuery(value)}
-          label={OUTLETS.SEARCH_BOX_PLACEHOLDER}
-          onFocus={() => {
-            setIsSearching(true);
-          }}
-          viewStyle={{marginBottom: 15, marginTop: 15, padding: 2}}
-          cancellable={isSearching}
-          onCancel={() => {
-            setIsSearching(false);
-            Keyboard.dismiss();
-          }}
+        <SearchBox
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          isSearching={isSearching}
+          setIsSearching={setIsSearching}
         />
+
+        {isSearching && (
+          <SearchResults searchQuery={searchQuery} isSearching={isSearching} />
+        )}
 
         {!isSearching && (
           <FlatList
@@ -103,11 +108,8 @@ const EateriesScene = ({navigation}) => {
           />
         )}
       </SceneBuilder>
-      {!isSearching && (
-        <FloatingButton icon="scan" iconColor="white" color={PRIMARY}>
-          <Type style={{marginHorizontal: 8}}>{OUTLETS.SCANNER_TEXT}</Type>
-        </FloatingButton>
-      )}
+
+      {!isSearching && <FloatingPill />}
     </>
   );
 };

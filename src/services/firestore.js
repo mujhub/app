@@ -18,3 +18,9 @@ export const getEateryBySlug = (slug) => {
   if (!slug) return;
   return db.collection('eateries').doc(slug).get();
 };
+
+export const getSearchResults = (query) => {
+  query = query.toString();
+  if (query.length < 3) return;
+  return db.collection('search').doc(query).get();
+};
