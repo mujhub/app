@@ -13,7 +13,7 @@ const ThemedModal = ({visible, setVisible, children}) => {
       animationType="fade">
       <TouchableOpacity
         activeOpacity={1}
-        style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.5)'}}
+        style={{flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.75)'}}
         onPress={() => {
           setVisible(false);
         }}>
@@ -21,9 +21,9 @@ const ThemedModal = ({visible, setVisible, children}) => {
           <View
             style={{
               height: null,
-              width: '75%',
+              width: '85%',
               borderRadius: 10,
-              backgroundColor: colors.surface,
+              backgroundColor: colors.elevated,
               alignSelf: 'center',
               padding: 25,
               paddingBottom: 10,

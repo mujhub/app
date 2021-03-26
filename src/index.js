@@ -9,9 +9,11 @@ import {mmkvCurrentTheme} from './utils/storage';
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [currTheme, setCurrTheme] = useState(light);
+  const [themeValue, setThemeValue] = useState(1);
 
   const setTheme = useCallback(
     (theme) => {
+      setThemeValue(theme);
       switch (theme) {
         case 1:
           setCurrTheme(light);
@@ -53,7 +55,7 @@ const App = () => {
   }, []);
 
   return (
-    <CustomTheme.Provider value={{setTheme, currTheme, isDarkMode}}>
+    <CustomTheme.Provider value={{setTheme, currTheme, themeValue, isDarkMode}}>
       <PaperProvider theme={currTheme}>
         <AppNavigator />
       </PaperProvider>

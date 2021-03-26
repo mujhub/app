@@ -7,6 +7,7 @@ import {
   Header,
   DialogBox,
   ThemedModal,
+  ThemeControl,
 } from '../components/Shared/';
 
 import {LoginForm, Dashboard, WebViews} from '../components/Dms';
@@ -44,9 +45,10 @@ const DmsScene = ({navigation}) => {
 
   return (
     <>
-      <ThemedModal
-        visible={settingsModal}
-        setVisible={setSettingsModal}></ThemedModal>
+      <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
+        <Type>Settings</Type>
+        <ThemeControl />
+      </ThemedModal>
 
       <SceneBuilder>
         <Header

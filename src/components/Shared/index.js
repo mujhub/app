@@ -12,6 +12,7 @@ export {default as Card} from './Card';
 export {default as BottomSheet} from './BottomSheet';
 export {default as DialogBox} from './DialogBox';
 export {default as ThemedModal} from './ThemedModal';
+export {default as ThemeControl} from './ThemeControl';
 export {default as FloatingButton} from './FloatingButton';
 export {default as TextCard} from '../SDR/TextCard';
 export {default as ImageCard} from '../SDR/ImageCard';
