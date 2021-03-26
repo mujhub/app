@@ -19,6 +19,7 @@ const Badge = ({style, viewStyle, color, name}) => {
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
+        ...style,
       }}>
       <Icon
         name={name}
