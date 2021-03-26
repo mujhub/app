@@ -16,6 +16,7 @@ const FloatingButton = ({icon, iconColor, color, onPress, children}) => {
         right: width / 15,
         height: width / 10,
         width: null,
+        paddingVertical: width / 15,
         paddingHorizontal: width / 20,
         borderRadius: width / 12,
         backgroundColor: color,
