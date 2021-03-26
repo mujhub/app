@@ -140,6 +140,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+        missingDimensionStrategy 'react-native-camera', 'general'
     }
     splits {
         abi {
@@ -190,6 +191,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation project(':react-native-linear-gradient')
+    implementation project(':react-native-camera')
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

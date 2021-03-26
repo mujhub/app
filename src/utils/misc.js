@@ -1,3 +1,5 @@
+import {SLUG_IDENTIFIER} from '../constants/strings';
+
 export const nameInitials = (name) => {
   let init = '';
   name = name.toLowerCase();
@@ -26,4 +28,18 @@ export const isOpen = ({opens_at, closes_at}) => {
   let startTime = Number(startParts[0]) * 60 + Number(startParts[1]);
   let endTime = Number(endParts[0]) * 60 + Number(endParts[1]);
   return currTime < endTime && currTime > startTime;
+};
+
+export const parseQRCode = (data) => {
+  let link = `${data.data}`;
+  if (link.startsWith('upi://pay')) {
+    let start = link.indexOf(SLUG_IDENTIFIER);
+    if (start === -1) return null;
+    start += SLUG_IDENTIFIER.length;
+    let end = link.indexOf('&', start);
+    if (end === -1) end = link.length;
+    let slug = link.substring(start, end);
+    console.log(slug);
+    return slug;
+  }
 };

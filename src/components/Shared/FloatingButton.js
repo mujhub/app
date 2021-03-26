@@ -8,6 +8,7 @@ const FloatingButton = ({icon, iconColor, color, onPress, children}) => {
   return (
     <TouchableOpacity
       activeOpacity={0.75}
+      onPress={onPress}
       style={{
         position: 'absolute',
         flexDirection: 'row',

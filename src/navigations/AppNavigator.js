@@ -12,7 +12,7 @@ import {light, dark, amoled} from '../styles/theme';
 import {CustomTheme} from '../contexts/CustomTheme';
 
 import BottomNavigator from './BottomNavigator';
-import {MenuScene, SearchMenuScene} from '../scenes/';
+import {MenuScene, SearchMenuScene, QrReaderScene} from '../scenes/';
 
 const Stack = createStackNavigator();
 const {width, height} = Dimensions.get('screen');
@@ -48,6 +48,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="SearchMenuScene"
           component={SearchMenuScene}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="QrReaderScene"
+          component={QrReaderScene}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

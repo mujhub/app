@@ -89,36 +89,40 @@ const MenuScene = ({navigation, route}) => {
 
   return (
     <ScrollView onScroll={handleOnScroll} stickyHeaderIndices={[1]}>
-      <OutletHero
-        yOffset={scrollYPosition}
-        onParallaxImageScrolled={handleParallaxImageScrolled}
-        headingTint={headingTint}
-        setHeadingTint={setHeadingTint}
-        outletInfo={outletInfo}
-      />
+      {outletInfo && (
+        <View>
+          <OutletHero
+            yOffset={scrollYPosition}
+            onParallaxImageScrolled={handleParallaxImageScrolled}
+            headingTint={headingTint}
+            setHeadingTint={setHeadingTint}
+            outletInfo={outletInfo}
+          />
 
-      <View
-        style={{
-          position: 'absolute',
-          width,
-          backgroundColor: headerColor,
-        }}>
-        <OutletHeader
-          headerColor={headerColor}
-          handleBack={handleBack}
-          headingTint={headingTint}
-          hasScrolled={hasScrolled}
-          outletInfo={outletInfo}
-        />
-      </View>
+          <View
+            style={{
+              position: 'absolute',
+              width,
+              backgroundColor: headerColor,
+            }}>
+            <OutletHeader
+              headerColor={headerColor}
+              handleBack={handleBack}
+              headingTint={headingTint}
+              hasScrolled={hasScrolled}
+              outletInfo={outletInfo}
+            />
+          </View>
+        </View>
+      )}
 
-      <View style={{minHeight: height}}>
-        {!isLoadingMenu ? (
+      {!isLoadingMenu && outletInfo ? (
+        <View style={{minHeight: height}}>
           <MenuList data={outletMenu} navigation={navigation} />
-        ) : (
-          <Type>Loading...</Type>
-        )}
-      </View>
+        </View>
+      ) : (
+        <Type>Loading...</Type>
+      )}
     </ScrollView>
   );
 };

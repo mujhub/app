@@ -109,7 +109,7 @@ const EateriesScene = ({navigation}) => {
         )}
       </SceneBuilder>
 
-      {!isSearching && <FloatingPill />}
+      {!isSearching && <FloatingPill navigation={navigation} />}
     </>
   );
 };

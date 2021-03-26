@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Dimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {Type} from '../Shared';
 
 import {getSearchResults} from '../../services/firestore';
+import {OUTLETS} from '../../constants/strings';
+
+const {width, height} = Dimensions.get('screen');
 
 const SearchResults = ({isSearching, searchQuery}) => {
   const {colors} = useTheme();
@@ -35,7 +38,7 @@ const SearchResults = ({isSearching, searchQuery}) => {
     return (
       <View>
         <Type style={{color: colors.disabled}}>
-          Keep typing... (min 3 chars)
+          {OUTLETS.SEARCH_PRE_MIN_CHARS}
         </Type>
       </View>
     );
@@ -51,6 +54,15 @@ const SearchResults = ({isSearching, searchQuery}) => {
   //   if (!isLoading)
   return (
     <View>
+      <View
+        style={{
+          position: 'absolute',
+          width,
+        }}>
+        <Type style={{color: colors.disabled}}>
+          {OUTLETS.SEARCH_EMPTY_RESULT}
+        </Type>
+      </View>
       {Object.keys(results).map(
         (item, i) =>
           results[item].name.indexOf(query) > -1 && (

@@ -1,5 +1,6 @@
 export const APP_NAME = 'MUJ Hub';
 export const APP_NAME_CAPS = 'MUJ HUB';
+export const SLUG_IDENTIFIER = '&mhs=';
 
 export const FOOD = {
   HEADING: 'Food',
@@ -18,6 +19,8 @@ export const OUTLETS = {
   OPEN: 'Open',
   CLOSE: 'Close',
   SEARCH_BOX_PLACEHOLDER: 'Search Items across eateries',
+  SEARCH_PRE_MIN_CHARS: 'Keep typing... (min 3 chars)',
+  SEARCH_EMPTY_RESULT: 'No items found.',
   SCANNER_TEXT: 'SCAN MENU QR',
 };
 
