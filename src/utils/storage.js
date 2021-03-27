@@ -17,18 +17,35 @@ export const mmkvCurrentTheme = async (theme = null) => {
   }
 };
 
-export const mmkvDMSDetails = async (username = null, password = null) => {
+export const mmkvDMSDetails = async (
+  username = null,
+  password = null,
+  name = null,
+  clear = false,
+) => {
   try {
+    if (clear) {
+      await MMKV.removeItem('name');
+      await MMKV.removeItem('username');
+      await MMKV.removeItem('password');
+      return {status: true};
+    }
     if (username) {
+      await MMKV.setStringAsync('name', name);
       await MMKV.setStringAsync('username', username);
       await MMKV.setStringAsync('password', password);
       MMKV.encryption.encrypt();
       return {status: true};
     } else {
+      const enc_name = await MMKV.getStringAsync('name');
       const enc_username = await MMKV.getStringAsync('username');
       const enc_password = await MMKV.getStringAsync('password');
-      console.log('res', enc_username, enc_password);
-      return {status: true, username: enc_username, password: enc_password};
+      return {
+        status: true,
+        username: enc_username,
+        password: enc_password,
+        name: enc_name,
+      };
     }
   } catch (error) {
     console.log(error);

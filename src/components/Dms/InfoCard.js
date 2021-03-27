@@ -1,5 +1,7 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
+import {View, Dimensions} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import {Card, Type} from '../Shared';
 import {DMS} from '../../constants/strings';
@@ -7,6 +9,7 @@ import {DMS} from '../../constants/strings';
 const {width, height} = Dimensions.get('screen');
 
 const InfoCard = (props) => {
+  const {colors} = useTheme();
   return (
     <Card heading={DMS.GREET}>
       <Type
@@ -25,13 +28,24 @@ const InfoCard = (props) => {
         }}>
         {props.id}
       </Type>
+      {props.program && (
+        <Type
+          style={{
+            margin: 10,
+            marginTop: 0,
+            fontSize: width / 28,
+          }}>
+          {props.program}
+        </Type>
+      )}
       <Type
         style={{
           margin: 10,
-          marginTop: 0,
-          fontSize: width / 28,
+          marginBottom: 10,
+          fontSize: width / 32,
+          color: colors.disabled,
         }}>
-        {props.program}
+        {DMS.SECURE_MESSAGE}
       </Type>
     </Card>
   );

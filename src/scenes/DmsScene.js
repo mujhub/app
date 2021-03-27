@@ -1,5 +1,6 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, Dimensions, ToastAndroid} from 'react-native';
+import {useTheme} from 'react-native-paper';
 
 import {
   SceneBuilder,
@@ -8,11 +9,18 @@ import {
   DialogBox,
   ThemedModal,
   ThemeControl,
+  PrimaryButton,
 } from '../components/Shared/';
 
 import {LoginForm, Dashboard, WebViews} from '../components/Dms';
+import {DMS} from '../constants/strings';
+
+import {mmkvDMSDetails} from '../utils/storage';
+
+const {width, height} = Dimensions.get('screen');
 
 const DmsScene = ({navigation}) => {
+  const {colors} = useTheme();
   const MainWVRef = useRef();
   const AttWVRef = useRef();
   const CaptchaWVRef = useRef();
@@ -46,8 +54,32 @@ const DmsScene = ({navigation}) => {
   return (
     <>
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
-        <Type>Settings</Type>
-        <ThemeControl />
+        <Type style={{fontSize: width / 20}}>Settings</Type>
+        <View style={{paddingVertical: 15}}>
+          <PrimaryButton
+            onPress={async () => {
+              const res = await mmkvDMSDetails(null, null, null, true);
+              if (res.status) {
+                ToastAndroid.show(
+                  'Cleared stored session.',
+                  ToastAndroid.SHORT,
+                );
+              }
+            }}>
+            Forget current session
+          </PrimaryButton>
+          <Type
+            style={{
+              margin: 5,
+              marginBottom: 10,
+              fontSize: width / 32,
+              color: colors.disabled,
+            }}>
+            {DMS.CLEAR_SESSION}
+          </Type>
+
+          <ThemeControl />
+        </View>
       </ThemedModal>
 
       <SceneBuilder>

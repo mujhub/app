@@ -22,10 +22,9 @@ const Dashboard = (props) => {
   useEffect(() => {
     const saveCredentials = async () => {
       const {username, password} = props.userCredentials;
+      const name = props.data.user.name;
       const res = await mmkvDMSDetails();
-      if (!res.username) {
-        const status = await mmkvDMSDetails(username, password);
-      }
+      const status = await mmkvDMSDetails(username, password, name);
     };
     saveCredentials();
   }, []);

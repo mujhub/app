@@ -11,6 +11,7 @@ import {DMS} from '../../constants/strings';
 import {VIBRANTS} from '../../constants/colors';
 import MMKVStorage from 'react-native-mmkv-storage';
 import {mmkvDMSDetails} from '../../utils/storage';
+import InfoCard from './InfoCard';
 
 const MMKV = new MMKVStorage.Loader().withEncryption().initialize();
 
@@ -21,6 +22,8 @@ const LoginForm = (props) => {
 
   const [localUsername, setLocalUsername] = useState('');
   const [localPassword, setLocalPassword] = useState('');
+  const [localName, setLocalName] = useState('');
+  const [isSaved, setIsSaved] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -60,6 +63,8 @@ const LoginForm = (props) => {
       if (res.username) {
         setLocalUsername(res.username);
         setLocalPassword(res.password);
+        setLocalName(res.name);
+        setIsSaved(true);
         //As the user doesn't type credentials, so onChange event is not triggered
         props.setUsername(res.username);
         props.setPassword(res.password);
@@ -71,24 +76,30 @@ const LoginForm = (props) => {
 
   return (
     <View style={{marginHorizontal: 10}}>
-      <InputBox
-        defaultValue={localUsername}
-        value={props.username}
-        onChangeText={(value) => props.setUsername(value)}
-        label={DMS.USERNAME}
-        error={errors.username}
-        isRequired={true}
-      />
-      <InputBox
-        defaultValue={localPassword}
-        value={props.password}
-        textContentType="password"
-        secureTextEntry={true}
-        onChangeText={(value) => props.setPassword(value)}
-        label={DMS.PASSWORD}
-        error={errors.password}
-        isRequired={true}
-      />
+      {isSaved && <InfoCard name={localName} id={localUsername} />}
+
+      {!isSaved && (
+        <>
+          <InputBox
+            defaultValue={localUsername}
+            value={props.username}
+            onChangeText={(value) => props.setUsername(value)}
+            label={DMS.USERNAME}
+            error={errors.username}
+            isRequired={true}
+          />
+          <InputBox
+            defaultValue={localPassword}
+            value={props.password}
+            textContentType="password"
+            secureTextEntry={true}
+            onChangeText={(value) => props.setPassword(value)}
+            label={DMS.PASSWORD}
+            error={errors.password}
+            isRequired={true}
+          />
+        </>
+      )}
       <View style={{marginTop: 16}}>
         <Type style={{color: colors.disabled}}>SECURITY CAPTCHA</Type>
         <View

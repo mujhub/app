@@ -39,10 +39,14 @@ export const DMS = {
   GREET: 'Welcome',
   FOOTER:
     "We're constantly improving the DMS integration. Make sure you keep the app updated!",
+  SECURE_MESSAGE:
+    'Your account details are encrypted and saved securely on your device.',
+  CLEAR_SESSION:
+    'This will will delete the session and the account details that are saved on your device.',
 };
 
 export const MESS = {
-  HEADING: "Today's Mess Menu",
+  HEADING: 'Mess Menu',
   NULL_MENU: 'Not yet updated.',
   EXPAND_CARD: 'VIEW ALL',
   CONTRACT_CARD: 'CLOSE',

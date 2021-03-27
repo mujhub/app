@@ -18,18 +18,20 @@ const ThemedModal = ({visible, setVisible, children}) => {
           setVisible(false);
         }}>
         <View flex={1} justifyContent="center">
-          <View
-            style={{
-              height: null,
-              width: '85%',
-              borderRadius: 10,
-              backgroundColor: colors.elevated,
-              alignSelf: 'center',
-              padding: 25,
-              paddingBottom: 10,
-            }}>
-            {children}
-          </View>
+          <TouchableOpacity activeOpacity={1}>
+            <View
+              style={{
+                height: null,
+                width: '85%',
+                borderRadius: 10,
+                backgroundColor: colors.elevated,
+                alignSelf: 'center',
+                padding: 25,
+                paddingBottom: 10,
+              }}>
+              {children}
+            </View>
+          </TouchableOpacity>
         </View>
       </TouchableOpacity>
     </Modal>
