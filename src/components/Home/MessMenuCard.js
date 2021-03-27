@@ -28,7 +28,7 @@ const MessMenuCard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // ANIMATION
-  const ANIMATION_DURATION = 50;
+  const ANIMATION_DURATION = 220;
   const [contractedCardHeight, setContractedCardHeight] = useState(0);
   const [expandedCardHeight, setExpandedCardHeight] = useState(0);
   const [hasCardExpanded, setCardExpanded] = useState(false);
@@ -131,7 +131,7 @@ const MessMenuCard = () => {
               </View>
 
               <Type
-                style={{lineHeight: 24, marginTop: 10, fontSize: width / 26}}>
+                style={{lineHeight: 24, marginTop: 15, fontSize: width / 26}}>
                 {menuData[category].menu.length > 0 ? (
                   menuData[category].menu.map((item, i) =>
                     i < menuData[category].menu.length - 1 ? item + ', ' : item,
@@ -164,7 +164,7 @@ const MessMenuCard = () => {
           }}>
           <Type
             style={{
-              fontSize: width / 24,
+              fontSize: width / 26,
               fontWeight: 'bold',
             }}>
             {menuData[category].name
@@ -180,7 +180,7 @@ const MessMenuCard = () => {
           ) : null}
           <Type
             style={{
-              fontSize: width / 28,
+              fontSize: width / 30,
               color: colors.disabled,
               fontWeight: 'bold',
               textAlignVertical: 'center',
@@ -194,7 +194,12 @@ const MessMenuCard = () => {
           </Type>
         </View>
 
-        <Type style={{fontSize: width / 26, lineHeight: 24, marginVertical: 5}}>
+        <Type
+          style={{
+            fontSize: width / 28,
+            lineHeight: 24,
+            marginTop: 10,
+          }}>
           {menuData[category].menu.length > 0 ? (
             menuData[category].menu.map((item, i) =>
               i < menuData[category].menu.length - 1 ? item + ', ' : item,
@@ -263,7 +268,7 @@ const MessMenuCard = () => {
 
   return !isLoading ? (
     <View>
-      <Type
+      {/* <Type
         style={{
           fontSize: 14,
           fontWeight: 'bold',
@@ -271,8 +276,9 @@ const MessMenuCard = () => {
           marginVertical: 5,
           color: colors.disabled,
         }}>
-        {MESS.HEADING}
-      </Type>
+        {MESS.HEADING + ' '}
+        <UpdatedAtDate />
+      </Type> */}
       <Animated.View
         style={[
           {
@@ -295,9 +301,8 @@ const MessMenuCard = () => {
               opacity: Animated.subtract(1, textOpacity),
             },
           ]}>
-          {/* <UpdatedAtDate /> */}
           <Type>
-            {'Mess Menu  '}
+            {MESS.HEADING + ' '}
             <UpdatedAtDate />
           </Type>
           <ContractedCardData />
@@ -316,7 +321,7 @@ const MessMenuCard = () => {
             },
           ]}>
           <Type style={{marginBottom: 15}}>
-            {'Mess Menu  '}
+            {MESS.HEADING + ' '}
             <UpdatedAtDate />
           </Type>
           <ExpandedCardData />
