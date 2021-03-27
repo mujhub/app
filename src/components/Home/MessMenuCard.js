@@ -28,7 +28,7 @@ const MessMenuCard = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   // ANIMATION
-  const ANIMATION_DURATION = 200;
+  const ANIMATION_DURATION = 50;
   const [contractedCardHeight, setContractedCardHeight] = useState(0);
   const [expandedCardHeight, setExpandedCardHeight] = useState(0);
   const [hasCardExpanded, setCardExpanded] = useState(false);
@@ -101,28 +101,37 @@ const MessMenuCard = () => {
         {Object.keys(menuData).map((category, i) =>
           i === ongoingMeal ? (
             <View key={i.toString()}>
-              <Type
+              <View
                 style={{
-                  fontSize: width / 22,
-                  fontWeight: 'bold',
-                  marginTop: 15,
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'baseline',
+                  justifyContent: 'space-between',
                 }}>
-                {menuData[category].name
-                  ? menuData[category].name.toUpperCase() + ' MENU'
-                  : ''}
-              </Type>
-              <Type
-                style={{
-                  fontSize: width / 28,
-                  color: colors.disabled,
-                  fontWeight: 'bold',
-                }}>
-                {menuData[category].startsAt && menuData[category].endsAt
-                  ? `${menuData[category].startsAt} - ${menuData[category].endsAt}`
-                  : ''}
-              </Type>
+                <Type
+                  style={{
+                    fontSize: width / 22,
+                    fontWeight: 'bold',
+                    marginTop: 15,
+                  }}>
+                  {menuData[category].name
+                    ? menuData[category].name.toUpperCase() + ' MENU'
+                    : ''}
+                </Type>
+                <Type
+                  style={{
+                    fontSize: width / 28,
+                    color: colors.disabled,
+                    fontWeight: 'bold',
+                  }}>
+                  {menuData[category].startsAt && menuData[category].endsAt
+                    ? `${menuData[category].startsAt} - ${menuData[category].endsAt}`
+                    : ''}
+                </Type>
+              </View>
 
-              <Type style={{marginTop: 10, fontSize: width / 26}}>
+              <Type
+                style={{lineHeight: 24, marginTop: 10, fontSize: width / 26}}>
                 {menuData[category].menu.length > 0 ? (
                   menuData[category].menu.map((item, i) =>
                     i < menuData[category].menu.length - 1 ? item + ', ' : item,
@@ -144,35 +153,48 @@ const MessMenuCard = () => {
 
   const ExpandedCardData = () => {
     return Object.keys(menuData).map((category, i) => (
-      <View key={i.toString()} style={{width: '100%'}}>
-        <View style={{flexDirection: 'row', marginBottom: 5}}>
+      <View key={i.toString()} style={{width: '100%', position: 'relative'}}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            marginBottom: 2,
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+          }}>
           <Type
             style={{
-              fontSize: width / 26,
+              fontSize: width / 24,
               fontWeight: 'bold',
             }}>
             {menuData[category].name
               ? menuData[category].name.toUpperCase()
               : ''}
           </Type>
+          {menuData[category].isSpecial ? (
+            <Badge
+              style={{position: 'relative', marginLeft: 5}}
+              name="star"
+              color={VIBRANTS.YELLOW}
+            />
+          ) : null}
           <Type
             style={{
-              fontSize: width / 32,
+              fontSize: width / 28,
               color: colors.disabled,
               fontWeight: 'bold',
               textAlignVertical: 'center',
               marginLeft: 5,
+              textAlign: 'right',
+              flexGrow: 2,
             }}>
             {menuData[category].startsAt && menuData[category].endsAt
               ? `${menuData[category].startsAt} - ${menuData[category].endsAt}`
               : ''}
           </Type>
-          {menuData[category].isSpecial ? (
-            <Badge name="star" color={VIBRANTS.YELLOW} />
-          ) : null}
         </View>
 
-        <Type style={{fontSize: width / 26}}>
+        <Type style={{fontSize: width / 26, lineHeight: 24, marginVertical: 5}}>
           {menuData[category].menu.length > 0 ? (
             menuData[category].menu.map((item, i) =>
               i < menuData[category].menu.length - 1 ? item + ', ' : item,
@@ -273,7 +295,11 @@ const MessMenuCard = () => {
               opacity: Animated.subtract(1, textOpacity),
             },
           ]}>
-          <UpdatedAtDate />
+          {/* <UpdatedAtDate /> */}
+          <Type>
+            {'Mess Menu  '}
+            <UpdatedAtDate />
+          </Type>
           <ContractedCardData />
         </Animated.View>
 
@@ -289,7 +315,7 @@ const MessMenuCard = () => {
               opacity: textOpacity,
             },
           ]}>
-          <Type style={{marginVertical: 10}}>
+          <Type style={{marginBottom: 15}}>
             {'Mess Menu  '}
             <UpdatedAtDate />
           </Type>
@@ -312,11 +338,11 @@ const MessMenuCard = () => {
                 color: colors.primary,
                 textAlign: 'right',
               }}>
-              {!hasCardExpanded ? (
+              {/* {!hasCardExpanded ? (
                 <Icon name="chevron-down" size={width / 25} />
               ) : (
                 <Icon name="chevron-up" size={width / 25} />
-              )}
+              )} */}
               {!hasCardExpanded ? MESS.EXPAND_CARD : MESS.CONTRACT_CARD}
             </Type>
           </View>

@@ -38,7 +38,7 @@ const TextCard = ({card, navigation}) => {
         style={{marginTop: height / 30}}>
         <LinearGradient
           start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
+          end={{x: 1, y: 1}}
           colors={[
             appearance.backgroundGradient.from,
             appearance.backgroundGradient.to,
@@ -52,6 +52,7 @@ const TextCard = ({card, navigation}) => {
             style={{
               textAlignVertical: 'center',
               flexDirection: 'row',
+              alignItems: 'baseline',
               padding: 5,
             }}>
             {data.iconName && (
@@ -81,7 +82,8 @@ const TextCard = ({card, navigation}) => {
             <Type
               style={{
                 fontSize: width / 28,
-                padding: 5,
+                padding: 10,
+                lineHeight: 24,
                 color: appearance.textColor,
               }}>
               {data.bodyText}
@@ -93,7 +95,7 @@ const TextCard = ({card, navigation}) => {
               style={{
                 position: 'absolute',
                 right: 0,
-                top: 0,
+                top: 5,
                 padding: width / 20,
               }}>
               <Icon
