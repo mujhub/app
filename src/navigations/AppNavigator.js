@@ -38,7 +38,7 @@ const AppNavigator = () => {
         <Stack.Screen
           name="MainScreen"
           component={BottomNavigator}
-          options={{headerShown: false, title: 'MUJ Hub'}}
+          options={{headerShown: false, title: 'MUJ HUB'}}
         />
         <Stack.Screen
           name="MenuScene"

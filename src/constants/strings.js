@@ -1,4 +1,4 @@
-export const APP_NAME = 'MUJ Hub';
+export const APP_NAME = 'MUJ HUB';
 export const APP_NAME_CAPS = 'MUJ HUB';
 export const SLUG_IDENTIFIER = '&mhs=';
 
