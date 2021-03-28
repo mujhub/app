@@ -11,8 +11,10 @@ import {
   Header,
 } from '../components/Shared/';
 import MessMenuCard from '../components/Home/MessMenuCard';
-import {HOME} from '../constants/strings';
+import UpdateChecker from '../components/SDR/UpdateChecker';
 import SDRBuilder from '../components/Home/SDRBuilders/SDRBuilder';
+
+import {HOME} from '../constants/strings';
 
 const HomeScene = ({navigation}) => {
   const {setTheme} = useContext(CustomTheme);
@@ -25,6 +27,7 @@ const HomeScene = ({navigation}) => {
         iconName="settings-sharp"
       />
       <ScrollView showsVerticalScrollIndicator={false}>
+        <UpdateChecker navigation={navigation} />
         <SDRBuilder navigation={navigation} />
         <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
         <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>

@@ -24,3 +24,7 @@ export const getSearchResults = (query) => {
   if (query.length < 3) return;
   return db.collection('search').doc(query).get();
 };
+
+export const checkUpdates = () => {
+  return db.collection('app').doc('updateInfo').get();
+};
