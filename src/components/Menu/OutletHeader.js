@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, TouchableOpacity, Dimensions} from 'react-native';
+import {View, Text, TouchableOpacity, Dimensions, Linking} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {Type} from '../Shared';
 
@@ -48,9 +48,19 @@ const OutletHeader = ({
       </View>
 
       {hasScrolled && (
-        <TouchableOpacity onPress={handleBack} activeOpacity={0.75}>
+        <TouchableOpacity
+          onPress={() => {
+            Linking.canOpenURL('upi://pay').then((can) => {
+              if (can) {
+                Linking.openURL(
+                  'upi://pay?pa=dustspeck@kotak&pn=Vaibhav Garg&tn=Via MUJ HUB&cu=INR',
+                );
+              }
+            });
+          }}
+          activeOpacity={0.75}>
           <Icon
-            name="call-outline"
+            name="wallet-outline"
             size={25}
             style={{
               margin: 10,

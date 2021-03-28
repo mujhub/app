@@ -9,14 +9,16 @@ import {
   Platform,
   ScrollView,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {CustomTheme} from '../../contexts/CustomTheme';
-import {Type, ItemSeparator} from '../Shared';
+import {Type, ItemSeparator, PrimaryButton} from '../Shared';
 import {VIBRANTS, PRIMARY} from '../../constants/colors';
 import {isOpen} from '../../utils/misc';
+import {OUTLETS} from '../../constants/strings';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -132,29 +134,47 @@ const OutletHero = ({
         <View style={{backgroundColor: colors.background}}>
           <View style={{margin: 20, marginTop: 10}}>
             <View style={{marginHorizontal: 5}}>
-              <Text
-                style={{
-                  fontWeight: 'bold',
-                  fontSize: width / 28,
-                  color: isOutletOpen ? VIBRANTS.GREEN2 : VIBRANTS.RED,
-                  marginTop: 10,
-                }}>
-                {isOutletOpen ? 'Open Now' : 'Closed'}
-                <Text
-                  style={{
-                    color: colors.disabled,
-                  }}>{` - ${data.opens_at} - ${data.closes_at}`}</Text>
-              </Text>
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <View>
+                  <Text
+                    style={{
+                      fontWeight: 'bold',
+                      fontSize: width / 28,
+                      color: isOutletOpen ? VIBRANTS.GREEN2 : VIBRANTS.RED,
+                      marginTop: 10,
+                    }}>
+                    {isOutletOpen ? OUTLETS.OPEN : OUTLETS.CLOSE}
+                    <Text
+                      style={{
+                        color: colors.disabled,
+                      }}>{` - ${data.opens_at} - ${data.closes_at}`}</Text>
+                  </Text>
 
-              <Text
-                style={{
-                  fontSize: width / 30,
-                  marginTop: 10,
-                  color: colors.disabled,
-                }}>
-                <Icon name="location-outline" />
-                {' ' + data.location}
-              </Text>
+                  <Text
+                    style={{
+                      fontSize: width / 30,
+                      marginTop: 10,
+                      color: colors.disabled,
+                    }}>
+                    <Icon name="location-outline" />
+                    {' ' + data.location}
+                  </Text>
+                </View>
+                <PrimaryButton
+                  mode="outlined"
+                  onPress={() => {
+                    Linking.canOpenURL('upi://pay').then((can) => {
+                      if (can) {
+                        Linking.openURL(
+                          'upi://pay?pa=dustspeck@kotak&pn=Vaibhav Garg',
+                        );
+                      }
+                    });
+                  }}>
+                  <Type style={{color: colors.primary}}>{OUTLETS.PAYMENT}</Type>
+                </PrimaryButton>
+              </View>
 
               <TouchableOpacity
                 style={{marginTop: 10}}
@@ -179,7 +199,10 @@ const OutletHero = ({
                       <ItemSeparator widthPercentage="100%" opacityHex="ff" />
                       <View style={{marginVertical: 20}}>
                         <Type
-                          style={{color: VIBRANTS.GREEN1, fontWeight: 'bold'}}>
+                          style={{
+                            color: VIBRANTS.GREEN1,
+                            fontWeight: 'bold',
+                          }}>
                           {offer.heading}
                         </Type>
                         <Type>{offer.body}</Type>
@@ -191,7 +214,7 @@ const OutletHero = ({
             </View>
           </View>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             activeOpacity={0.75}
             style={{
               position: 'absolute',
@@ -207,7 +230,7 @@ const OutletHero = ({
               elevation: 5,
             }}>
             <Icon name="call" size={width / 18} color="white" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </>

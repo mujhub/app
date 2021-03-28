@@ -8,6 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  Linking,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,9 +17,11 @@ import {CustomTheme} from '../contexts/CustomTheme';
 import OutletHero from '../components/Menu/OutletHero';
 import OutletHeader from '../components/Menu/OutletHeader';
 import MenuList from '../components/Menu/MenuList';
-import {InputBox, Type} from '../components/Shared';
+import {InputBox, Type, FloatingButton} from '../components/Shared';
 import SearchBox from '../components/Menu/SearchBox';
 import {getEateryBySlug} from '../services/firestore';
+import {PRIMARY} from '../constants/colors';
+import {OUTLETS} from '../constants/strings';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -88,9 +91,9 @@ const MenuScene = ({navigation, route}) => {
   if (!route.params.slug) return null;
 
   return (
-    <ScrollView onScroll={handleOnScroll} stickyHeaderIndices={[1]}>
-      {outletInfo && (
-        <View>
+    outletInfo && (
+      <>
+        <ScrollView onScroll={handleOnScroll} stickyHeaderIndices={[1]}>
           <OutletHero
             yOffset={scrollYPosition}
             onParallaxImageScrolled={handleParallaxImageScrolled}
@@ -113,17 +116,34 @@ const MenuScene = ({navigation, route}) => {
               outletInfo={outletInfo}
             />
           </View>
-        </View>
-      )}
 
-      {!isLoadingMenu && outletInfo ? (
-        <View style={{minHeight: height}}>
-          <MenuList data={outletMenu} navigation={navigation} />
+          {!isLoadingMenu && outletInfo ? (
+            <View style={{minHeight: height}}>
+              <MenuList data={outletMenu} navigation={navigation} />
+            </View>
+          ) : (
+            <Type>Loading...</Type>
+          )}
+          {/* <View style={{height: 500, width}}></View> */}
+        </ScrollView>
+
+        <View>
+          <FloatingButton
+            icon="call"
+            iconColor="white"
+            color={PRIMARY}
+            onPress={() => {
+              Linking.canOpenURL('tel:').then((can) => {
+                if (can) Linking.openURL('tel:7668310023');
+              });
+            }}>
+            <Type style={{marginHorizontal: 8, color: 'white'}}>
+              {OUTLETS.CALL}
+            </Type>
+          </FloatingButton>
         </View>
-      ) : (
-        <Type>Loading...</Type>
-      )}
-    </ScrollView>
+      </>
+    )
   );
 };
 

@@ -16,12 +16,14 @@ export const ACADEMICS = {
 
 export const OUTLETS = {
   HEADING: 'Eateries',
-  OPEN: 'Open',
-  CLOSE: 'Close',
+  OPEN: 'Open Now',
+  CLOSE: 'Closed',
   SEARCH_BOX_PLACEHOLDER: 'Search Items across eateries',
   SEARCH_PRE_MIN_CHARS: 'Keep typing... (min 3 chars)',
   SEARCH_EMPTY_RESULT: 'No items found.',
   SCANNER_TEXT: 'SCAN MENU QR',
+  PAYMENT: 'Make Payment',
+  CALL: 'PLACE CALL',
 };
 
 export const DMS = {

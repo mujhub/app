@@ -7,6 +7,7 @@ import {Type} from '../Shared';
 import {VIBRANTS, TYPE} from '../../constants/colors';
 import SearchBox from './SearchBox';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ROUNDNESS} from '../../styles/theme';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -92,14 +93,26 @@ const MenuList = ({data, navigation, isSearching}) => {
             justifyContent: 'space-between',
             marginHorizontal: 10,
           }}>
-          <Type style={{fontSize: width / 22}}>MENU</Type>
           <TouchableOpacity
             style={{flexDirection: 'row'}}
             onPress={handleSearch}>
-            <Icon name="search" size={width / 18} color={colors.text} />
-            <Type style={{fontSize: width / 24, marginHorizontal: 10}}>
-              SEARCH
-            </Type>
+            <View
+              style={{
+                width: '100%',
+                height: 45,
+                backgroundColor: colors.surface,
+                borderRadius: ROUNDNESS / 2,
+                justifyContent: 'center',
+              }}>
+              <Type
+                style={{marginHorizontal: ROUNDNESS, color: colors.disabled}}>
+                <Icon
+                  name="search"
+                  style={{marginHorizontal: ROUNDNESS, color: colors.disabled}}
+                />
+                {'  SEARCH ITEMS'}
+              </Type>
+            </View>
           </TouchableOpacity>
         </View>
       ) : (
