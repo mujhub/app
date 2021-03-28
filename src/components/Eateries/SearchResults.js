@@ -65,7 +65,7 @@ const SearchResults = ({isSearching, searchQuery}) => {
       </View>
       {Object.keys(results).map(
         (item, i) =>
-          results[item].name.indexOf(query) > -1 && (
+          results[item].name.toString().toLowerCase().indexOf(query) > -1 && (
             <View key={i.toString()}>
               <Type>{JSON.stringify(results[item])}</Type>
             </View>
