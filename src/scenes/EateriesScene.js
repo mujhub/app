@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, FlatList, Text, View, Keyboard} from 'react-native';
+import {ScrollView, FlatList, View, Dimensions} from 'react-native';
 
 import {
   SceneBuilder,
@@ -10,6 +10,8 @@ import {
   ListFooter,
   FloatingButton,
   InputBox,
+  ThemedModal,
+  ThemeControl,
 } from '../components/Shared';
 import {VIBRANTS, PRIMARY} from '../constants/colors';
 import {
@@ -25,10 +27,13 @@ import FloatingPill from '../components/Eateries/FloatingPill';
 import SearchBox from '../components/Eateries/SearchBox';
 import SearchResults from '../components/Eateries/SearchResults';
 
+const {width, height} = Dimensions.get('screen');
+
 const EateriesScene = ({navigation}) => {
   const [eateries, setEateries] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [settingsModal, setSettingsModal] = useState(false);
 
   // Keyboard.addListener('keyboardDidHide', () => {
   //   setSearchQuery('');
@@ -78,11 +83,20 @@ const EateriesScene = ({navigation}) => {
   const eateriesFooter = () => <ListFooter msg="That's all folks!" />;
   return (
     <>
+      <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
+        <Type style={{fontSize: width / 20}}>Settings</Type>
+        <View style={{paddingVertical: 15}}>
+          <ThemeControl />
+        </View>
+      </ThemedModal>
       <SceneBuilder>
         <Header
           heading={FOOD.HEADING}
           navigation={navigation}
           iconName="settings-sharp"
+          iconAction={() => {
+            setSettingsModal(true);
+          }}
         />
 
         <SearchBox
