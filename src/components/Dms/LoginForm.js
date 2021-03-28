@@ -23,7 +23,6 @@ const LoginForm = (props) => {
   const [localUsername, setLocalUsername] = useState('');
   const [localPassword, setLocalPassword] = useState('');
   const [localName, setLocalName] = useState('');
-  const [isSaved, setIsSaved] = useState(false);
 
   const [errors, setErrors] = useState({});
 
@@ -64,7 +63,7 @@ const LoginForm = (props) => {
         setLocalUsername(res.username);
         setLocalPassword(res.password);
         setLocalName(res.name);
-        setIsSaved(true);
+        props.setIsSaved(true);
         //As the user doesn't type credentials, so onChange event is not triggered
         props.setUsername(res.username);
         props.setPassword(res.password);
@@ -76,9 +75,9 @@ const LoginForm = (props) => {
 
   return (
     <View style={{marginHorizontal: 10}}>
-      {isSaved && <InfoCard name={localName} id={localUsername} />}
+      {props.isSaved && <InfoCard name={localName} id={localUsername} />}
 
-      {!isSaved && (
+      {!props.isSaved && (
         <>
           <InputBox
             defaultValue={localUsername}

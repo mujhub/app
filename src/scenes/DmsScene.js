@@ -50,6 +50,7 @@ const DmsScene = ({navigation}) => {
   });
 
   const [settingsModal, setSettingsModal] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   return (
     <>
@@ -60,6 +61,7 @@ const DmsScene = ({navigation}) => {
             onPress={async () => {
               const res = await mmkvDMSDetails(null, null, null, true);
               if (res.status) {
+                setIsSaved(false);
                 ToastAndroid.show(
                   'Cleared stored session.',
                   ToastAndroid.SHORT,
@@ -99,6 +101,8 @@ const DmsScene = ({navigation}) => {
               captcha={captcha}
               setUsername={setUsername}
               setPassword={setPassword}
+              isSaved={isSaved}
+              setIsSaved={setIsSaved}
               setCaptcha={setCaptcha}
               MainWVRef={MainWVRef}
               CaptchaWVRef={CaptchaWVRef}

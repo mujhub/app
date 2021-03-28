@@ -28,7 +28,7 @@ const InfoCard = (props) => {
         }}>
         {props.id}
       </Type>
-      {props.program && (
+      {props.program ? (
         <Type
           style={{
             margin: 10,
@@ -37,7 +37,7 @@ const InfoCard = (props) => {
           }}>
           {props.program}
         </Type>
-      )}
+      ) : null}
       <Type
         style={{
           margin: 10,
