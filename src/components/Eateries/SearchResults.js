@@ -6,6 +6,7 @@ import {Type} from '../Shared';
 
 import {getSearchResults} from '../../services/firestore';
 import {OUTLETS} from '../../constants/strings';
+import {logUniversalSearch} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -18,6 +19,7 @@ const SearchResults = ({isSearching, searchQuery}) => {
   const getResults = async (query) => {
     setIsLoading(true);
     let res = await getSearchResults(query);
+    logUniversalSearch({query});
     setIsLoading(false);
     setResults({...res.data()});
   };

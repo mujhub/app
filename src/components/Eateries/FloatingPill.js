@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text} from 'react-native';
+import analytics from '@react-native-firebase/analytics';
 
 import {FloatingButton, Type} from '../Shared';
 
@@ -11,7 +12,8 @@ const FloatingPill = ({navigation}) => (
     icon="scan"
     iconColor="white"
     color={PRIMARY}
-    onPress={() => {
+    onPress={async () => {
+      await analytics().logEvent('scan_qr');
       navigation.navigate('QrReaderScene');
     }}>
     <Type style={{marginHorizontal: 8, color: 'white'}}>

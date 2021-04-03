@@ -2,9 +2,6 @@ import React, {useState, useRef, useEffect} from 'react';
 import {FlatList, Dimensions, Text, View, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import MMKVStorage from 'react-native-mmkv-storage';
-
-const MMKV = new MMKVStorage.Loader().withEncryption().initialize();
 
 import {PrimaryButton, Type, DataTable, Card} from '../Shared';
 import InfoCard from './InfoCard';
@@ -13,6 +10,7 @@ import CollapsedInfoCard from './CollapsedInfoCard';
 import {logoutScript} from '../../constants/scripts';
 import {DMS, ATTENDANCE} from '../../constants/strings';
 import {mmkvDMSDetails} from '../../utils/storage';
+import {logDMSLogin} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -45,6 +43,7 @@ const Dashboard = (props) => {
   const welcomeCardRef = useRef();
 
   useEffect(() => {
+    logDMSLogin();
     setTimeout(() => {
       if (welcomeCardRef.current)
         welcomeCardRef.current.measure((_x, _y, _ox, oy) => {

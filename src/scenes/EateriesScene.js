@@ -26,6 +26,7 @@ import {scoreSort} from '../utils/eateries';
 import FloatingPill from '../components/Eateries/FloatingPill';
 import SearchBox from '../components/Eateries/SearchBox';
 import SearchResults from '../components/Eateries/SearchResults';
+import {logMenuFetch} from '../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -62,6 +63,7 @@ const EateriesScene = ({navigation}) => {
       key={item.slug}
       activeOpacity={0.75}
       onPress={() => {
+        logMenuFetch({name: item.slug});
         navigation.navigate('MenuScene', {info: {...item}, slug: item.slug});
         // navigation.navigate('MenuScene', {slug: item.slug});
         // navigation.navigate('MenuScene');

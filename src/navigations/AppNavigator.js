@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import {StatusBar, Dimensions} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {
@@ -6,6 +6,7 @@ import {
   CardStyleInterpolators,
 } from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import analytics from '@react-native-firebase/analytics';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {light, dark, amoled} from '../styles/theme';
@@ -19,9 +20,29 @@ const {width, height} = Dimensions.get('screen');
 
 const AppNavigator = () => {
   const {isDarkMode} = useContext(CustomTheme);
+  const navigationRef = useRef();
+  const routeNameRef = useRef();
 
   return (
-    <NavigationContainer theme={isDarkMode ? dark : light}>
+    <NavigationContainer
+      theme={isDarkMode ? dark : light}
+      ref={navigationRef}
+      onReady={() =>
+        (routeNameRef.current = navigationRef.current.getCurrentRoute().name)
+      }
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+        if (previousRouteName !== currentRouteName) {
+          console.log('=========', previousRouteName);
+          await analytics().logScreenView({
+            screen_name: currentRouteName,
+            screen_class: currentRouteName,
+          });
+        }
+        routeNameRef.current = currentRouteName;
+      }}>
       <StatusBar
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor="transparent"
@@ -32,7 +53,7 @@ const AppNavigator = () => {
         screenOptions={{
           gestureEnabled: true,
           gestureDirection: 'horizontal',
-          gestureResponseDistance: {horizontal: width / 3},
+          gestureResponseDistance: {horizontal: width / 2},
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
         <Stack.Screen

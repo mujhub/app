@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {getMessMenu} from '../../services/firestore';
 import {MESS} from '../../constants/strings';
 import {VIBRANTS} from '../../constants/colors';
+import {logMessMenu} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -259,6 +260,7 @@ const MessMenuCard = () => {
           break;
         }
       }
+      logMessMenu({meal: menuData[ongoingMeal].name});
     } catch (error) {}
   }, [menuData]);
 

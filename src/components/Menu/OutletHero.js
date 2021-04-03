@@ -19,6 +19,7 @@ import {Type, ItemSeparator, PrimaryButton} from '../Shared';
 import {VIBRANTS, PRIMARY} from '../../constants/colors';
 import {isOpen} from '../../utils/misc';
 import {OUTLETS} from '../../constants/strings';
+import {logPayment} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -166,6 +167,7 @@ const OutletHero = ({
                   onPress={() => {
                     Linking.canOpenURL('upi://pay').then((can) => {
                       if (can) {
+                        logPayment({name: data.slug});
                         Linking.openURL(
                           'upi://pay?pa=dustspeck@kotak&pn=Vaibhav Garg',
                         );

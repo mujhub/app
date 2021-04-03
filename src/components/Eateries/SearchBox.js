@@ -17,11 +17,6 @@ const SearchBox = ({
       onFocus={() => {
         setIsSearching(true);
       }}
-      //   onBlur={() => {
-      //     setIsSearching(false);
-      //     setSearchQuery('');
-      //     Keyboard.dismiss();
-      //   }}
       viewStyle={{marginBottom: 15, marginTop: 15, padding: 2}}
       cancellable={isSearching}
       onCancel={() => {

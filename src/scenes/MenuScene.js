@@ -22,6 +22,7 @@ import SearchBox from '../components/Menu/SearchBox';
 import {getEateryBySlug} from '../services/firestore';
 import {PRIMARY} from '../constants/colors';
 import {OUTLETS} from '../constants/strings';
+import {logPlaceCall} from '../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -134,7 +135,10 @@ const MenuScene = ({navigation, route}) => {
             color={PRIMARY}
             onPress={() => {
               Linking.canOpenURL('tel:').then((can) => {
-                if (can) Linking.openURL('tel:7668310023');
+                if (can) {
+                  logPlaceCall({name: outletInfo.slug});
+                  Linking.openURL('tel:7668310023');
+                }
               });
             }}>
             <Type style={{marginHorizontal: 8, color: 'white'}}>

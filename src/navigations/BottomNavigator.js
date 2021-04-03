@@ -38,7 +38,7 @@ const BottomNavigator = ({navigation}) => {
           let iconName;
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Menu') {
+          } else if (route.name === 'Eateries') {
             iconName = focused ? 'fast-food' : 'fast-food-outline';
           } else if (route.name === 'Dms') {
             iconName = focused ? 'business' : 'business-outline';
@@ -63,7 +63,7 @@ const BottomNavigator = ({navigation}) => {
           backgroundColor: colors.bottomNavigation,
         },
       }}>
-      <Tab.Screen name="Menu" component={EateriesScene} />
+      <Tab.Screen name="Eateries" component={EateriesScene} />
       <Tab.Screen name="Home" component={HomeStackScreen} />
       <Tab.Screen name="Dms" component={DmsScene} />
     </Tab.Navigator>
