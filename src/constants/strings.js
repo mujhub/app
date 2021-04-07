@@ -22,8 +22,8 @@ export const OUTLETS = {
   SEARCH_PRE_MIN_CHARS: 'Keep typing... (min 3 chars)',
   SEARCH_EMPTY_RESULT: 'No items found.',
   SCANNER_TEXT: 'SCAN MENU QR',
-  PAYMENT: 'Make Payment',
-  CALL: 'PLACE CALL',
+  PAYMENT: 'PAY',
+  CALL: 'CALL OUTLET',
 };
 
 export const DMS = {
