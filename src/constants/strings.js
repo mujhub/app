@@ -62,3 +62,9 @@ export const ATTENDANCE = {
   ABOVE_THRESHOLD: 'You may miss the next ${v} classes.',
   EQUAL_THRESHOLD: "Just on track. Don't miss the next class.",
 };
+
+export const SCAN = {
+  HEADING: 'SCAN ANY MUJ HUB QR CODE',
+  QR_HEADER: 'Lorem ipsum is dummy text used in graphic designs.',
+  QR_FOOTER: 'Lorem ipsum is dummy text used in graphic designs.',
+};
