@@ -236,7 +236,7 @@ const MessMenuCard = () => {
     } catch (error) {
       console.log(error);
     }
-    return <Type>{updatedAtDate}</Type>;
+    return <Type style={{color: colors.disabled}}>{updatedAtDate}</Type>;
   };
 
   const getData = async () => {
@@ -311,7 +311,7 @@ const MessMenuCard = () => {
               opacity: Animated.subtract(1, textOpacity),
             },
           ]}>
-          <Type>
+          <Type style={{color: colors.disabled}}>
             {MESS.HEADING + ' '}
             <UpdatedAtDate />
           </Type>
@@ -330,7 +330,7 @@ const MessMenuCard = () => {
               opacity: textOpacity,
             },
           ]}>
-          <Type style={{marginBottom: 15}}>
+          <Type style={{marginBottom: 15, color: colors.disabled}}>
             {MESS.HEADING + ' '}
             <UpdatedAtDate />
           </Type>
