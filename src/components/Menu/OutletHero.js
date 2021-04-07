@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
 import {CustomTheme} from '../../contexts/CustomTheme';
 import {Type, ItemSeparator, PrimaryButton} from '../Shared';
@@ -38,7 +39,7 @@ const OutletHero = ({
     closes_at: '',
     offers: [],
     ...outletInfo,
-    cover: 'https://picsum.photos/300/300/?blur',
+    cover: 'https://picsum.photos/seed/picsum/400/300/',
   };
 
   const {isDarkMode} = useContext(CustomTheme);
@@ -58,14 +59,13 @@ const OutletHero = ({
     setIsOutletOpen(
       isOpen({opens_at: data.opens_at, closes_at: data.closes_at}),
     );
-  }, [outletInfo]);
+  }, [data.closes_at, data.opens_at, outletInfo]);
 
   useEffect(() => {
     // console.log(yOffset);
     // console.log(yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier)));
     // console.log(headingTint);
-
-    setParallaxMultiplier(yOffset != 0 ? 0.01 * yOffset + 1 : 1);
+    setParallaxMultiplier(yOffset !== 0 ? 0.01 * yOffset + 1 : 1);
     setParallaxOpacity(
       1 - yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier) - 30),
     );
@@ -74,7 +74,6 @@ const OutletHero = ({
         255 * (1 - yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier))),
       );
     }
-
     if (yOffset + 30 > height / (HEIGHT_FACTOR * parallaxMultiplier)) {
       setStatusColor(colors.elevated);
       setStatusStyle(isDarkMode ? 'light-content' : 'dark-content');
@@ -88,7 +87,14 @@ const OutletHero = ({
         onParallaxImageScrolled(false);
       }
     }
-  }, [yOffset]);
+  }, [
+    colors.elevated,
+    isDarkMode,
+    onParallaxImageScrolled,
+    parallaxMultiplier,
+    setHeadingTint,
+    yOffset,
+  ]);
 
   return (
     <>
@@ -99,18 +105,32 @@ const OutletHero = ({
       />
 
       <ScrollView>
-        <Image
-          source={{uri: data.cover}}
-          style={{
-            width,
-            height: height / (HEIGHT_FACTOR * parallaxMultiplier),
-            opacity: parallaxOpacity,
-          }}
-          resizeMode="cover"
-          resizeMethod="resize"
-        />
+        <View ref={(r) => (this.image = r)}>
+          <Image
+            source={{uri: data.cover}}
+            style={{
+              height: height / (HEIGHT_FACTOR * parallaxMultiplier),
+              opacity: parallaxOpacity,
+            }}
+            resizeMode="cover"
+            resizeMethod="resize"
+          />
+          <LinearGradient
+            ref={(r) => (this.gradiant = r)}
+            locations={[0, 1.0]}
+            colors={['rgba(0,0,0,10)', 'rgba(0,0,0,0.10)']}
+            style={{
+              position: 'absolute',
+              width: '100%',
+              height: '100%',
+            }}
+          />
+        </View>
 
-        <View
+        {/* ----------------------- */}
+        {/* TEXT OVER IMAGE */}
+        {/* ----------------------- */}
+        {/* <View
           style={{
             position: 'absolute',
             top: height / (2 * HEIGHT_FACTOR),
@@ -119,25 +139,39 @@ const OutletHero = ({
           <View style={{width}}>
             <Type
               style={{
-                fontSize: width / 13,
+                fontSize: width / 14,
                 color: 'white',
                 fontWeight: 'bold',
-                textShadowColor: 'black',
-                textShadowRadius: 30,
+                textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                textShadowRadius: 20,
                 textAlign: 'center',
               }}
               viewStyle={{margin: 10}}>
               {data.title}
             </Type>
           </View>
-        </View>
+        </View> */}
+        {/* ------------------------ */}
 
         <View style={{backgroundColor: colors.background}}>
-          <View style={{margin: 20, marginTop: 10}}>
-            <View style={{marginHorizontal: 5}}>
+          <View style={{margin: 20}}>
+            <View>
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <View>
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  alignItems: 'baseline',
+                }}>
+                <View style={{marginBottom: 5}}>
+                  <View>
+                    <Type
+                      style={{
+                        fontSize: width / 20,
+                        fontWeight: 'bold',
+                      }}>
+                      {data.title}
+                    </Type>
+                  </View>
                   <Text
                     style={{
                       fontWeight: 'bold',
@@ -204,10 +238,11 @@ const OutletHero = ({
                           style={{
                             color: VIBRANTS.GREEN1,
                             fontWeight: 'bold',
+                            marginBottom: 8,
                           }}>
                           {offer.heading}
                         </Type>
-                        <Type>{offer.body}</Type>
+                        <Type style={{lineHeight: 24}}>{offer.body}</Type>
                       </View>
                     </View>
                   ))}

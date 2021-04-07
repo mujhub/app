@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Dimensions, Linking} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {FOOD} from '../../constants/strings';
 import {Type} from '../Shared';
 
 const {width, height} = Dimensions.get('screen');
@@ -23,11 +24,17 @@ const OutletHeader = ({
         flexDirection: 'row',
         justifyContent: 'space-between',
       }}>
-      <View style={{flexDirection: 'row'}}>
+      <View
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignContent: 'center',
+          justifyContent: 'center',
+        }}>
         <TouchableOpacity onPress={handleBack} activeOpacity={0.75}>
           <Icon
             name="chevron-back"
-            size={28}
+            size={24}
             style={{
               margin: 10,
               color: `rgb(${headingTint},${headingTint},${headingTint})`,
@@ -37,13 +44,13 @@ const OutletHeader = ({
 
         <Type
           style={{
-            margin: 10,
-            fontSize: width / 20,
+            marginTop: 12,
+            fontSize: width / 24,
             color: `rgb(${headingTint},${headingTint},${headingTint})`,
-            fontWeight: 'bold',
+            // fontWeight: 'bold',
           }}
           viewStyle={{margin: 10}}>
-          {hasScrolled ? data.title : 'Welcome to'}
+          {hasScrolled ? data.title : 'Food'}
         </Type>
       </View>
 
