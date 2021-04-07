@@ -78,7 +78,7 @@ const EateriesScene = ({navigation}) => {
   );
 
   const eateriesHeader = () => (
-    <Type style={{fontSize: 15, fontWeight: 'bold', marginHorizontal: 15}}>
+    <Type style={{fontSize: width / 26, fontWeight: 'bold'}}>
       {OUTLETS.HEADING}
     </Type>
   );
