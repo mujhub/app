@@ -21,7 +21,7 @@ const Header = ({navigation, isBack, heading, style, iconName, iconAction}) => {
     <>
       <View
         style={{
-          marginBottom: 8,
+          marginBottom: 20,
           flexDirection: 'row',
           justifyContent: 'space-between',
           backgroundColor: colors.background,

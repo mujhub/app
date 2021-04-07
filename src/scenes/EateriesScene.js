@@ -109,7 +109,11 @@ const EateriesScene = ({navigation}) => {
         />
 
         {isSearching && (
-          <SearchResults searchQuery={searchQuery} isSearching={isSearching} />
+          <SearchResults
+            searchQuery={searchQuery}
+            isSearching={isSearching}
+            navigation={navigation}
+          />
         )}
 
         {!isSearching && (
