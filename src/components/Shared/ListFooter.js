@@ -6,8 +6,8 @@ const {width, height} = Dimensions.get('screen');
 
 const ListFooter = ({msg}) => {
   return (
-    <View style={{paddingBottom: height / 2}}>
-      <Type>{msg}</Type>
+    <View style={{paddingBottom: height / 2, marginTop: 10}}>
+      <Type style={{textAlign: 'center'}}>{msg}</Type>
     </View>
   );
 };

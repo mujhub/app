@@ -54,7 +54,7 @@ const Header = ({navigation, isBack, heading, style, iconName, iconAction}) => {
         {iconName && (
           <TouchableOpacity
             activeOpacity={0.75}
-            style={{position: 'absolute', right: 0, padding: 5}}
+            style={{position: 'absolute', right: 0, paddingVertical: 5}}
             onPress={typeof iconAction === 'function' ? iconAction : null}>
             <Icon
               name="settings-sharp"

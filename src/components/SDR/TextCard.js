@@ -81,9 +81,9 @@ const TextCard = ({card, navigation}) => {
           {data.bodyText && (
             <Type
               style={{
-                fontSize: width / 28,
+                fontSize: width / 26,
                 padding: 10,
-                lineHeight: 24,
+                lineHeight: 22,
                 color: appearance.textColor,
               }}>
               {data.bodyText}

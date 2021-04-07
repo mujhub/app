@@ -27,7 +27,7 @@ const HomeScene = ({navigation}) => {
   return (
     <>
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
-        <Type style={{fontSize: width / 20}}>Settings</Type>
+        <Type style={{fontSize: width / 24}}>Settings</Type>
         <View style={{paddingVertical: 15}}>
           <ThemeControl />
         </View>
@@ -44,10 +44,10 @@ const HomeScene = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <UpdateChecker navigation={navigation} />
           <SDRBuilder navigation={navigation} />
-          <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
+          {/* <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
           <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>
-          <PrimaryButton onPress={() => setTheme(3)}>Amoled</PrimaryButton>
-          <View style={{height: 120}} />
+          <PrimaryButton onPress={() => setTheme(3)}>Amoled</PrimaryButton> */}
+          <View style={{height: 120, paddingBottom: height / 4}} />
         </ScrollView>
       </SceneBuilder>
     </>

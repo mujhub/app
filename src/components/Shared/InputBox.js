@@ -45,7 +45,7 @@ const InputBox = (props) => {
   return (
     <View
       style={{
-        marginTop: 25,
+        marginTop: 28,
         ...props.viewStyle,
       }}>
       <View
@@ -65,7 +65,7 @@ const InputBox = (props) => {
             color: colors.text,
             fontSize: width / 24,
             borderRadius: ROUNDNESS / 4,
-            paddingHorizontal: ROUNDNESS / 2,
+            paddingHorizontal: ROUNDNESS,
             paddingVertical: ROUNDNESS / 2,
             backgroundColor: colors.surface,
             ...props.style,
@@ -84,21 +84,21 @@ const InputBox = (props) => {
           onChangeText={(text) => handleType(text)}
         />
       </View>
-      {props.error && (
-        <Text style={{color: VIBRANTS.RED, marginHorizontal: 10}}>
-          {props.error}
-        </Text>
-      )}
+      {props.error && <Text style={{color: VIBRANTS.RED}}>{props.error}</Text>}
       <Text
         style={{
           position: 'absolute',
-          left: ROUNDNESS,
-          top: !isFocused && value === '' && !props.defaultValue ? 12 : -20,
+          transform: !props.error ? [{translateY: -10}] : [{translateY: -20}],
+          // left: ROUNDNESS,
+          left:
+            !isFocused && value === '' && !props.defaultValue ? ROUNDNESS : 0,
+          top: !isFocused && value === '' && !props.defaultValue ? '50%' : -10,
           color:
             !isFocused && value === '' && !props.defaultValue
               ? colors.placeholder
               : colors.helper,
-          fontSize: !isFocused && value === '' && !props.defaultValue ? 16 : 12,
+          fontSize:
+            !isFocused && value === '' && !props.defaultValue ? width / 30 : 12,
         }}
         onPress={() => {
           inputRef.current.focus();
@@ -113,10 +113,9 @@ const InputBox = (props) => {
           style={{
             position: 'absolute',
             right: ROUNDNESS,
-            top: 12,
+            top: 11,
             color: colors.helper,
             fontSize: 16,
-            padding: 2,
             paddingLeft: 10,
             // backgroundColor: 'red',
           }}>

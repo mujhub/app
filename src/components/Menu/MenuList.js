@@ -85,7 +85,7 @@ const MenuList = ({data, navigation, isSearching}) => {
   };
 
   return (
-    <View style={{marginVertical: 25, marginHorizontal: 10}}>
+    <View style={{marginVertical: 10, marginHorizontal: 10}}>
       {!isSearching ? (
         <View
           style={{
@@ -198,7 +198,9 @@ const MenuList = ({data, navigation, isSearching}) => {
                       <View style={{marginBottom: 15}}>
                         <Type
                           style={{
-                            fontSize: width / 38,
+                            fontSize: width / 30,
+                            lineHeight: 20,
+                            marginTop: 8,
                             margin: 2,
                             marginLeft: width / 28 + 12,
                           }}>

@@ -74,7 +74,7 @@ const LoginForm = (props) => {
   }, []);
 
   return (
-    <View style={{marginHorizontal: 10}}>
+    <View>
       {props.isSaved && <InfoCard name={localName} id={localUsername} />}
 
       {!props.isSaved && (
@@ -152,27 +152,31 @@ const LoginForm = (props) => {
         autoCapitalize="none"
         error={errors.captcha}
         isRequired={true}
+        viewStyle={{marginTop: 20}}
       />
 
-      <Type
-        style={{
-          marginTop: 32,
-          margin: 2,
-          color: VIBRANTS.RED + '99',
-          fontSize: width / 28,
-          alignSelf: 'center',
-        }}>
-        {props.error}
-      </Type>
+      {props.error ? (
+        <Type
+          style={{
+            marginTop: 32,
+            margin: 2,
+            color: VIBRANTS.RED + '99',
+            fontSize: width / 28,
+            alignSelf: 'center',
+          }}>
+          {props.error}
+        </Type>
+      ) : null}
 
       <PrimaryButton
+        style={{marginTop: 20}}
         onPress={handleSubmit}
         loading={props.isLoading}
         loadingText={DMS.LOADING}>
         {DMS.ACTION}
       </PrimaryButton>
 
-      <View style={{flexDirection: 'row', width: '90%', marginVertical: 25}}>
+      <View style={{flexDirection: 'row', width: '90%', marginVertical: 10}}>
         <Icon
           size={width / 24}
           style={{margin: 10}}

@@ -17,12 +17,12 @@ const ListItem = ({navigation, data}) => {
     <View style={{flexDirection: 'row', width: '100%'}}>
       <View
         style={{
-          width: width / 7,
-          height: width / 7,
+          width: width / 8,
+          height: width / 8,
           backgroundColor: data.tint,
-          borderRadius: ROUNDNESS / 2,
-          marginVertical: 20,
-          marginHorizontal: 10,
+          borderRadius: ROUNDNESS / 4,
+          marginVertical: 18,
+          marginRight: 5,
           justifyContent: 'center',
           alignItems: 'center',
         }}>
@@ -36,7 +36,7 @@ const ListItem = ({navigation, data}) => {
       </View>
       <View
         style={{
-          marginVertical: 20,
+          marginVertical: 18,
           marginHorizontal: 10,
           justifyContent: 'space-between',
           flex: 1,
