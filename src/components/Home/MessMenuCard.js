@@ -111,7 +111,7 @@ const MessMenuCard = () => {
                 }}>
                 <Type
                   style={{
-                    fontSize: width / 22,
+                    fontSize: width / 26,
                     fontWeight: 'bold',
                     marginTop: 15,
                   }}>
@@ -119,9 +119,21 @@ const MessMenuCard = () => {
                     ? menuData[category].name.toUpperCase() + ' MENU'
                     : ''}
                 </Type>
+                {menuData[category].isSpecial ? (
+                  <Badge
+                    style={{
+                      position: 'relative',
+                      marginLeft: 5,
+                    }}
+                    name="star"
+                    color={VIBRANTS.YELLOW}
+                  />
+                ) : null}
                 <Type
                   style={{
-                    fontSize: width / 28,
+                    textAlign: 'right',
+                    flexGrow: 2,
+                    fontSize: width / 30,
                     color: colors.disabled,
                     fontWeight: 'bold',
                   }}>
@@ -141,10 +153,6 @@ const MessMenuCard = () => {
                   <Type>{MESS.NULL_MENU}</Type>
                 )}
               </Type>
-
-              {menuData[category].isSpecial ? (
-                <Badge name="star" color={VIBRANTS.YELLOW} />
-              ) : null}
             </View>
           ) : null,
         )}
