@@ -1,16 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {View, Dimensions} from 'react-native';
+import {View, Dimensions, FlatList} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
-import {Type} from '../Shared';
+import {Type, ItemSeparator, ListItem} from '../Shared';
 
 import {getSearchResults} from '../../services/firestore';
+import {VIBRANTS, TYPE} from '../../constants/colors';
+import {scoreSort} from '../../utils/eateries';
 import {OUTLETS} from '../../constants/strings';
 import {logUniversalSearch} from '../../services/analytics';
+// import {logMenuFetch} from '../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
-const SearchResults = ({isSearching, searchQuery}) => {
+const SearchResults = ({isSearching, searchQuery, navigation}) => {
   const {colors} = useTheme();
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState(searchQuery);
@@ -54,24 +59,131 @@ const SearchResults = ({isSearching, searchQuery}) => {
   //     );
 
   //   if (!isLoading)
+
+  const renderType = (type) => {
+    let icon = '';
+    let color = null;
+    switch (type) {
+      case 0:
+        icon = 'ellipse';
+        color = TYPE.VEG;
+        break;
+      case 1:
+        icon = 'egg';
+        color = TYPE.EGG;
+        break;
+      case 2:
+        icon = 'ellipse';
+        color = TYPE.NON;
+        break;
+
+      default:
+        break;
+    }
+    return (
+      <Icon
+        name={icon}
+        size={width / 28}
+        color={color}
+        style={{marginRight: 5}}
+      />
+    );
+  };
+
   return (
     <View>
-      <View
-        style={{
-          position: 'absolute',
-          width,
-        }}>
-        <Type style={{color: colors.disabled}}>
-          {OUTLETS.SEARCH_EMPTY_RESULT}
-        </Type>
-      </View>
-      {Object.keys(results).map(
-        (item, i) =>
-          results[item].name.toString().toLowerCase().indexOf(query) > -1 && (
-            <View key={i.toString()}>
-              <Type>{JSON.stringify(results[item])}</Type>
+      {/* <Type>{JSON.stringify(results)}</Type> */}
+      {Object.entries(results).length === 0 ? (
+        <View>
+          <Type style={{color: colors.disabled}}>
+            {OUTLETS.SEARCH_EMPTY_RESULT}
+          </Type>
+        </View>
+      ) : (
+        Object.keys(results).map((key, i) => (
+          <TouchableOpacity
+            key={i.toString()}
+            activeOpacity={0.75}
+            onPress={() => {
+              // logMenuFetch({name: item.slug});
+              navigation.navigate('MenuScene', {
+                info: {...results[key]},
+                slug: results[key].name,
+              });
+            }}>
+            {/* <Type>{JSON.stringify(results[key])}</Type> */}
+            <View
+              style={{
+                backgroundColor: i % 2 === 0 ? colors.disabled + '25' : null,
+                paddingVertical: 8,
+                paddingHorizontal: 10,
+              }}>
+              <View>
+                <Type
+                  style={{
+                    fontSize: width / 24,
+                    paddingVertical: 5,
+                  }}>
+                  {results[key].eatery}
+                </Type>
+              </View>
+
+              <View
+                style={{
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                }}>
+                {/* type and name */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    paddingVertical: 5,
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    {renderType(results[key].type)}
+                    <Type
+                      style={{
+                        fontSize: width / 25,
+                        // margin: 2,
+                      }}>
+                      {results[key].name}
+                    </Type>
+                  </View>
+                </View>
+
+                {/* price */}
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                  }}>
+                  <Type
+                    style={{
+                      fontSize: width / 30,
+                      // margin: 2,
+                      color: colors.disabled,
+                    }}>
+                    ₹
+                  </Type>
+                  <Type style={{fontSize: width / 25, margin: 2}}>
+                    {typeof key.price === 'object'
+                      ? results[key].price.map((p, i) =>
+                          i < results[key].price.length - 1 ? p + ', ' : p,
+                        )
+                      : results[key].price}
+                  </Type>
+                </View>
+              </View>
             </View>
-          ),
+            <ItemSeparator />
+          </TouchableOpacity>
+        ))
       )}
     </View>
   );
