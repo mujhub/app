@@ -17,6 +17,7 @@ import {getMessMenu} from '../../services/firestore';
 import {MESS} from '../../constants/strings';
 import {VIBRANTS} from '../../constants/colors';
 import {logMessMenu} from '../../services/analytics';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -51,7 +52,7 @@ const MessMenuCard = () => {
 
   useEffect(() => {
     animateContractCard();
-  }, [contractedCardHeight, expandedCardHeight]);
+  }, [animateContractCard, contractedCardHeight, expandedCardHeight]);
 
   const animateExpandCard = () => {
     Animated.timing(cardHeight, {
@@ -95,6 +96,9 @@ const MessMenuCard = () => {
   const [ongoingMeal, setOngoingMeal] = useState(0);
   const [menuData, setMenuData] = useState([]);
   const [updatedAt, setUpdatedAt] = useState('');
+
+  // Refresh mess menu
+  const [isRefreshEnabled, setIsRefreshEnabled] = useState(false);
 
   const ContractedCardData = () => {
     return (
@@ -144,7 +148,12 @@ const MessMenuCard = () => {
               </View>
 
               <Type
-                style={{lineHeight: 24, marginTop: 15, fontSize: width / 26}}>
+                style={{
+                  lineHeight: 24,
+                  marginTop: 15,
+                  fontSize: width / 26,
+                  marginBottom: 15,
+                }}>
                 {menuData[category].menu.length > 0 ? (
                   menuData[category].menu.map((item, i) =>
                     i < menuData[category].menu.length - 1 ? item + ', ' : item,
@@ -205,7 +214,7 @@ const MessMenuCard = () => {
 
         <Type
           style={{
-            fontSize: width / 28,
+            fontSize: width / 26,
             lineHeight: 24,
             marginTop: 10,
           }}>
@@ -230,9 +239,9 @@ const MessMenuCard = () => {
     let updatedAtDate = '';
     try {
       let date = new Date(updatedAt.seconds * 1000);
-      updatedAtDate = `${date.getDate()}.${
+      updatedAtDate = `${date.getDate()}/${
         date.getMonth() + 1
-      }.${date.getFullYear()}`;
+      }/${date.getFullYear()}`;
     } catch (error) {
       console.log(error);
     }
@@ -248,6 +257,10 @@ const MessMenuCard = () => {
     setMenuData(data.meals ? data.meals : []);
     setUpdatedAt(data.updatedAt);
     setIsLoading(false);
+  };
+
+  const refreshTimeHandler = () => {
+    setIsRefreshEnabled(!isRefreshEnabled);
   };
 
   useEffect(() => {
@@ -270,25 +283,26 @@ const MessMenuCard = () => {
       }
       logMessMenu({meal: menuData[ongoingMeal].name});
     } catch (error) {}
-  }, [menuData]);
+  }, [menuData, ongoingMeal]);
 
   useEffect(() => {
-    getData();
-  }, []);
+    // on clicking the refresh button the state will go from
+    // refresh enabled to not enabled
+    // initially its false
+    if (!isRefreshEnabled) {
+      getData();
+      // wait for 1 min to allow user to refresh
+      const timer = setTimeout(() => {
+        setIsRefreshEnabled(!isRefreshEnabled);
+      }, 60 * 1000 * 1);
+      return () => {
+        clearTimeout(timer);
+      };
+    }
+  }, [isRefreshEnabled]);
 
   return !isLoading ? (
     <View>
-      {/* <Type
-        style={{
-          fontSize: 14,
-          fontWeight: 'bold',
-          marginHorizontal: 15,
-          marginVertical: 5,
-          color: colors.disabled,
-        }}>
-        {MESS.HEADING + ' '}
-        <UpdatedAtDate />
-      </Type> */}
       <Animated.View
         style={[
           {
@@ -337,31 +351,68 @@ const MessMenuCard = () => {
           <ExpandedCardData />
         </Animated.View>
 
-        <TouchableWithoutFeedback onPress={toggleExpand}>
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              right: 0,
-              paddingHorizontal: 20,
-              paddingVertical: 5,
-              marginBottom: 15,
-            }}>
-            <Type
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: '100%',
+            marginTop: 25,
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            position: 'absolute',
+            bottom: 0,
+            paddingHorizontal: 20,
+            paddingVertical: 5,
+            marginBottom: 15,
+          }}>
+          {/* ------------------------ */}
+          {/* ------ UPDATE TIME ----- */}
+          {/* ------------------------ */}
+          <TouchableOpacity
+            disabled={!isRefreshEnabled}
+            onPress={refreshTimeHandler}>
+            <View
               style={{
-                fontWeight: 'bold',
-                color: colors.primary,
-                textAlign: 'right',
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
               }}>
-              {/* {!hasCardExpanded ? (
+              <Type
+                style={{
+                  color: isRefreshEnabled ? colors.primary : colors.disabled,
+                }}>
+                {isRefreshEnabled ? (
+                  <Icon name="refresh-circle" size={18} />
+                ) : (
+                  <Icon name="checkmark-circle" size={18} />
+                )}
+              </Type>
+              <Type
+                style={{
+                  color: isRefreshEnabled ? colors.text : colors.disabled,
+                  marginLeft: 5,
+                }}>
+                {!isRefreshEnabled ? 'Updated Recently' : 'Refresh'}
+              </Type>
+            </View>
+          </TouchableOpacity>
+          <TouchableWithoutFeedback onPress={toggleExpand}>
+            <View>
+              <Type
+                style={{
+                  fontWeight: 'bold',
+                  color: colors.primary,
+                }}>
+                {/* {!hasCardExpanded ? (
                 <Icon name="chevron-down" size={width / 25} />
               ) : (
                 <Icon name="chevron-up" size={width / 25} />
               )} */}
-              {!hasCardExpanded ? MESS.EXPAND_CARD : MESS.CONTRACT_CARD}
-            </Type>
-          </View>
-        </TouchableWithoutFeedback>
+                {!hasCardExpanded ? MESS.EXPAND_CARD : MESS.CONTRACT_CARD}
+              </Type>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
       </Animated.View>
     </View>
   ) : (
