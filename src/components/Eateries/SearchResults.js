@@ -92,7 +92,6 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
 
   return (
     <View>
-      {/* <Type>{JSON.stringify(results)}</Type> */}
       {Object.entries(results).length === 0 ? (
         <View>
           <Type style={{color: colors.disabled}}>
@@ -100,90 +99,96 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
           </Type>
         </View>
       ) : (
-        Object.keys(results).map((key, i) => (
-          <TouchableOpacity
-            key={i.toString()}
-            activeOpacity={0.75}
-            onPress={() => {
-              // logMenuFetch({name: item.slug});
-              navigation.navigate('MenuScene', {
-                info: {...results[key]},
-                slug: results[key].name,
-              });
-            }}>
-            {/* <Type>{JSON.stringify(results[key])}</Type> */}
-            <View
-              style={{
-                backgroundColor: i % 2 === 0 ? colors.disabled + '25' : null,
-                paddingVertical: 8,
-                paddingHorizontal: 10,
-              }}>
-              <View>
-                <Type
-                  style={{
-                    fontSize: width / 24,
-                    paddingVertical: 5,
-                  }}>
-                  {results[key].eatery}
-                </Type>
-              </View>
-
-              <View
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
+        Object.keys(results).map(
+          (key, i) =>
+            results[key].name
+              .toString()
+              .toLowerCase()
+              .indexOf(query.toString().toLowerCase()) > -1 && (
+              <TouchableOpacity
+                key={i.toString()}
+                activeOpacity={0.75}
+                onPress={() => {
+                  // logMenuFetch({name: item.slug});
+                  navigation.navigate('MenuScene', {
+                    // info: {...results[key]},
+                    slug: results[key].eatery,
+                  });
                 }}>
-                {/* type and name */}
                 <View
                   style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingVertical: 5,
+                    backgroundColor:
+                      i % 2 === 0 ? colors.disabled + '25' : null,
+                    paddingVertical: 8,
+                    paddingHorizontal: 10,
                   }}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                    }}>
-                    {renderType(results[key].type)}
+                  <View>
                     <Type
                       style={{
-                        fontSize: width / 25,
-                        // margin: 2,
+                        fontSize: width / 24,
+                        paddingVertical: 5,
                       }}>
-                      {results[key].name}
+                      {results[key].eatery}
                     </Type>
                   </View>
-                </View>
 
-                {/* price */}
-                <View
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                  }}>
-                  <Type
+                  <View
                     style={{
-                      fontSize: width / 30,
-                      // margin: 2,
-                      color: colors.disabled,
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
                     }}>
-                    ₹
-                  </Type>
-                  <Type style={{fontSize: width / 25, margin: 2}}>
-                    {typeof key.price === 'object'
-                      ? results[key].price.map((p, i) =>
-                          i < results[key].price.length - 1 ? p + ', ' : p,
-                        )
-                      : results[key].price}
-                  </Type>
+                    {/* type and name */}
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 5,
+                      }}>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          alignItems: 'center',
+                        }}>
+                        {renderType(results[key].type)}
+                        <Type
+                          style={{
+                            fontSize: width / 25,
+                            // margin: 2,
+                          }}>
+                          {results[key].name}
+                        </Type>
+                      </View>
+                    </View>
+
+                    {/* price */}
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <Type
+                        style={{
+                          fontSize: width / 30,
+                          // margin: 2,
+                          color: colors.disabled,
+                        }}>
+                        ₹
+                      </Type>
+                      <Type style={{fontSize: width / 25, margin: 2}}>
+                        {typeof key.price === 'object'
+                          ? results[key].price.map((p, i) =>
+                              i < results[key].price.length - 1 ? p + ', ' : p,
+                            )
+                          : results[key].price}
+                      </Type>
+                    </View>
+                  </View>
                 </View>
-              </View>
-            </View>
-            <ItemSeparator />
-          </TouchableOpacity>
-        ))
+                <ItemSeparator />
+              </TouchableOpacity>
+            ),
+        )
       )}
     </View>
   );
