@@ -30,7 +30,7 @@ const ListItem = ({navigation, data}) => {
           <Badge name="star" color={VIBRANTS.YELLOW} />
         )}
 
-        <Type style={{fontSize: width / 18, color: colors.text + 'aa'}}>
+        <Type style={{fontSize: width / 20, color: colors.text + 'aa'}}>
           {data.title ? nameInitials(data.title) : null}
         </Type>
       </View>
