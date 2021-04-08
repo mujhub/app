@@ -9,7 +9,7 @@ import {cardBehaviorHandler} from '../../utils/SDRHandlers';
 
 const {width, height} = Dimensions.get('screen');
 
-const ImageCard = ({card, navigation}) => {
+const ImageCard = ({card, navigation, horizontal}) => {
   const {colors} = useTheme();
 
   const [imageDimensions, setImageDimensions] = useState({width: 0, height: 0});
@@ -42,11 +42,10 @@ const ImageCard = ({card, navigation}) => {
       <TouchableOpacity
         activeOpacity={1}
         onPress={handleAction}
-        style={{marginTop: height / 30}}>
+        style={{marginTop: !horizontal ? height / 30 : 0}}>
         <View
           style={{
             backgroundColor: colors.elevated,
-
             overflow: 'hidden',
             borderRadius: 10,
           }}>

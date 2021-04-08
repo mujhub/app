@@ -27,6 +27,7 @@ import FloatingPill from '../components/Eateries/FloatingPill';
 import SearchBox from '../components/Eateries/SearchBox';
 import SearchResults from '../components/Eateries/SearchResults';
 import {logMenuFetch} from '../services/analytics';
+import SDRBuilder from '../components/Eateries/SDRBuilders/SDRBuilders';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -78,11 +79,15 @@ const EateriesScene = ({navigation}) => {
   );
 
   const eateriesHeader = () => (
-    <Type style={{fontSize: width / 26, fontWeight: 'bold'}}>
-      {OUTLETS.HEADING}
-    </Type>
+    <>
+      <SDRBuilder />
+      <Type style={{fontSize: width / 26, fontWeight: 'bold', marginTop: 10}}>
+        {OUTLETS.HEADING}
+      </Type>
+    </>
   );
   const eateriesFooter = () => <ListFooter msg="That's all folks!" />;
+
   return (
     <>
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
