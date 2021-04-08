@@ -6,6 +6,10 @@ export const getHomeComponents = () => {
   return db.collection('app').doc('homeComponents').get();
 };
 
+export const getEateriesComponents = () => {
+  return db.collection('app').doc('eateriesComponents').get();
+};
+
 export const getMessMenu = () => {
   return db.collection('mess').doc('menuData').get();
 };

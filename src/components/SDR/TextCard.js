@@ -11,7 +11,7 @@ import {Type} from '../Shared';
 
 const {width, height} = Dimensions.get('screen');
 
-const TextCard = ({card, navigation}) => {
+const TextCard = ({card, navigation, horizontal}) => {
   const {colors} = useTheme();
 
   let data = {bodyText: null, headingText: null, iconName: null, ...card.data};
@@ -35,7 +35,7 @@ const TextCard = ({card, navigation}) => {
       <TouchableOpacity
         activeOpacity={1}
         onPress={handleAction}
-        style={{marginTop: height / 30}}>
+        style={{marginTop: !horizontal ? height / 30 : 0}}>
         <LinearGradient
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
