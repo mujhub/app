@@ -125,7 +125,7 @@ const LoginForm = (props) => {
               <WebView
                 ref={props.CaptchaWVRef}
                 style={{margin: -4}}
-                source={{uri: URLS.DMS_CAPTCHA}}
+                source={{uri: !props.isLoading ? URLS.DMS_CAPTCHA : null}}
                 injectedJavaScript={`document.getElementsByTagName('img')[0].style = "width:${
                   width * 0.3 + 8
                 }px; height:${width * 0.1 + 8}px;true;"`}

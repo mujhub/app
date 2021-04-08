@@ -79,6 +79,7 @@ const DataTable = ({
                   : i === tintPercentageIndex
                   ? percentageTint(parseInt(cell))
                   : colors.text,
+                fontSize: !index ? 12 : 14,
               }}>
               {cell.replace('Attandance ', '').replace('Attendance ', '')}
             </Type>

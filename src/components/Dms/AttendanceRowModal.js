@@ -15,27 +15,29 @@ const AttendanceRowModal = ({data, headingArr}) => {
   const THRESHOLD = 0.75;
   const [thresholdMessage, setThresholdMessage] = useState();
   const [attn, setAttn] = useState(0);
+  let attn_temp = 0;
 
   useEffect(() => {
-    let P = data[6];
-    let T = data[8];
+    let P = parseInt(data[6]);
+    let T = parseInt(data[8]);
     let curr = P / T;
-    // let attn = 0;
     if (curr > THRESHOLD) {
-      setAttn(parseInt((P - THRESHOLD * T) / THRESHOLD));
+      attn_temp = parseInt((P - THRESHOLD * T) / THRESHOLD);
+      setAttn(attn_temp);
     } else if (curr < THRESHOLD) {
-      setAttn(parseInt((P - THRESHOLD * T) / (1 - THRESHOLD)));
+      attn_temp = parseInt((P - THRESHOLD * T) / (1 - THRESHOLD));
+      setAttn(attn_temp);
     }
-    if (attn > 0) {
+    if (attn_temp > 0) {
       setThresholdMessage(
-        attn > 1
-          ? ATTENDANCE.ABOVE_THRESHOLD.replace('${v}', attn)
+        attn_temp > 1
+          ? ATTENDANCE.ABOVE_THRESHOLD.replace('${v}', attn_temp)
           : ATTENDANCE.ABOVE_THRESHOLD_SINGULAR,
       );
-    } else if (attn < 0) {
+    } else if (attn_temp < 0) {
       setThresholdMessage(
-        attn < -1
-          ? ATTENDANCE.BELOW_THRESHOLD.replace('${v}', -1 * attn)
+        attn_temp < -1
+          ? ATTENDANCE.BELOW_THRESHOLD.replace('${v}', -1 * attn_temp)
           : ATTENDANCE.BELOW_THRESHOLD_SINGULAR,
       );
     } else {
