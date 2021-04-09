@@ -16,23 +16,23 @@ const InfoCard = (props) => {
         style={{
           fontWeight: 'bold',
           marginHorizontal: 10,
-          marginVertical: 5,
-          fontSize: width / 18,
+          marginTop: 16,
+          fontSize: width / 20,
         }}>
         {props.name}
       </Type>
       <Type
         style={{
           marginHorizontal: 10,
-          fontSize: width / 22,
+          marginVertical: 5,
+          fontSize: width / 24,
         }}>
         {props.id}
       </Type>
       {props.program ? (
         <Type
           style={{
-            margin: 10,
-            marginTop: 0,
+            marginHorizontal: 10,
             fontSize: width / 28,
           }}>
           {props.program}
@@ -41,8 +41,9 @@ const InfoCard = (props) => {
       <Type
         style={{
           margin: 10,
-          marginBottom: 10,
-          fontSize: width / 32,
+          marginBottom: 16,
+          fontSize: width / 30,
+          // lineHeight:
           color: colors.disabled,
         }}>
         {DMS.SECURE_MESSAGE}

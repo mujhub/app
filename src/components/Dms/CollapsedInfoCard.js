@@ -13,17 +13,19 @@ const CollapsedInfoCard = (props) => {
       style={{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
+        // paddingHorizontal: 10,
+        paddingTop: 20,
         paddingBottom: 10,
+
         backgroundColor: colors.background,
       }}>
       <Type
         style={{
           fontWeight: 'bold',
           color: colors.disabled,
-          marginHorizontal: 10,
+          // marginHorizontal: 10,
           fontSize: width / 28,
-          textDecorationLine: 'underline',
+          // textDecorationLine: 'underline',
         }}>
         {props.name}
       </Type>
@@ -31,9 +33,9 @@ const CollapsedInfoCard = (props) => {
         style={{
           fontWeight: 'bold',
           color: colors.disabled,
-          marginHorizontal: 10,
+          // marginHorizontal: 10,
           fontSize: width / 28,
-          textDecorationLine: 'underline',
+          // textDecorationLine: 'underline',
         }}>
         {props.id}
       </Type>
