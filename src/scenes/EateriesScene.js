@@ -74,7 +74,7 @@ const EateriesScene = ({navigation}) => {
   const eateriesHeader = () => (
     <>
       <SDRBuilder />
-      <Type style={{fontSize: width / 26, fontWeight: 'bold', marginTop: 10}}>
+      <Type style={{fontSize: width / 26, fontWeight: 'bold', marginTop: 8}}>
         {OUTLETS.HEADING}
       </Type>
     </>
@@ -83,17 +83,17 @@ const EateriesScene = ({navigation}) => {
 
   return (
     <>
-      <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
+      {/* <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
         <Type style={{fontSize: width / 28, fontWeight: 'bold'}}>SETTINGS</Type>
         <View style={{paddingVertical: 15}}>
           <ThemeControl />
         </View>
-      </ThemedModal>
+      </ThemedModal> */}
       <SceneBuilder>
         <Header
           heading={FOOD.HEADING}
           navigation={navigation}
-          iconName="settings-sharp"
+          // iconName="settings-sharp"
           iconAction={() => {
             setSettingsModal(true);
           }}

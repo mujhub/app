@@ -3,11 +3,11 @@ export const APP_NAME_CAPS = 'MUJ HUB';
 export const SLUG_IDENTIFIER = '&mhs=';
 
 export const FOOD = {
-  HEADING: 'Food',
+  HEADING: 'FOOD',
 };
 
 export const HOME = {
-  HEADING: 'Home',
+  HEADING: 'MUJ HUB',
 };
 
 export const ACADEMICS = {
