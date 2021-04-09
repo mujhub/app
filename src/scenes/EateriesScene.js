@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, FlatList, View, Dimensions} from 'react-native';
+import {FlatList, View, Dimensions} from 'react-native';
 
 import {
   SceneBuilder,
@@ -8,17 +8,10 @@ import {
   ListItem,
   ItemSeparator,
   ListFooter,
-  FloatingButton,
-  InputBox,
   ThemedModal,
   ThemeControl,
 } from '../components/Shared';
-import {VIBRANTS, PRIMARY} from '../constants/colors';
-import {
-  TouchableHighlight,
-  TouchableWithoutFeedback,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {FOOD, OUTLETS} from '../constants/strings';
 
 import {getEateries} from '../services/firestore';
@@ -91,7 +84,7 @@ const EateriesScene = ({navigation}) => {
   return (
     <>
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
-        <Type style={{fontSize: width / 20}}>Settings</Type>
+        <Type style={{fontSize: width / 28, fontWeight: 'bold'}}>SETTINGS</Type>
         <View style={{paddingVertical: 15}}>
           <ThemeControl />
         </View>
