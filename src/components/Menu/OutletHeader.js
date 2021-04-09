@@ -36,7 +36,8 @@ const OutletHeader = ({
             name="chevron-back"
             size={24}
             style={{
-              margin: 10,
+              marginVertical: 17,
+              marginHorizontal: 10,
               color: `rgb(${headingTint},${headingTint},${headingTint})`,
             }}
           />
@@ -44,7 +45,7 @@ const OutletHeader = ({
 
         <Type
           style={{
-            marginTop: 12,
+            marginTop: 16,
             fontSize: width / 24,
             color: `rgb(${headingTint},${headingTint},${headingTint})`,
             // fontWeight: 'bold',
