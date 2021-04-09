@@ -51,7 +51,7 @@ const InputBox = (props) => {
       <View
         style={{
           borderRadius: ROUNDNESS / 4,
-          borderWidth: 0.5,
+          borderWidth: 1,
           borderColor: !props.error
             ? !isFocused
               ? colors.border
