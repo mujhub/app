@@ -115,9 +115,9 @@ const MessMenuCard = () => {
                 }}>
                 <Type
                   style={{
-                    fontSize: width / 26,
+                    fontSize: width / 28,
                     fontWeight: 'bold',
-                    marginTop: 15,
+                    marginTop: 16,
                   }}>
                   {menuData[category].name
                     ? menuData[category].name.toUpperCase() + ' MENU'
@@ -149,10 +149,10 @@ const MessMenuCard = () => {
 
               <Type
                 style={{
-                  lineHeight: 24,
-                  marginTop: 15,
-                  fontSize: width / 26,
-                  marginBottom: 15,
+                  lineHeight: 22,
+                  marginTop: 16,
+                  fontSize: width / 28,
+                  marginBottom: 16,
                 }}>
                 {menuData[category].menu.length > 0 ? (
                   menuData[category].menu.map((item, i) =>
@@ -182,7 +182,7 @@ const MessMenuCard = () => {
           }}>
           <Type
             style={{
-              fontSize: width / 26,
+              fontSize: width / 28,
               fontWeight: 'bold',
             }}>
             {menuData[category].name
@@ -214,9 +214,9 @@ const MessMenuCard = () => {
 
         <Type
           style={{
-            fontSize: width / 26,
-            lineHeight: 24,
-            marginTop: 10,
+            fontSize: width / 28,
+            lineHeight: 22,
+            marginTop: 16,
           }}>
           {menuData[category].menu.length > 0 ? (
             menuData[category].menu.map((item, i) =>
@@ -226,7 +226,7 @@ const MessMenuCard = () => {
             <Type>{MESS.NULL_MENU}</Type>
           )}
         </Type>
-        <View style={{marginVertical: 15}}>
+        <View style={{marginVertical: 16}}>
           {i < menuData.length - 1 ? (
             <ItemSeparator widthPercentage="100%" />
           ) : null}
@@ -310,6 +310,7 @@ const MessMenuCard = () => {
             backgroundColor: colors.elevated,
             borderRadius: ROUNDNESS,
             overflow: 'hidden',
+            marginTop: 30,
           },
           {height: cardHeight},
         ]}>
@@ -318,7 +319,7 @@ const MessMenuCard = () => {
           ref={contractedCardRef}
           style={[
             {
-              padding: 20,
+              padding: 16,
               position: 'absolute',
             },
             {
@@ -337,14 +338,14 @@ const MessMenuCard = () => {
           ref={expandedCardRef}
           style={[
             {
-              padding: 20,
+              padding: 16,
               position: 'absolute',
             },
             {
               opacity: textOpacity,
             },
           ]}>
-          <Type style={{marginBottom: 15, color: colors.disabled}}>
+          <Type style={{marginBottom: 16, color: colors.disabled}}>
             {MESS.HEADING + ' '}
             <UpdatedAtDate />
           </Type>
@@ -356,14 +357,14 @@ const MessMenuCard = () => {
             display: 'flex',
             flexDirection: 'row',
             width: '100%',
-            marginTop: 25,
+            // marginTop: 25,
             justifyContent: 'space-between',
             alignItems: 'baseline',
             position: 'absolute',
             bottom: 0,
-            paddingHorizontal: 20,
-            paddingVertical: 5,
-            marginBottom: 15,
+            paddingHorizontal: 16,
+            paddingVertical: 2,
+            marginBottom: 16,
           }}>
           {/* ------------------------ */}
           {/* ------ UPDATE TIME ----- */}
