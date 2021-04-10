@@ -1,20 +1,64 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 
-import {Type} from '../Shared';
-import {VIBRANTS, TYPE} from '../../constants/colors';
 import SearchBox from './SearchBox';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import CounterBtn from './CounterButton';
+import {Type} from '../Shared';
+
+import {VIBRANTS, TYPE} from '../../constants/colors';
 import {ROUNDNESS} from '../../styles/theme';
 
 const {width, height} = Dimensions.get('screen');
 
-const MenuList = ({data, navigation, isSearching}) => {
+const MenuList = ({data, navigation, isSearching, cartItems, setCartItems}) => {
   const {colors} = useTheme();
 
   const [categorizedObj, setCategorizedObj] = useState({});
+  // const [cartItems, setCartItems] = useState([]);
+
+  const addItem = ({id, priceIndex}) => {
+    let items = cartItems;
+    let cartIndex = -1;
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item[id]) {
+        cartIndex = i;
+        break;
+      }
+    }
+    // console.log(`cartIndex`, cartIndex);
+    let item = {[id]: {priceIndices: []}, ...items[cartIndex]};
+    // console.log(`item`, item);
+    item[id].priceIndices.push(priceIndex);
+    if (cartIndex > -1) items.splice(cartIndex, 1);
+    cartItems.push(item);
+    setCartItems([...cartItems]);
+    // console.log(JSON.stringify(cartItems));
+  };
+
+  const subtractItem = ({id, priceIndex}) => {
+    let items = cartItems;
+    let cartIndex = -1;
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item[id]) {
+        cartIndex = i;
+        break;
+      }
+    }
+    // console.log(`cartIndex`, cartIndex);
+    let item = {[id]: {priceIndices: []}, ...items[cartIndex]};
+    // console.log(`item`, item);
+    let i = item[id].priceIndices.indexOf(priceIndex);
+    if (i > -1) item[id].priceIndices.splice(i, 1);
+    if (cartIndex > -1) items.splice(cartIndex, 1);
+    if (item[id].priceIndices.length > 0) cartItems.push(item);
+    // console.log(JSON.stringify(cartItems));
+    setCartItems([...cartItems]);
+  };
 
   useEffect(() => {
     let pre = {};
@@ -50,8 +94,8 @@ const MenuList = ({data, navigation, isSearching}) => {
         break;
 
       default:
-        // icon = 'ellipse';
-        // color = TYPE.VEG;
+        icon = 'ellipse';
+        color = TYPE.VEG;
         break;
     }
     return (
@@ -161,53 +205,87 @@ const MenuList = ({data, navigation, isSearching}) => {
                         style={{
                           flexDirection: 'row',
                           alignItems: 'center',
-                          maxWidth: '60%',
+                          // justifyContent: 'space-between',
+                          flex: 1,
                         }}>
-                        {renderType(item.type)}
-                        <Type
+                        <View
+                          style={{flexDirection: 'row', alignItems: 'center'}}>
+                          {renderType(item.type)}
+                          <Type
+                            style={{
+                              fontSize: width / 25,
+                              margin: 2,
+                            }}>
+                            {item.name}
+                          </Type>
+                          <Type
+                            style={{
+                              fontSize: width / 25,
+                              margin: 2,
+                            }}>
+                            {' - '}
+                          </Type>
+                        </View>
+                        <View
                           style={{
-                            fontSize: width / 25,
-                            margin: 2,
+                            flexDirection: 'row',
+                            alignItems: 'center',
                           }}>
-                          {item.name}
-                        </Type>
+                          <Type
+                            style={{
+                              fontSize: width / 30,
+                              margin: 2,
+                              color: colors.disabled,
+                            }}>
+                            ₹
+                          </Type>
+                          <Type style={{fontSize: width / 30, margin: 2}}>
+                            {typeof item.price === 'object'
+                              ? item.price.map((p, i) =>
+                                  i < item.price.length - 1 ? p + ' / ' : p,
+                                )
+                              : item.price}
+                          </Type>
+                        </View>
                       </View>
+
                       <View
                         style={{
-                          flexDirection: 'row',
-                          alignItems: 'center',
+                          height: '100%',
+                          minHeight: 40,
+                          width: '25%',
+                          justifyContent: 'center',
+                          alignItems: 'flex-end',
                         }}>
-                        <Type
-                          style={{
-                            fontSize: width / 30,
-                            margin: 2,
-                            color: colors.disabled,
-                          }}>
-                          ₹
-                        </Type>
-                        <Type style={{fontSize: width / 25, margin: 2}}>
-                          {typeof item.price === 'object'
-                            ? item.price.map((p, i) =>
-                                i < item.price.length - 1 ? p + '-' : p,
-                              )
-                            : item.price}
-                        </Type>
+                        <CounterBtn
+                          onAdd={addItem}
+                          onSubtract={subtractItem}
+                          id={item.id}
+                          max={5}
+                        />
                       </View>
                     </View>
-                    {`${item.description}`.length > 0 ? (
-                      <View style={{marginBottom: 15}}>
-                        <Type
-                          style={{
-                            fontSize: width / 30,
-                            lineHeight: 20,
-                            marginTop: 8,
-                            margin: 2,
-                            marginLeft: width / 28 + 12,
-                          }}>
-                          {item.description ? item.description : ''}
-                        </Type>
-                      </View>
-                    ) : null}
+                    <View
+                      style={{
+                        flexDirection: 'row',
+                        maxWidth: width,
+                        justifyContent: 'flex-end',
+                      }}>
+                      {`${item.description}`.length > 0 ? (
+                        <View style={{marginBottom: 10, width: '100%'}}>
+                          <Type
+                            style={{
+                              fontSize: width / 35,
+                              lineHeight: 20,
+                              marginTop: 5,
+                              paddingRight: 10,
+                              marginLeft: width / 28 + 12,
+                            }}>
+                            {item.description ? item.description : ''}
+                          </Type>
+                        </View>
+                      ) : null}
+                    </View>
                   </View>
                 )}
               </View>
@@ -215,6 +293,7 @@ const MenuList = ({data, navigation, isSearching}) => {
           </View>
         ))}
       </View>
+      <View style={{height: height / 8}}></View>
     </View>
   );
 };

@@ -68,3 +68,12 @@ export const SCAN = {
   QR_HEADER: 'Lorem ipsum is dummy text used in graphic designs.',
   QR_FOOTER: 'Lorem ipsum is dummy text used in graphic designs.',
 };
+
+export const CART = {
+  LEAVE_ORDER: {
+    HEADING: 'Are you sure?',
+    BODY: 'Your cart has items! Are you sure you want to clear your cart?',
+    CANCEL: 'No, stay.',
+    OK: 'Yes, go back.',
+  },
+};

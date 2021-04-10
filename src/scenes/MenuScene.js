@@ -21,8 +21,9 @@ import {InputBox, Type, FloatingButton} from '../components/Shared';
 import SearchBox from '../components/Menu/SearchBox';
 import {getEateryBySlug} from '../services/firestore';
 import {PRIMARY} from '../constants/colors';
-import {OUTLETS} from '../constants/strings';
+import {OUTLETS, CART} from '../constants/strings';
 import {logPlaceCall} from '../services/analytics';
+import ViewCartButton from '../components/Menu/ViewCartButton';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -59,6 +60,8 @@ const MenuScene = ({navigation, route}) => {
   const [isLoadingMenu, setIsLoadingMenu] = useState(true);
   const [outletInfo, setOutletInfo] = useState(null);
   const [outletMenu, setOutletMenu] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [hasItemsInCart, setHasItemsInCart] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -87,6 +90,28 @@ const MenuScene = ({navigation, route}) => {
     if (route.params.info) setOutletInfo(route.params.info);
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+      console.log(hasItemsInCart);
+      if (!hasItemsInCart) return;
+      e.preventDefault();
+
+      Alert.alert(CART.LEAVE_ORDER.HEADING, CART.LEAVE_ORDER.BODY, [
+        {text: CART.LEAVE_ORDER.CANCEL, onPress: () => {}},
+        {
+          text: CART.LEAVE_ORDER.OK,
+          onPress: () => navigation.dispatch(e.data.action),
+        },
+      ]);
+    });
+    return unsubscribe;
+  }, [navigation, hasItemsInCart]);
+
+  useEffect(() => {
+    console.log('cart: ' + JSON.stringify(cartItems));
+    setHasItemsInCart(cartItems.length > 0 ? true : false);
+  }, [cartItems]);
 
   if (!route.params) return null;
   if (!route.params.slug) return null;
@@ -120,7 +145,12 @@ const MenuScene = ({navigation, route}) => {
 
           {!isLoadingMenu && outletInfo ? (
             <View style={{minHeight: height}}>
-              <MenuList data={outletMenu} navigation={navigation} />
+              <MenuList
+                data={outletMenu}
+                navigation={navigation}
+                cartItems={cartItems}
+                setCartItems={setCartItems}
+              />
             </View>
           ) : (
             <Type>Loading...</Type>
@@ -128,24 +158,26 @@ const MenuScene = ({navigation, route}) => {
           {/* <View style={{height: 500, width}}></View> */}
         </ScrollView>
 
-        <View>
+        {cartItems.length ? <ViewCartButton data={cartItems} /> : null}
+
+        {/* <View>
           <FloatingButton
             icon="call"
             iconColor="white"
             color={PRIMARY}
             onPress={() => {
-              Linking.canOpenURL('tel:').then((can) => {
-                if (can) {
-                  logPlaceCall({name: outletInfo.slug});
-                  Linking.openURL('tel:7668310023');
-                }
-              });
+              // Linking.canOpenURL('tel:').then((can) => {
+              //   if (can) {
+              //     logPlaceCall({name: outletInfo.slug});
+              //     Linking.openURL('tel:7668310023');
+              //   }
+              // });
             }}>
             <Type style={{marginHorizontal: 8, color: 'white'}}>
-              {OUTLETS.CALL}
+              {'View Cart'.toUpperCase()}
             </Type>
           </FloatingButton>
-        </View>
+        </View> */}
       </>
     )
   );
