@@ -7,13 +7,15 @@ import {CustomTheme} from '../contexts/CustomTheme';
 import {
   SceneBuilder,
   Type,
-  PrimaryButton,
-  InputBox,
   Header,
   ThemedModal,
   ThemeControl,
 } from '../components/Shared/';
-import MessMenuCard from '../components/Home/MessMenuCard';
+
+// for settings
+import RatingAndBugOption from '../components/Shared/RatingAndBugOption';
+import UpdateAppAndShareOption from '../components/Shared/UpdateAppAndShareOption';
+
 import UpdateChecker from '../components/SDR/UpdateChecker';
 import SDRBuilder from '../components/Home/SDRBuilders/SDRBuilder';
 
@@ -28,9 +30,11 @@ const HomeScene = ({navigation}) => {
   return (
     <>
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
-        <Type style={{fontSize: width / 24}}>Settings</Type>
+        <Type style={{fontSize: width / 28, fontWeight: 'bold'}}>SETTINGS</Type>
         <View style={{paddingVertical: 15}}>
           <ThemeControl />
+          <RatingAndBugOption />
+          <UpdateAppAndShareOption />
         </View>
       </ThemedModal>
       <SceneBuilder>

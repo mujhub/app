@@ -1,14 +1,12 @@
 import React, {useRef, useState} from 'react';
-import {ScrollView, View, Dimensions, ToastAndroid} from 'react-native';
+import {View, Dimensions, ToastAndroid} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {
   SceneBuilder,
   Type,
   Header,
-  DialogBox,
   ThemedModal,
-  ThemeControl,
   PrimaryButton,
 } from '../components/Shared/';
 
@@ -55,7 +53,7 @@ const DmsScene = ({navigation}) => {
   return (
     <>
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
-        <Type style={{fontSize: width / 20}}>Settings</Type>
+        <Type style={{fontSize: width / 28, fontWeight: 'bold'}}>SETTINGS</Type>
         <View style={{paddingVertical: 15}}>
           <PrimaryButton
             onPress={async () => {
@@ -80,7 +78,7 @@ const DmsScene = ({navigation}) => {
             {DMS.CLEAR_SESSION}
           </Type>
 
-          <ThemeControl />
+          {/* <ThemeControl /> */}
         </View>
       </ThemedModal>
 

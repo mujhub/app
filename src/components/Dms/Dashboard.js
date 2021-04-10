@@ -79,7 +79,7 @@ const Dashboard = (props) => {
           style={{
             opacity: 1 - 3 * headerOpacity,
             flexDirection: 'row',
-            marginBottom: 10,
+            marginBottom: 16,
           }}>
           <InfoCard
             name={props.data.user.name}
@@ -102,6 +102,7 @@ const Dashboard = (props) => {
         </Card>
 
         <PrimaryButton
+          style={{marginTop: 24}}
           onPress={() => {
             props.MainWVRef.current.injectJavaScript(logoutScript);
           }}>
@@ -110,15 +111,14 @@ const Dashboard = (props) => {
 
         <Type
           style={{
-            margin: 10,
-            marginTop: 20,
+            marginTop: 10,
             fontSize: width / 28,
             color: colors.disabled,
           }}>
           {DMS.FOOTER}
         </Type>
 
-        <View style={{height: height / 3}} />
+        <View style={{height: height / 2.5}} />
       </ScrollView>
     </>
   );

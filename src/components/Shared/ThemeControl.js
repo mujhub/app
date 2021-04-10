@@ -5,7 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {CustomTheme} from '../../contexts/CustomTheme';
 
 import {ROUNDNESS} from '../../styles/theme';
-import {THEME, PRIMARY, GRAY} from '../../constants/colors';
+import {GRAY} from '../../constants/colors';
 import {ItemSeparator} from '.';
 import Type from './Type';
 
@@ -16,26 +16,37 @@ const ThemeControl = () => {
   const {setTheme, themeValue} = useContext(CustomTheme);
   return (
     <>
-      <ItemSeparator />
-      <Type style={{color: colors.disabled, margin: 5}}>Change Theme</Type>
+      <ItemSeparator widthPercentage="100%" />
+      <Type style={{marginTop: 16, marginBottom: 5, fontSize: width / 24}}>
+        Appearance
+      </Type>
+      <Type
+        style={{
+          marginBottom: 10,
+          color: colors.disabled,
+          fontSize: width / 30,
+        }}>
+        Customize how MUJ HUB looks on your device.
+      </Type>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           width: '100%',
+          marginBottom: 10,
         }}>
         <TouchableOpacity
           onPress={() => {
             setTheme(1);
           }}
           style={{
-            height: height / 20,
+            height: height / 25,
             width: '33%',
             alignItems: 'center',
             justifyContent: 'center',
             borderTopLeftRadius: ROUNDNESS / 2,
             borderBottomLeftRadius: ROUNDNESS / 2,
-            backgroundColor: themeValue === 1 ? GRAY.T5 : GRAY.T7,
+            backgroundColor: themeValue === 1 ? GRAY.T5 : GRAY.T8,
           }}>
           <Text style={{color: themeValue === 1 ? GRAY.T8 : GRAY.T2}}>
             LIGHT
@@ -46,11 +57,11 @@ const ThemeControl = () => {
             setTheme(2);
           }}
           style={{
-            height: height / 20,
+            height: height / 25,
             width: '33%',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: themeValue === 2 ? GRAY.T5 : GRAY.T7,
+            backgroundColor: themeValue === 2 ? GRAY.T5 : GRAY.T8,
           }}>
           <Text style={{color: themeValue === 2 ? GRAY.T8 : GRAY.T2}}>
             DARK
@@ -61,13 +72,13 @@ const ThemeControl = () => {
             setTheme(3);
           }}
           style={{
-            height: height / 20,
+            height: height / 25,
             width: '33%',
             alignItems: 'center',
             justifyContent: 'center',
             borderTopRightRadius: ROUNDNESS / 2,
             borderBottomRightRadius: ROUNDNESS / 2,
-            backgroundColor: themeValue === 3 ? GRAY.T5 : GRAY.T7,
+            backgroundColor: themeValue === 3 ? GRAY.T5 : GRAY.T8,
           }}>
           <Text style={{color: themeValue === 3 ? GRAY.T8 : GRAY.T2}}>
             AMOLED

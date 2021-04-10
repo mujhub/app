@@ -50,11 +50,11 @@ const ListItem = ({navigation, data}) => {
           <Type style={{fontSize: width / 24, color: colors.text}}>
             {data.title}
           </Type>
-          <Type style={{fontSize: width / 26, color: colors.disabled}}>
+          <Type style={{fontSize: width / 30, color: colors.disabled}}>
             {`${data.opens_at} - ${data.closes_at}`}
           </Type>
         </View>
-        <Type style={{fontSize: width / 26, color: colors.disabled}}>
+        <Type style={{fontSize: width / 28, color: colors.disabled}}>
           {data.description.substr(0, 25)}
           {data.description.length > 25 ? '...' : ''}
         </Type>

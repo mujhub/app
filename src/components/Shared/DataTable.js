@@ -48,7 +48,7 @@ const DataTable = ({
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingVertical: 15,
+            paddingVertical: 12,
             backgroundColor:
               alternateTint && index
                 ? index % 2

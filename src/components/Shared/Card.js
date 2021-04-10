@@ -11,10 +11,10 @@ const Card = ({heading, children}) => {
     <View style={{width: '100%'}}>
       <Type
         style={{
-          margin: 10,
+          // margin: 10,
           marginBottom: 5,
-          marginTop: 25,
-          fontSize: width / 24,
+          // marginTop: 25,
+          fontSize: width / 28,
           color: colors.disabled,
         }}>
         {heading}

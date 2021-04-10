@@ -10,6 +10,8 @@ target 'mujhub_app' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
   target 'mujhub_appTests' do
     inherit! :complete
     # Pods for testing

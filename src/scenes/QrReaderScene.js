@@ -21,9 +21,9 @@ import {SCAN} from '../constants/strings';
 const {width, height} = Dimensions.get('screen');
 
 const QR_SIZE = width * 0.75;
-const QR_RADIUS = 30;
-const QR_BORDER = 5;
-const QR_EYE_SIZE = width / 6;
+const QR_RADIUS = 20;
+const QR_BORDER = 4;
+const QR_EYE_SIZE = width / 7;
 const LOGO_SIZE = width * 0.18;
 
 const QrReaderScene = ({navigation}) => {
@@ -129,6 +129,7 @@ const QrReaderScene = ({navigation}) => {
 
                 <View style={{left: 0, ...styles.eye}} />
                 <View style={{right: 0, ...styles.eye}} />
+                <View style={{bottom: 0, right: 0, ...styles.eye}} />
                 <View style={{bottom: 0, ...styles.eye}} />
               </View>
             </View>
@@ -148,18 +149,18 @@ const QrReaderScene = ({navigation}) => {
           <View style={{alignItems: 'center'}}>
             <Text
               style={{
-                fontSize: width / 16,
+                fontSize: width / 22,
                 fontWeight: 'bold',
-                marginTop: height / 8,
+                marginTop: height / 6,
                 color: 'white',
               }}>
               {SCAN.HEADING}
             </Text>
             <Text
               style={{
-                fontSize: width / 20,
-                marginTop: height / 20,
-                paddingHorizontal: width / 8,
+                fontSize: width / 24,
+                marginTop: height / 80,
+                paddingHorizontal: width / 6,
                 textAlign: 'center',
                 color: 'white',
               }}>
@@ -168,9 +169,9 @@ const QrReaderScene = ({navigation}) => {
           </View>
           <Text
             style={{
-              fontSize: width / 20,
-              marginBottom: height / 6,
-              paddingHorizontal: width / 8,
+              fontSize: width / 24,
+              marginBottom: height / 7,
+              paddingHorizontal: width / 6,
               textAlign: 'center',
               color: 'white',
             }}>
@@ -181,8 +182,8 @@ const QrReaderScene = ({navigation}) => {
           <TouchableOpacity onPress={handleBack} activeOpacity={0.75}>
             <Icon
               name="chevron-back"
-              size={28}
-              style={{margin: 10, color: 'white'}}
+              size={24}
+              style={{marginVertical: 17, marginHorizontal: 10, color: 'white'}}
             />
           </TouchableOpacity>
         </View>
@@ -196,9 +197,9 @@ const styles = StyleSheet.create({
   eye: {
     width: QR_EYE_SIZE,
     height: QR_EYE_SIZE,
-    margin: QR_BORDER,
-    backgroundColor: ACCENT + '50',
-    borderRadius: QR_RADIUS - QR_BORDER,
+    margin: 2 * QR_BORDER,
+    backgroundColor: ACCENT + '20',
+    borderRadius: QR_RADIUS - QR_BORDER * 2,
     position: 'absolute',
   },
 });
