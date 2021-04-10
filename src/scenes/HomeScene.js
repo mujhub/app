@@ -1,5 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {ScrollView, View, Dimensions} from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 import {CustomTheme} from '../contexts/CustomTheme';
 
@@ -45,8 +46,20 @@ const HomeScene = ({navigation}) => {
           <UpdateChecker navigation={navigation} />
           <SDRBuilder navigation={navigation} />
           {/* <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
-          <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>
-          <PrimaryButton onPress={() => setTheme(3)}>Amoled</PrimaryButton> */}
+          <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>*/}
+
+          <PrimaryButton
+            onPress={() => {
+              try {
+                auth().signOut();
+                navigation.replace('LoginScreen');
+              } catch (error) {
+                console.log(error);
+              }
+            }}>
+            Sign Out
+          </PrimaryButton>
+
           <View style={{height: 120, paddingBottom: height / 4}} />
         </ScrollView>
       </SceneBuilder>

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "378472565561-rd3fg359u435766n15dtki6qptn6icua.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mujhub",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "378472565561-1kgkl8g9mm5vo61sacn27thls0atsh5b.apps.googleusercontent.com",
           "client_type": 3
         }

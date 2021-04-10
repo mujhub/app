@@ -12,14 +12,22 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import {light, dark, amoled} from '../styles/theme';
 import {CustomTheme} from '../contexts/CustomTheme';
 
+import {UserAuth} from '../contexts/UserAuth';
+
 import BottomNavigator from './BottomNavigator';
-import {MenuScene, SearchMenuScene, QrReaderScene} from '../scenes/';
+import {
+  LoginScene,
+  MenuScene,
+  SearchMenuScene,
+  QrReaderScene,
+} from '../scenes/';
 
 const Stack = createStackNavigator();
 const {width, height} = Dimensions.get('screen');
 
 const AppNavigator = () => {
   const {isDarkMode} = useContext(CustomTheme);
+  const {user} = useContext(UserAuth);
   const navigationRef = useRef();
   const routeNameRef = useRef();
 
@@ -35,7 +43,6 @@ const AppNavigator = () => {
         const currentRouteName = navigationRef.current.getCurrentRoute().name;
 
         if (previousRouteName !== currentRouteName) {
-          console.log('=========', previousRouteName);
           await analytics().logScreenView({
             screen_name: currentRouteName,
             screen_class: currentRouteName,
@@ -49,13 +56,18 @@ const AppNavigator = () => {
         translucent
       />
       <Stack.Navigator
-        initialRouteName="MainScreen"
+        initialRouteName={user ? 'MainScreen' : 'LoginScreen'}
         screenOptions={{
           gestureEnabled: true,
           gestureDirection: 'horizontal',
           gestureResponseDistance: {horizontal: width / 2},
           cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         }}>
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScene}
+          options={{headerShown: false, title: 'MUJ HUB'}}
+        />
         <Stack.Screen
           name="MainScreen"
           component={BottomNavigator}
