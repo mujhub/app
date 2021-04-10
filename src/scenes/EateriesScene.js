@@ -28,7 +28,7 @@ const EateriesScene = ({navigation}) => {
   const [eateries, setEateries] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [settingsModal, setSettingsModal] = useState(false);
+  // const [settingsModal, setSettingsModal] = useState(false);
 
   // Keyboard.addListener('keyboardDidHide', () => {
   //   setSearchQuery('');
@@ -94,9 +94,9 @@ const EateriesScene = ({navigation}) => {
           heading={FOOD.HEADING}
           navigation={navigation}
           // iconName="settings-sharp"
-          iconAction={() => {
-            setSettingsModal(true);
-          }}
+          // iconAction={() => {
+          //   setSettingsModal(true);
+          // }}
         />
 
         <SearchBox

@@ -10,6 +10,7 @@ import {
   Header,
   ThemedModal,
   ThemeControl,
+  PrimaryButton,
 } from '../components/Shared/';
 
 // for settings

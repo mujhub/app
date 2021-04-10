@@ -27,6 +27,7 @@ const SearchBox = ({
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
+          marginTop: 8,
         }}>
         {searchQuery !== '' && isSearching ? (
           <Icon

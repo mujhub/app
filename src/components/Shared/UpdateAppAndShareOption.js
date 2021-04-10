@@ -18,7 +18,7 @@ const UpdateAppOption = () => {
     try {
       const result = await Share.open(sharedMessage);
     } catch (error) {
-      console.error(error.message);
+      console.log(error.message);
     }
   };
 

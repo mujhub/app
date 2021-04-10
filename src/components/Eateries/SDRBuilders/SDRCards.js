@@ -25,7 +25,7 @@ const SDRCards = ({cards, navigation}) => {
           <View key={i.toString()}>
             {/* {card.type === 'MessMenuCard' && <MessMenuCard />} */}
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
-              {card.type === 'image' && (
+              {card.type === 'image' && card.visible && (
                 <View style={{width: width - 40, paddingRight: 20}}>
                   <ImageCard
                     card={card}
@@ -34,7 +34,7 @@ const SDRCards = ({cards, navigation}) => {
                   />
                 </View>
               )}
-              {card.type === 'text' && (
+              {card.type === 'text' && card.visible && (
                 <View style={{width: width - 40, paddingRight: 20}}>
                   <TextCard
                     card={card}
