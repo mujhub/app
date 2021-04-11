@@ -20,6 +20,7 @@ import {
   MenuScene,
   SearchMenuScene,
   QrReaderScene,
+  PlaceOrderScene,
 } from '../scenes/';
 
 const Stack = createStackNavigator();
@@ -84,8 +85,13 @@ const AppNavigator = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="QrReaderScene"
+          name="QrReaderScreen"
           component={QrReaderScene}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="PlaceOrderScreen"
+          component={PlaceOrderScene}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

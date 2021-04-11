@@ -14,7 +14,7 @@ const FloatingPill = ({navigation}) => (
     color={PRIMARY}
     onPress={async () => {
       await analytics().logEvent('scan_qr');
-      navigation.navigate('QrReaderScene');
+      navigation.navigate('QrReaderScreen');
     }}>
     <Type style={{marginHorizontal: 8, color: 'white'}}>
       {OUTLETS.SCANNER_TEXT}

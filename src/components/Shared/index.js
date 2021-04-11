@@ -16,3 +16,4 @@ export {default as ThemeControl} from './ThemeControl';
 export {default as FloatingButton} from './FloatingButton';
 export {default as TextCard} from '../SDR/TextCard';
 export {default as ImageCard} from '../SDR/ImageCard';
+export {default as PrivateNavigator} from './PrivateNavigator';

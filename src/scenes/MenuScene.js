@@ -62,6 +62,7 @@ const MenuScene = ({navigation, route}) => {
   const [outletMenu, setOutletMenu] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [hasItemsInCart, setHasItemsInCart] = useState(false);
+  // const [priceSelector, setPriceSelector] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -150,6 +151,7 @@ const MenuScene = ({navigation, route}) => {
                 navigation={navigation}
                 cartItems={cartItems}
                 setCartItems={setCartItems}
+                // priceSelector={priceSelector}
               />
             </View>
           ) : (
@@ -158,7 +160,21 @@ const MenuScene = ({navigation, route}) => {
           {/* <View style={{height: 500, width}}></View> */}
         </ScrollView>
 
-        {cartItems.length ? <ViewCartButton data={cartItems} /> : null}
+        {/* {priceSelector && (
+          <View
+            style={{
+              height: 30,
+              width: '100%',
+              position: 'absolute',
+              bottom: 0,
+              backgroundColor: 'red',
+            }}>
+          </View>
+        )} */}
+
+        {cartItems.length ? (
+          <ViewCartButton data={cartItems} navigation={navigation} />
+        ) : null}
 
         {/* <View>
           <FloatingButton

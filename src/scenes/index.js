@@ -5,3 +5,4 @@ export {default as DmsScene} from './DmsScene';
 export {default as MenuScene} from './MenuScene';
 export {default as SearchMenuScene} from './SearchMenuScene';
 export {default as QrReaderScene} from './QrReaderScene';
+export {default as PlaceOrderScene} from './PlaceOrderScene';
