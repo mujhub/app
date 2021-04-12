@@ -59,14 +59,20 @@ const PlaceOrderScene = ({route, navigation}) => {
         const menuItem = outletMenu[j];
         if (cartItemKeys[0] === menuItem.id) {
           console.log('cartItem', cartItem[menuItem.id].priceIndices);
+
           let itemPrices = cartItem[menuItem.id].priceIndices;
           itemPrices.forEach((price_index) => {
             let pre_cart = cart;
             if (typeof menuItem.price === 'object') {
-              pre_cart.push({...menuItem, price: menuItem.price[price_index]});
+              pre_cart.push({
+                ...menuItem,
+                price: menuItem.price[price_index],
+                count: itemPrices.length,
+              });
             } else {
-              pre_cart.push({...menuItem, price: menuItem.price});
+              pre_cart.push({...menuItem, price: menuItem.price, count: 1});
             }
+            console.log(`==== precart ==== ${pre_cart}`);
             setCart(pre_cart);
           });
 
@@ -96,7 +102,7 @@ const PlaceOrderScene = ({route, navigation}) => {
       <PrivateNavigator user={user} navigation={navigation} />
       <SceneBuilder>
         {!loading ? (
-          isAccepting ? (
+          true ? (
             <View style={{minHeight: height - 30}}>
               <ScrollView>
                 <Type>{JSON.stringify(user.uid)}</Type>
