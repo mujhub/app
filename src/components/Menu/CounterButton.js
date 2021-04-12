@@ -25,7 +25,7 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
     } else {
       if (count < max) {
         setCount(count + 1);
-        onAdd({id, priceIndex: 0});
+        onAdd({id, priceIndex: 0, price});
       } else
         ToastAndroid.show(
           `Can not add more than ${max} items`,
@@ -39,14 +39,14 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
       setAdding(false);
     } else {
       setCount(count - 1);
-      onSubtract({id, priceIndex: 0});
+      onSubtract({id, priceIndex: 0, price});
     }
   };
 
   const handleAddSelector = ({priceIndex}) => {
     if (count < max) {
       setCount(count + 1);
-      onAdd({id, priceIndex});
+      onAdd({id, priceIndex, price: price[priceIndex]});
     } else
       ToastAndroid.show(
         `Can not add more than ${max} items`,
@@ -56,7 +56,7 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
   };
 
   const handleSubSelector = ({priceIndex}) => {
-    let has = onSubtract({id, priceIndex});
+    let has = onSubtract({id, priceIndex, price: price[priceIndex]});
     if (has) setCount(count - 1);
 
     setSelector(false);
@@ -146,6 +146,7 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
         <View style={{flexDirection: 'row'}}>
           {price.map((e, i) => (
             <TouchableOpacity
+              key={i}
               style={{paddingHorizontal: 3}}
               onPress={() => {
                 if (adding) handleAddSelector({priceIndex: i});
@@ -154,7 +155,7 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
               <View
                 style={{
                   backgroundColor: adding ? VIBRANTS.GREEN1 : VIBRANTS.RED,
-                  padding: 5,
+                  padding: 2,
                   borderRadius: 16,
                 }}>
                 <Text
@@ -163,7 +164,7 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
                     paddingHorizontal: 3,
                     color: 'white',
                   }}>
-                  {e}
+                  {`₹${e}`}
                 </Text>
               </View>
             </TouchableOpacity>

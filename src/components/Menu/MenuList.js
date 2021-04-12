@@ -20,15 +20,14 @@ const MenuList = ({
   cartItems,
   setCartItems,
   priceSelector,
+  cartTotal,
+  setCartTotal,
 }) => {
   const {colors} = useTheme();
 
   const [categorizedObj, setCategorizedObj] = useState({});
-  // const [cartItems, setCartItems] = useState([]);
 
-  const priceSelectorHandler = () => {};
-
-  const addItem = ({id, priceIndex}) => {
+  const addItem = ({id, priceIndex, price}) => {
     let items = cartItems;
     let cartIndex = -1;
     for (let i = 0; i < items.length; i++) {
@@ -42,13 +41,14 @@ const MenuList = ({
     let item = {[id]: {priceIndices: []}, ...items[cartIndex]};
     // console.log(`item`, item);
     item[id].priceIndices.push(priceIndex);
+    setCartTotal(cartTotal + price);
     if (cartIndex > -1) items.splice(cartIndex, 1);
     cartItems.push(item);
     setCartItems([...cartItems]);
     // console.log(JSON.stringify(cartItems));
   };
 
-  const subtractItem = ({id, priceIndex}) => {
+  const subtractItem = ({id, priceIndex, price}) => {
     let items = cartItems;
     let cartIndex = -1;
     for (let i = 0; i < items.length; i++) {
@@ -69,6 +69,7 @@ const MenuList = ({
     if (i > -1) item[id].priceIndices.splice(i, 1);
     if (cartIndex > -1) items.splice(cartIndex, 1);
     if (item[id].priceIndices.length > 0) cartItems.push(item);
+    setCartTotal(cartTotal - price);
     // console.log(JSON.stringify(cartItems));
     setCartItems([...cartItems]);
     return true;

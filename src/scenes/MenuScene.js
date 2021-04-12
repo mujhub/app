@@ -61,6 +61,7 @@ const MenuScene = ({navigation, route}) => {
   const [outletInfo, setOutletInfo] = useState(null);
   const [outletMenu, setOutletMenu] = useState(null);
   const [cartItems, setCartItems] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
   const [hasItemsInCart, setHasItemsInCart] = useState(false);
   // const [priceSelector, setPriceSelector] = useState(true);
 
@@ -151,7 +152,8 @@ const MenuScene = ({navigation, route}) => {
                 navigation={navigation}
                 cartItems={cartItems}
                 setCartItems={setCartItems}
-                // priceSelector={priceSelector}
+                cartTotal={cartTotal}
+                setCartTotal={setCartTotal}
               />
             </View>
           ) : (
@@ -173,7 +175,12 @@ const MenuScene = ({navigation, route}) => {
         )} */}
 
         {cartItems.length ? (
-          <ViewCartButton data={cartItems} navigation={navigation} />
+          <ViewCartButton
+            data={cartItems}
+            navigation={navigation}
+            slug={route.params.slug}
+            cartTotal={cartTotal}
+          />
         ) : null}
 
         {/* <View>
