@@ -144,6 +144,7 @@ const MenuList = ({
                   <MenuItem
                     i={i}
                     item={item}
+                    showCounter={!isSearching}
                     addItem={addItem}
                     subtractItem={subtractItem}
                   />

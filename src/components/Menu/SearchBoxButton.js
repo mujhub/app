@@ -1,6 +1,9 @@
 import React from 'react';
 import {View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
+
+import {Type} from '../Shared';
 
 import {ROUNDNESS} from '../../styles/theme';
 

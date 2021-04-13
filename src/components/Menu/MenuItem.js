@@ -7,7 +7,7 @@ import CounterBtn from './CounterButton';
 
 const {width, height} = Dimensions.get('screen');
 
-const MenuItem = ({item, i, addItem, subtractItem}) => {
+const MenuItem = ({item, i, addItem, subtractItem, showCounter}) => {
   const {colors} = useTheme();
   return (
     <View
@@ -28,7 +28,7 @@ const MenuItem = ({item, i, addItem, subtractItem}) => {
             flex: 1,
             flexDirection: 'row',
             alignItems: 'center',
-            // justifyContent: 'space-between',
+            justifyContent: !showCounter ? 'space-between' : null,
           }}>
           <View
             style={{
@@ -43,13 +43,15 @@ const MenuItem = ({item, i, addItem, subtractItem}) => {
               }}>
               {item.name}
             </Type>
-            <Type
-              style={{
-                fontSize: width / 25,
-                margin: 2,
-              }}>
-              {' - '}
-            </Type>
+            {showCounter && (
+              <Type
+                style={{
+                  fontSize: width / 25,
+                  margin: 2,
+                }}>
+                {' - '}
+              </Type>
+            )}
           </View>
           <View
             style={{
@@ -74,22 +76,24 @@ const MenuItem = ({item, i, addItem, subtractItem}) => {
           </View>
         </View>
 
-        <View
-          style={{
-            height: '100%',
-            minHeight: 40,
-            width: '25%',
-            justifyContent: 'center',
-            alignItems: 'flex-end',
-          }}>
-          <CounterBtn
-            onAdd={addItem}
-            onSubtract={subtractItem}
-            id={item.id}
-            price={item.price}
-            max={5}
-          />
-        </View>
+        {showCounter && (
+          <View
+            style={{
+              height: '100%',
+              minHeight: 40,
+              width: '25%',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+            }}>
+            <CounterBtn
+              onAdd={addItem}
+              onSubtract={subtractItem}
+              id={item.id}
+              price={item.price}
+              max={5}
+            />
+          </View>
+        )}
       </View>
       <View
         style={{
