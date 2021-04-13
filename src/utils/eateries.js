@@ -16,6 +16,5 @@ export const scoreSort = (eateries) => {
   featuredEateries = featuredEateries.sort((a, b) => b.score - a.score);
   scoreSortedEateries = scoreSortedEateries.sort((a, b) => b.score - a.score);
   sortedEateries = [...featuredEateries, ...scoreSortedEateries];
-  console.log('sortedEateries', sortedEateries);
   return sortedEateries;
 };

@@ -66,7 +66,7 @@ const DmsScene = ({navigation}) => {
                 );
               }
             }}>
-            Forget current session
+            {DMS.CLEAR_SESSION_BUTTON}
           </PrimaryButton>
           <Type
             style={{
@@ -77,8 +77,6 @@ const DmsScene = ({navigation}) => {
             }}>
             {DMS.CLEAR_SESSION}
           </Type>
-
-          {/* <ThemeControl /> */}
         </View>
       </ThemedModal>
 
@@ -120,9 +118,6 @@ const DmsScene = ({navigation}) => {
               isLoading={isLoading}
             />
           )}
-
-          {/* <Type>{`Loading: ${isLoading} ; 
-Data: ${JSON.stringify(data)}`}</Type> */}
 
           <WebViews
             data={data}

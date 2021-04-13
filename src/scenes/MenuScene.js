@@ -65,7 +65,6 @@ const MenuScene = ({navigation, route}) => {
   const [cartTotal, setCartTotal] = useState(0);
   const [cartCount, setCartCount] = useState(0);
   const [hasItemsInCart, setHasItemsInCart] = useState(false);
-  // const [priceSelector, setPriceSelector] = useState(true);
 
   const fetchData = async () => {
     try {
@@ -75,7 +74,6 @@ const MenuScene = ({navigation, route}) => {
       const res = await getEateryBySlug(slug);
       if (!res.exists) return;
       let data = res.data();
-      // console.log(JSON.stringify(data));
       let info = data.info;
       if (info) setOutletInfo(info);
       let menu = data.menu;
@@ -97,7 +95,6 @@ const MenuScene = ({navigation, route}) => {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-      console.log(hasItemsInCart);
       if (!hasItemsInCart) return;
       e.preventDefault();
 
@@ -117,7 +114,6 @@ const MenuScene = ({navigation, route}) => {
   );
 
   useEffect(() => {
-    console.log('cart: ' + JSON.stringify(cartItems));
     setHasItemsInCart(cartItems.length > 0 ? true : false);
   }, [cartItems]);
 
@@ -167,21 +163,8 @@ const MenuScene = ({navigation, route}) => {
           ) : (
             <Type>Loading...</Type>
           )}
-          {/* <View style={{height: 500, width}}></View> */}
         </ScrollView>
 
-        {/* {priceSelector && (
-          <View
-            style={{
-              height: 30,
-              width: '100%',
-              position: 'absolute',
-              bottom: 0,
-              backgroundColor: 'red',
-            }}>
-          </View>
-        )} */}
-        {/* {console.log(cartItems.length)} */}
         {cartItems.length ? (
           <ViewCartButton
             cartCount={cartCount}

@@ -28,6 +28,15 @@ const HomeScene = ({navigation}) => {
   const {setTheme} = useContext(CustomTheme);
   const [settingsModal, setSettingsModal] = useState(false);
 
+  const handleSignOut = () => {
+    try {
+      auth().signOut();
+      navigation.replace('LoginScreen');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
@@ -50,20 +59,7 @@ const HomeScene = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <UpdateChecker navigation={navigation} />
           <SDRBuilder navigation={navigation} />
-          {/* <PrimaryButton onPress={() => setTheme(1)}>Light</PrimaryButton>
-          <PrimaryButton onPress={() => setTheme(2)}>Dark</PrimaryButton>*/}
-
-          <PrimaryButton
-            onPress={() => {
-              try {
-                auth().signOut();
-                navigation.replace('LoginScreen');
-              } catch (error) {
-                console.log(error);
-              }
-            }}>
-            Sign Out
-          </PrimaryButton>
+          <PrimaryButton onPress={handleSignOut}>Sign Out</PrimaryButton>
 
           <View style={{height: 120, paddingBottom: height / 4}} />
         </ScrollView>

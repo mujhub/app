@@ -23,7 +23,6 @@ const SearchBox = ({searchQuery, setSearchQuery, navigation}) => {
       />
       <View
         style={{
-          // paddingHorizontal: 20,
           paddingTop: 30,
           paddingBottom: 10,
           backgroundColor: colors.background,

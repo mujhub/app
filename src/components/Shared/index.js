@@ -4,6 +4,7 @@ export {default as PrimaryButton} from './PrimaryButton';
 export {default as Type} from './Type';
 export {default as Header} from './Header';
 export {default as ListItem} from './ListItem';
+export {default as FoodType} from './FoodType';
 export {default as ItemSeparator} from './ItemSeparator';
 export {default as ListFooter} from './ListFooter';
 export {default as Badge} from './Badge';

@@ -11,6 +11,8 @@ import {
   PrimaryButton,
 } from '../components/Shared';
 
+import {validatePhone, validateOTP} from '../utils/validators';
+
 const LoginScene = ({navigation}) => {
   const {user} = useContext(UserAuth);
   const [phone, setPhone] = useState('');
@@ -27,16 +29,6 @@ const LoginScene = ({navigation}) => {
     });
     return unsubscribe;
   }, [navigation]);
-
-  const validatePhone = () => {
-    var regex = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
-    return regex.test(phone);
-  };
-
-  const validateOTP = () => {
-    var regex = /^[0-9]{6}$/;
-    return regex.test(otp);
-  };
 
   const signInWithPhoneNumber = async () => {
     if (phone !== '') {

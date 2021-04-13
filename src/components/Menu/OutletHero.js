@@ -55,7 +55,6 @@ const OutletHero = ({
   const [isOutletOpen, setIsOutletOpen] = useState(true);
 
   useEffect(() => {
-    console.log('====', JSON.stringify(outletInfo));
     setIsOutletOpen(
       isOpen({opens_at: data.opens_at, closes_at: data.closes_at}),
     );

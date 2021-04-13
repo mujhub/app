@@ -25,7 +25,6 @@ const ViewCartButton = ({slug, data, cartTotal, navigation, cartCount}) => {
           style={{
             paddingVertical: 5,
             paddingHorizontal: 10,
-            // backgroundColor: PRIMARY + '55',
             borderColor: colors.primary,
             borderWidth: 1,
             borderRadius: 4,
@@ -33,9 +32,7 @@ const ViewCartButton = ({slug, data, cartTotal, navigation, cartCount}) => {
           onPress={() => {
             navigation.navigate('PlaceOrderScreen', {slug, data, cartTotal});
           }}>
-          {/* <Type>{JSON.stringify(data)}</Type> */}
           <Type>View Cart</Type>
-          {/* <Type>{JSON.stringify(cartTotal)}</Type> */}
         </TouchableOpacity>
       </View>
     </View>

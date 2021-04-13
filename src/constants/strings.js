@@ -43,6 +43,7 @@ export const DMS = {
     "We're constantly improving the DMS integration. Make sure you keep the app updated!",
   SECURE_MESSAGE:
     'Your account details are encrypted and saved securely on your device.',
+  CLEAR_SESSION_BUTTON: 'Forget current session',
   CLEAR_SESSION:
     'This will will delete the session and the account details that are saved on your device.',
 };

@@ -82,7 +82,6 @@ export const placeOrder = async ({uid, slug, data}) => {
 };
 
 export const getOrderHistory = async ({uid}) => {
-  // return db.collection('users').doc(`${uid}`).collection('orders').onSnapshot((snap)=>{snap.forEach((order))})
   let orders = [];
 
   try {
@@ -93,7 +92,6 @@ export const getOrderHistory = async ({uid}) => {
       .orderBy('created_at', 'desc')
       .limit(5)
       .get();
-    // (await docRefs).forEach((e)=>{e.data()})
     (await docRefs).forEach((e) => {
       let order = e.data();
       orders.push({...order, oid: e.id});

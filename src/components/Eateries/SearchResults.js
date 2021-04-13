@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-import {Type, ItemSeparator, ListItem} from '../Shared';
+import {Type, ItemSeparator, ListItem, FoodType} from '../Shared';
 
 import {getSearchResults} from '../../services/firestore';
 import {VIBRANTS, TYPE} from '../../constants/colors';
@@ -60,36 +60,6 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
 
   //   if (!isLoading)
 
-  const renderType = (type) => {
-    let icon = '';
-    let color = null;
-    switch (type) {
-      case 0:
-        icon = 'ellipse';
-        color = TYPE.VEG;
-        break;
-      case 1:
-        icon = 'egg';
-        color = TYPE.EGG;
-        break;
-      case 2:
-        icon = 'ellipse';
-        color = TYPE.NON;
-        break;
-
-      default:
-        break;
-    }
-    return (
-      <Icon
-        name={icon}
-        size={width / 28}
-        color={color}
-        style={{marginRight: 5}}
-      />
-    );
-  };
-
   return (
     <View>
       {Object.entries(results).length === 0 ? (
@@ -111,7 +81,6 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
                 onPress={() => {
                   // logMenuFetch({name: item.slug});
                   navigation.navigate('MenuScene', {
-                    // info: {...results[key]},
                     slug: results[key].eatery,
                   });
                 }}>
@@ -150,7 +119,7 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
                           flexDirection: 'row',
                           alignItems: 'center',
                         }}>
-                        {renderType(results[key].type)}
+                        <FoodType type={results[key].type} />
                         <Type
                           style={{
                             fontSize: width / 25,

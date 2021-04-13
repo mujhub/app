@@ -28,16 +28,6 @@ const EateriesScene = ({navigation}) => {
   const [eateries, setEateries] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  // const [settingsModal, setSettingsModal] = useState(false);
-
-  // Keyboard.addListener('keyboardDidHide', () => {
-  //   setSearchQuery('');
-  //   setIsSearching(false);
-  // });
-
-  useEffect(() => {
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     const eateriesData = await getEateries();
@@ -52,6 +42,10 @@ const EateriesScene = ({navigation}) => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   const renderer = ({item}) => (
     <TouchableOpacity
       key={item.slug}
@@ -59,8 +53,6 @@ const EateriesScene = ({navigation}) => {
       onPress={() => {
         logMenuFetch({name: item.slug});
         navigation.navigate('MenuScene', {info: {...item}, slug: item.slug});
-        // navigation.navigate('MenuScene', {slug: item.slug});
-        // navigation.navigate('MenuScene');
       }}>
       <ListItem navigation={navigation} data={item} />
       <ListItem navigation={navigation} data={item} />
@@ -83,12 +75,6 @@ const EateriesScene = ({navigation}) => {
 
   return (
     <>
-      {/* <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
-        <Type style={{fontSize: width / 28, fontWeight: 'bold'}}>SETTINGS</Type>
-        <View style={{paddingVertical: 15}}>
-          <ThemeControl />
-        </View>
-      </ThemedModal> */}
       <SceneBuilder>
         <Header
           heading={FOOD.HEADING}

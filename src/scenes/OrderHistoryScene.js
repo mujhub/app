@@ -1,16 +1,23 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {View, Text, RefreshControl, Dimensions} from 'react-native';
+import {
+  View,
+  FlatList,
+  RefreshControl,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
 
-import {getOrderHistory} from '../services/firestore';
 import {UserAuth} from '../contexts/UserAuth';
+import {getOrderHistory} from '../services/firestore';
+
 import {SceneBuilder, Type} from '../components/Shared';
-import {ActivityIndicator} from 'react-native-paper';
-import {FlatList} from 'react-native-gesture-handler';
+import {PRIMARY} from '../constants/colors';
 
 const {width, height} = Dimensions.get('screen');
 
 const OrderHistoryScene = () => {
   const {user} = useContext(UserAuth);
+
   const [isLoading, setIsLoading] = useState(false);
   const [orderHistory, setOrderHistory] = useState([]);
 
@@ -47,7 +54,7 @@ const OrderHistoryScene = () => {
           )}
         />
       ) : (
-        <ActivityIndicator color="grey" size={28} />
+        <ActivityIndicator color={PRIMARY} size={28} />
       )}
     </SceneBuilder>
   );

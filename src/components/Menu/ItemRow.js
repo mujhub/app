@@ -19,7 +19,7 @@ const ItemRow = ({item, i}) => {
           justifyContent: 'space-between',
           paddingVertical: 2,
           paddingHorizontal: 5,
-          backgroundColor: i % 2 ? colors.disabled + '55' : null,
+          backgroundColor: i % 2 ? null : colors.disabled + '55',
         }}>
         <View
           style={{

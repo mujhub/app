@@ -20,10 +20,12 @@ import {
   PrimaryButton,
   InputBox,
 } from '../components/Shared';
-import {PRIMARY} from '../constants/colors';
-import {isOpen} from '../utils/misc';
 import ItemRow from '../components/Menu/ItemRow';
+
+import {isOpen} from '../utils/misc';
+import {PRIMARY} from '../constants/colors';
 import {CART} from '../constants/strings';
+import InvoiceList from '../components/Menu/InvoiceList';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -36,20 +38,17 @@ const PlaceOrderScene = ({route, navigation}) => {
   const [cart, setCart] = useState([]);
   const [invoice, setInvoice] = useState([]);
   const [placingOrder, setPlacingOrder] = useState(false);
-  const [tableNumber, setTableNumber] = useState('');
+  const [additionalInfo, setAdditionalInfo] = useState('');
 
   const {slug, data, cartTotal} = route.params;
 
   const fetchData = async () => {
     try {
       setLoading(true);
-      //   let slug = route.params.slug;
       if (!slug) return;
       const res = await getEateryBySlug(slug);
-      //   console.log('fetched');
       if (!res.exists) return;
       let data = res.data();
-      //   console.log(JSON.stringify(data));
       let info = data.info;
       if (info) setOutletInfo(info);
       let menu = data.menu;
@@ -69,8 +68,6 @@ const PlaceOrderScene = ({route, navigation}) => {
       for (let j = 0; j < outletMenu.length; j++) {
         const menuItem = outletMenu[j];
         if (cartItemKeys[0] === menuItem.id) {
-          console.log('cartItem', cartItem[menuItem.id].priceIndices);
-
           let itemPrices = cartItem[menuItem.id].priceIndices;
           itemPrices.forEach((price_index) => {
             let pre_cart = cart;
@@ -83,10 +80,8 @@ const PlaceOrderScene = ({route, navigation}) => {
             } else {
               pre_cart.push({...menuItem, price: menuItem.price, count: 1});
             }
-            console.log(`==== precart ==== ${pre_cart}`);
             setCart(pre_cart);
           });
-
           break;
         }
       }
@@ -139,49 +134,17 @@ const PlaceOrderScene = ({route, navigation}) => {
       <PrivateNavigator user={user} navigation={navigation} />
       <SceneBuilder>
         {!loading ? (
-          true ? (
-            <View style={{minHeight: height - 30}}>
-              <KeyboardAvoidingView behavior={'padding'} style={{flex: 1}}>
-                <ScrollView>
-                  <Type>{JSON.stringify(user.uid)}</Type>
-                  <Type>{JSON.stringify(outletInfo)}</Type>
-                  <Type>{JSON.stringify(slug)}</Type>
-                  {cart.map((cartItem, i) => (
-                    <ItemRow item={cartItem} i={i} />
-                  ))}
-                  <Type>{`${CART.INVOICE.TOTAL_LABEL} ${cartTotal}`}</Type>
-                </ScrollView>
-                <View style={{minHeight: 200}}>
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                    }}>
-                    <InputBox
-                      viewStyle={{width: '50%'}}
-                      value={tableNumber}
-                      onChangeText={(value) => setTableNumber(value)}
-                      label={CART.INVOICE.ADDITIONAL}
-                      isRequired={true}
-                    />
-
-                    <Type
-                      style={{
-                        fontSize: 16,
-                        flex: 1,
-                        padding: 10,
-                        textAlign: 'right',
-                        textAlignVertical: 'bottom',
-                      }}>
-                      {`${CART.INVOICE.PAYABLE_LABEL} ₹${cartTotal}`}
-                    </Type>
-                  </View>
-                  <PrimaryButton onPress={handlePlaceOrder}>
-                    {CART.INVOICE.ACTION}
-                  </PrimaryButton>
-                </View>
-              </KeyboardAvoidingView>
-            </View>
+          isAccepting ? (
+            <InvoiceList
+              cart={cart}
+              cartTotal={cartTotal}
+              additionalInfo={additionalInfo}
+              setAdditionalInfo={setAdditionalInfo}
+              handlePlaceOrder={handlePlaceOrder}
+              user={user}
+              outletInfo={outletInfo}
+              slug={slug}
+            />
           ) : (
             <Type>{CART.INVOICE.NOT_ACCEPTING}</Type>
           )
