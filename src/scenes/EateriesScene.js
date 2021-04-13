@@ -93,10 +93,10 @@ const EateriesScene = ({navigation}) => {
         <Header
           heading={FOOD.HEADING}
           navigation={navigation}
-          // iconName="settings-sharp"
-          // iconAction={() => {
-          //   setSettingsModal(true);
-          // }}
+          iconName="stopwatch-sharp"
+          iconAction={() => {
+            navigation.navigate('OrderHistoryScreen');
+          }}
         />
 
         <SearchBox

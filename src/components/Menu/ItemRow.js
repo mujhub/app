@@ -9,7 +9,9 @@ const ItemRow = ({item, i}) => {
   const {colors} = useTheme();
 
   return (
-    <View style={{paddingVertical: 5, paddingHorizontal: 10}}>
+    <View
+      key={i.toString()}
+      style={{paddingVertical: 5, paddingHorizontal: 10}}>
       <View
         style={{
           flexDirection: 'row',

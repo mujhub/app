@@ -60,7 +60,7 @@ const Header = ({navigation, isBack, heading, style, iconName, iconAction}) => {
             style={{position: 'absolute', right: 0, paddingVertical: 8}}
             onPress={typeof iconAction === 'function' ? iconAction : null}>
             <Icon
-              name="settings-sharp"
+              name={iconName}
               size={width / 20}
               style={{margin: 5, color: colors.text}}
             />

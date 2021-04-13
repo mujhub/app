@@ -1,20 +1,29 @@
 import React, {useContext, useState, useEffect} from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  Dimensions,
+  Alert,
+  ScrollView,
+  DeviceEventEmitter,
+  KeyboardAvoidingView,
+  ActivityIndicator,
+} from 'react-native';
 
 import {UserAuth} from '../contexts/UserAuth';
-import {getEateryBySlug} from '../services/firestore';
+import {getEateryBySlug, placeOrder} from '../services/firestore';
 
 import {
   Type,
   PrivateNavigator,
   SceneBuilder,
   PrimaryButton,
+  InputBox,
 } from '../components/Shared';
-import {ActivityIndicator} from 'react-native-paper';
 import {PRIMARY} from '../constants/colors';
 import {isOpen} from '../utils/misc';
 import ItemRow from '../components/Menu/ItemRow';
-import {ScrollView} from 'react-native-gesture-handler';
+import {CART} from '../constants/strings';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -26,6 +35,8 @@ const PlaceOrderScene = ({route, navigation}) => {
   const [isAccepting, setIsAccepting] = useState(false);
   const [cart, setCart] = useState([]);
   const [invoice, setInvoice] = useState([]);
+  const [placingOrder, setPlacingOrder] = useState(false);
+  const [tableNumber, setTableNumber] = useState('');
 
   const {slug, data, cartTotal} = route.params;
 
@@ -76,6 +87,32 @@ const PlaceOrderScene = ({route, navigation}) => {
     }
   };
 
+  const handlePlaceOrder = async () => {
+    try {
+      setPlacingOrder(true);
+      let success = await placeOrder({uid: user.uid, slug, data});
+      if (success) {
+        DeviceEventEmitter.emit('event.clearCart');
+        Alert.alert(CART.ORDER_SUCCESS.HEADING, CART.ORDER_SUCCESS.BODY, [
+          {
+            text: CART.ORDER_SUCCESS.ACTION,
+            onPress: () => {
+              navigation.popToTop();
+            },
+          },
+        ]);
+      } else {
+        Alert.alert(CART.ORDER_FAILURE.HEADING, CART.ORDER_FAILURE.BODY, [
+          {text: CART.ORDER_FAILURE.ACTION, onPress: () => navigation.goBack()},
+        ]);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setPlacingOrder(false);
+    }
+  };
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -98,25 +135,49 @@ const PlaceOrderScene = ({route, navigation}) => {
         {!loading ? (
           isAccepting ? (
             <View style={{minHeight: height - 30}}>
-              <ScrollView>
-                <Type>{JSON.stringify(user.uid)}</Type>
-                <Type>{JSON.stringify(outletInfo)}</Type>
-                {/* <Type>{JSON.stringify(outletMenu)}</Type> */}
-                <Type>{JSON.stringify(slug)}</Type>
-                {/* <Type>{JSON.stringify(data)}</Type> */}
-                {cart.map((cartItem, i) => (
-                  <ItemRow item={cartItem} i={i} />
-                ))}
-                <Type>{`Total Amount: ${cartTotal}`}</Type>
-              </ScrollView>
-              <View style={{position: 'absolute', bottom: 50, width: '100%'}}>
-                <PrimaryButton>PLACE ORDER</PrimaryButton>
-              </View>
+              <KeyboardAvoidingView behavior={'padding'} style={{flex: 1}}>
+                <ScrollView>
+                  <Type>{JSON.stringify(user.uid)}</Type>
+                  <Type>{JSON.stringify(outletInfo)}</Type>
+                  <Type>{JSON.stringify(slug)}</Type>
+                  {cart.map((cartItem, i) => (
+                    <ItemRow item={cartItem} i={i} />
+                  ))}
+                  <Type>{`${CART.INVOICE.TOTAL_LABEL} ${cartTotal}`}</Type>
+                </ScrollView>
+                <View style={{minHeight: 200}}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                    }}>
+                    <InputBox
+                      viewStyle={{width: '50%'}}
+                      value={tableNumber}
+                      onChangeText={(value) => setTableNumber(value)}
+                      label={CART.INVOICE.ADDITIONAL}
+                      isRequired={true}
+                    />
+
+                    <Type
+                      style={{
+                        fontSize: 16,
+                        flex: 1,
+                        padding: 10,
+                        textAlign: 'right',
+                        textAlignVertical: 'bottom',
+                      }}>
+                      {`${CART.INVOICE.PAYABLE_LABEL} ₹${cartTotal}`}
+                    </Type>
+                  </View>
+                  <PrimaryButton onPress={handlePlaceOrder}>
+                    {CART.INVOICE.ACTION}
+                  </PrimaryButton>
+                </View>
+              </KeyboardAvoidingView>
             </View>
           ) : (
-            <Type>
-              The restaurant is not not accepting orders at the moment
-            </Type>
+            <Type>{CART.INVOICE.NOT_ACCEPTING}</Type>
           )
         ) : (
           <ActivityIndicator color={PRIMARY} size={28} />

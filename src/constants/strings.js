@@ -76,4 +76,21 @@ export const CART = {
     CANCEL: 'No, stay.',
     OK: 'Yes, go back.',
   },
+  ORDER_SUCCESS: {
+    HEADING: 'Success',
+    BODY: 'Order Placed!',
+    ACTION: 'Ok',
+  },
+  ORDER_FAILURE: {
+    HEADING: 'Failure',
+    BODY: 'Oops, order could not be placed. Try again later.',
+    ACTION: 'Ok',
+  },
+  INVOICE: {
+    TOTAL_LABEL: 'Total Amount:',
+    PAYABLE_LABEL: 'Order Total',
+    ADDITIONAL: 'Block Number: ',
+    ACTION: 'PLACE ORDER',
+    NOT_ACCEPTING: 'The restaurant is not not accepting orders at the moment',
+  },
 };

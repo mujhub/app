@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Linking,
+  DeviceEventEmitter,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -109,6 +110,10 @@ const MenuScene = ({navigation, route}) => {
     });
     return unsubscribe;
   }, [navigation, hasItemsInCart]);
+
+  DeviceEventEmitter.addListener('event.clearCart', () =>
+    setHasItemsInCart(false),
+  );
 
   useEffect(() => {
     console.log('cart: ' + JSON.stringify(cartItems));

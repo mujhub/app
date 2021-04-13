@@ -96,17 +96,16 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
                 paddingHorizontal: 10,
                 // backgroundColor: PRIMARY + '55',
                 borderColor: PRIMARY,
-                borderWidth: 0.5,
+                borderWidth: 1,
                 borderRadius: 8,
               }}>
-              <Text
+              <Type
                 style={{
                   textAlignVertical: 'center',
                   fontSize: width / 28,
-                  color: 'white',
                 }}>
                 Add
-              </Text>
+              </Type>
             </TouchableOpacity>
           )}
           {count > 0 && (

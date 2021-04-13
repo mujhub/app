@@ -21,6 +21,7 @@ import {
   SearchMenuScene,
   QrReaderScene,
   PlaceOrderScene,
+  OrderHistoryScene,
 } from '../scenes/';
 
 const Stack = createStackNavigator();
@@ -92,6 +93,11 @@ const AppNavigator = () => {
         <Stack.Screen
           name="PlaceOrderScreen"
           component={PlaceOrderScene}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="OrderHistoryScreen"
+          component={OrderHistoryScene}
           options={{headerShown: false}}
         />
       </Stack.Navigator>
