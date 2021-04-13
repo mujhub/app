@@ -63,6 +63,7 @@ const MenuScene = ({navigation, route}) => {
   const [outletMenu, setOutletMenu] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   const [hasItemsInCart, setHasItemsInCart] = useState(false);
   // const [priceSelector, setPriceSelector] = useState(true);
 
@@ -74,7 +75,7 @@ const MenuScene = ({navigation, route}) => {
       const res = await getEateryBySlug(slug);
       if (!res.exists) return;
       let data = res.data();
-      console.log(JSON.stringify(data));
+      // console.log(JSON.stringify(data));
       let info = data.info;
       if (info) setOutletInfo(info);
       let menu = data.menu;
@@ -153,6 +154,8 @@ const MenuScene = ({navigation, route}) => {
           {!isLoadingMenu && outletInfo ? (
             <View style={{minHeight: height}}>
               <MenuList
+                cartCount={cartCount}
+                setCartCount={setCartCount}
                 data={outletMenu}
                 navigation={navigation}
                 cartItems={cartItems}
@@ -178,9 +181,10 @@ const MenuScene = ({navigation, route}) => {
             }}>
           </View>
         )} */}
-
+        {/* {console.log(cartItems.length)} */}
         {cartItems.length ? (
           <ViewCartButton
+            cartCount={cartCount}
             data={cartItems}
             navigation={navigation}
             slug={route.params.slug}

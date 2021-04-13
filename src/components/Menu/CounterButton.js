@@ -96,8 +96,8 @@ const CounterBtn = ({onAdd, onSubtract, id, price, max}) => {
                 paddingHorizontal: 10,
                 // backgroundColor: PRIMARY + '55',
                 borderColor: PRIMARY,
-                borderWidth: 1,
-                borderRadius: 8,
+                borderWidth: 0.5,
+                borderRadius: 4,
               }}>
               <Type
                 style={{
