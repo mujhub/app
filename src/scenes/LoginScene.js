@@ -32,7 +32,7 @@ const LoginScene = ({navigation}) => {
 
   const signInWithPhoneNumber = async () => {
     if (phone !== '') {
-      if (validatePhone()) {
+      if (validatePhone(phone)) {
         try {
           setPhoneLoading(true);
           const confirmation = await auth().signInWithPhoneNumber(phone);
@@ -53,7 +53,7 @@ const LoginScene = ({navigation}) => {
 
   const confirmCode = async () => {
     if (otp !== '') {
-      if (validateOTP()) {
+      if (validateOTP(otp)) {
         try {
           setConfirmLoading(true);
           await confirm.confirm(otp);
