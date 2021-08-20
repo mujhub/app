@@ -7,3 +7,4 @@ export {default as SearchMenuScene} from './SearchMenuScene';
 export {default as QrReaderScene} from './QrReaderScene';
 export {default as PlaceOrderScene} from './PlaceOrderScene';
 export {default as OrderHistoryScene} from './OrderHistoryScene';
+export {default as ProfileScene} from './ProfileScene';

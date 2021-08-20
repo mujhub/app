@@ -10,7 +10,14 @@ import {GRAY} from '../../constants/colors';
 
 const {height, width} = Dimensions.get('screen');
 
-const Header = ({navigation, isBack, heading, style, iconName, iconAction}) => {
+const Header = ({
+  navigation,
+  isBack,
+  heading,
+  style,
+  iconNames,
+  iconActions,
+}) => {
   const {colors} = useTheme();
 
   const handleBack = () => {
@@ -54,18 +61,39 @@ const Header = ({navigation, isBack, heading, style, iconName, iconAction}) => {
           </TouchableOpacity>
         ) : null}
 
-        {iconName && (
-          <TouchableOpacity
-            activeOpacity={0.75}
-            style={{position: 'absolute', right: 0, paddingVertical: 8}}
-            onPress={typeof iconAction === 'function' ? iconAction : null}>
-            <Icon
-              name={iconName}
-              size={width / 20}
-              style={{margin: 5, color: colors.text}}
-            />
-          </TouchableOpacity>
-        )}
+        {iconNames
+          ? [0] && (
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={{position: 'absolute', right: 0, paddingVertical: 8}}
+                onPress={
+                  typeof iconActions[0] === 'function' ? iconActions[0] : null
+                }>
+                <Icon
+                  name={iconNames[0]}
+                  size={width / 20}
+                  style={{margin: 5, color: colors.text}}
+                />
+              </TouchableOpacity>
+            )
+          : null}
+
+        {iconNames
+          ? [1] && (
+              <TouchableOpacity
+                activeOpacity={0.75}
+                style={{position: 'absolute', left: 0, paddingVertical: 8}}
+                onPress={
+                  typeof iconActions[1] === 'function' ? iconActions[1] : null
+                }>
+                <Icon
+                  name={iconNames[1]}
+                  size={width / 20}
+                  style={{margin: 5, color: colors.text}}
+                />
+              </TouchableOpacity>
+            )
+          : null}
       </View>
     </>
   );

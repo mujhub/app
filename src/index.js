@@ -73,7 +73,7 @@ const App = () => {
   if (initializing) return null;
   return (
     <CustomTheme.Provider value={{setTheme, currTheme, themeValue, isDarkMode}}>
-      <UserAuth.Provider value={{user}}>
+      <UserAuth.Provider value={{user, setUser}}>
         <PaperProvider theme={currTheme}>
           <AppNavigator />
         </PaperProvider>

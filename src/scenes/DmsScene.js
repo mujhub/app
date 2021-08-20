@@ -84,10 +84,12 @@ const DmsScene = ({navigation}) => {
         <Header
           heading="DMS"
           navigation={navigation}
-          iconName="settings-sharp"
-          iconAction={() => {
-            setSettingsModal(true);
-          }}
+          iconNames={['settings-sharp']}
+          iconActions={[
+            () => {
+              setSettingsModal(true);
+            },
+          ]}
         />
         <View>
           {!data.isLoggedIn && (

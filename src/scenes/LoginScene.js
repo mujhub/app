@@ -58,7 +58,7 @@ const LoginScene = ({navigation}) => {
           setConfirmLoading(true);
           await confirm.confirm(otp);
           console.log(JSON.stringify(confirm));
-          navigation.replace('MainScreen');
+          navigation.reset({index: 0, routes: [{name: 'ProfileScreen'}]});
         } catch (error) {
           console.log(error);
           console.log('Invalid code.');

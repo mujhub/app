@@ -79,10 +79,15 @@ const EateriesScene = ({navigation}) => {
         <Header
           heading={FOOD.HEADING}
           navigation={navigation}
-          iconName="stopwatch-sharp"
-          iconAction={() => {
-            navigation.navigate('OrderHistoryScreen');
-          }}
+          iconNames={['stopwatch-sharp', 'person']}
+          iconActions={[
+            () => {
+              navigation.navigate('OrderHistoryScreen');
+            },
+            () => {
+              navigation.navigate('ProfileScreen');
+            },
+          ]}
         />
 
         <SearchBox
