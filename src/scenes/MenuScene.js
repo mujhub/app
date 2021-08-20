@@ -11,7 +11,7 @@ import {
   Linking,
   DeviceEventEmitter,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {useTheme, ActivityIndicator} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {CustomTheme} from '../contexts/CustomTheme';
@@ -161,7 +161,7 @@ const MenuScene = ({navigation, route}) => {
               />
             </View>
           ) : (
-            <Type>Loading...</Type>
+            <ActivityIndicator color={PRIMARY} size="large" />
           )}
         </ScrollView>
 

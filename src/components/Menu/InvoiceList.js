@@ -22,7 +22,7 @@ const InvoiceList = ({
     <View style={{minHeight: height - 30}}>
       <KeyboardAvoidingView behavior={'padding'} style={{flex: 1}}>
         <ScrollView>
-          <Type>{JSON.stringify(user.uid)}</Type>
+          <Type>{JSON.stringify(user)}</Type>
           <Type>{JSON.stringify(outletInfo)}</Type>
           <Type>{JSON.stringify(slug)}</Type>
           {cart.map((cartItem, i) => (
@@ -52,7 +52,7 @@ const InvoiceList = ({
                 textAlign: 'right',
                 textAlignVertical: 'bottom',
               }}>
-              {`${CART.INVOICE.PAYABLE_LABEL} ₹${cartTotal}`}
+              {`${CART.INVOICE.PAYABLE_LABEL}  ₹ ${cartTotal}`}
             </Type>
           </View>
           <PrimaryButton onPress={handlePlaceOrder}>
