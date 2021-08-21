@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {View, Text, ToastAndroid} from 'react-native';
-import auth from '@react-native-firebase/auth';
+import auth, {firebase} from '@react-native-firebase/auth';
 
 import {UserAuth} from '../contexts/UserAuth';
 
@@ -29,6 +29,15 @@ const LoginScene = ({navigation}) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        ToastAndroid.show('Phone Number verified!', ToastAndroid.SHORT);
+        navigation.navigate('MainScreen');
+      }
+    });
+  }, []);
 
   const signInWithPhoneNumber = async () => {
     if (phone !== '') {
