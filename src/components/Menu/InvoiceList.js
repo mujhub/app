@@ -38,6 +38,7 @@ const InvoiceList = ({
             }}>
             <InputBox
               viewStyle={{width: '50%'}}
+              defaultValue={additionalInfo}
               value={additionalInfo}
               onChangeText={(value) => setAdditionalInfo(value)}
               label={CART.INVOICE.ADDITIONAL}

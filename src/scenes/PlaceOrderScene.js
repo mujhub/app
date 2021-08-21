@@ -1,13 +1,13 @@
 import React, {useContext, useState, useEffect} from 'react';
 import {
   View,
-  Text,
   Dimensions,
   Alert,
   ScrollView,
   DeviceEventEmitter,
   KeyboardAvoidingView,
   ActivityIndicator,
+  ToastAndroid,
 } from 'react-native';
 
 import {UserAuth} from '../contexts/UserAuth';
@@ -26,6 +26,7 @@ import {isOpen} from '../utils/misc';
 import {PRIMARY} from '../constants/colors';
 import {CART} from '../constants/strings';
 import InvoiceList from '../components/Menu/InvoiceList';
+import {mmkvDefaultBlock} from '../utils/storage';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -53,6 +54,8 @@ const PlaceOrderScene = ({route, navigation}) => {
       if (info) setOutletInfo(info);
       let menu = data.menu;
       if (menu) setOutletMenu(menu);
+      let blockData = await mmkvDefaultBlock();
+      if (blockData.status) setAdditionalInfo(blockData.block);
     } catch (error) {
       console.log(error);
     } finally {
@@ -90,15 +93,20 @@ const PlaceOrderScene = ({route, navigation}) => {
 
   const handlePlaceOrder = async () => {
     try {
+      if (!additionalInfo) {
+        ToastAndroid.show('Please input block number', ToastAndroid.SHORT);
+        return;
+      }
       setPlacingOrder(true);
-      let success = await placeOrder({uid: user.uid, slug, data});
+      // let success = await placeOrder({uid: user.uid, slug, data});
+      let success = true;
       if (success) {
         DeviceEventEmitter.emit('event.clearCart');
         Alert.alert(CART.ORDER_SUCCESS.HEADING, CART.ORDER_SUCCESS.BODY, [
           {
             text: CART.ORDER_SUCCESS.ACTION,
             onPress: () => {
-              navigation.popToTop();
+              // navigation.popToTop();
             },
           },
         ]);

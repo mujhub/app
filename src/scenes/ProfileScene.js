@@ -12,13 +12,17 @@ import {
   PrimaryButton,
 } from '../components/Shared';
 import {PRIMARY} from '../constants/colors';
+import {mmkvDefaultBlock} from '../utils/storage';
 
 const {width, height} = Dimensions.get('screen');
 
 const ProfileScene = ({navigation}) => {
   const {user, setUser} = useContext(UserAuth);
 
-  const [userProfile, setUserProfile] = useState({displayName: ''});
+  const [userProfile, setUserProfile] = useState({
+    displayName: '',
+    defaultBlock: '',
+  });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleUpdateProfile = async () => {
@@ -31,6 +35,7 @@ const ProfileScene = ({navigation}) => {
       await auth().currentUser.updateProfile({
         displayName: userProfile.displayName,
       });
+      await mmkvDefaultBlock(userProfile.defaultBlock);
       let updatedUser = await auth().currentUser;
       setUser(updatedUser);
     } catch (error) {
@@ -50,8 +55,20 @@ const ProfileScene = ({navigation}) => {
     }
   };
 
+  const initUserData = async () => {
+    let userData = {
+      displayName: user?.displayName,
+      defaultBlock: '',
+    };
+    try {
+      let blockData = await mmkvDefaultBlock();
+      if (blockData.status)
+        setUserProfile({...userData, defaultBlock: blockData.block});
+    } catch (error) {}
+  };
+
   useEffect(() => {
-    setUserProfile({displayName: user?.displayName});
+    initUserData();
   }, [user]);
 
   return (
@@ -82,6 +99,14 @@ const ProfileScene = ({navigation}) => {
             value={user.phoneNumber}
             label={'Phone'}
             isRequired
+          />
+          <InputBox
+            defaultValue={userProfile.defaultBlock}
+            value={userProfile.defaultBlock}
+            onChangeText={(value) =>
+              setUserProfile({...userProfile, defaultBlock: `${value}`})
+            }
+            label={'Default Block'}
           />
           <PrimaryButton
             loading={isLoading}

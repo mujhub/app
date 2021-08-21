@@ -52,3 +52,18 @@ export const mmkvDMSDetails = async (
     return {status: false};
   }
 };
+
+export const mmkvDefaultBlock = async (block = null) => {
+  try {
+    if (block) {
+      await MMKV.setStringAsync('block', block);
+      return {status: true};
+    } else {
+      const enc_block = await MMKV.getStringAsync('block');
+      return {status: true, block: enc_block};
+    }
+  } catch (error) {
+    console.log(error);
+    return {status: false};
+  }
+};

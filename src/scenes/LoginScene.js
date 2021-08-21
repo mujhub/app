@@ -80,7 +80,7 @@ const LoginScene = ({navigation}) => {
         value={phone}
         onChangeText={(value) => setPhone(value)}
         label={'Phone Number'}
-        // error={errors.username}
+        keyboardType="phone-pad"
         isRequired={true}
       />
       <PrimaryButton onPress={signInWithPhoneNumber} loading={phoneLoading}>
@@ -93,7 +93,7 @@ const LoginScene = ({navigation}) => {
             value={otp}
             onChangeText={(value) => setOTP(value)}
             label={'OTP'}
-            // error={errors.username}
+            keyboardType="numeric"
             isRequired={true}
           />
           <PrimaryButton onPress={confirmCode} loading={confirmLoading}>
