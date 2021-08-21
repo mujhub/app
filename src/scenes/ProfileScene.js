@@ -44,7 +44,7 @@ const ProfileScene = ({navigation}) => {
   const handleSignOut = async () => {
     try {
       await auth().signOut();
-      navigation.replace('LoginScreen');
+      navigation.reset({index: 0, routes: [{name: 'LoginScreen'}]});
     } catch (error) {
       console.log(error);
     }
