@@ -67,3 +67,18 @@ export const mmkvDefaultBlock = async (block = null) => {
     return {status: false};
   }
 };
+
+export const mmkvMessMenuSubscription = async (value = null) => {
+  try {
+    if (value) {
+      await MMKV.setStringAsync('messMenuSubscription', value);
+      return {status: true};
+    } else {
+      const enc_value = await MMKV.getStringAsync('messMenuSubscription');
+      return {status: true, value: enc_value};
+    }
+  } catch (error) {
+    console.log(error);
+    return {status: false};
+  }
+};

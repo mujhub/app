@@ -53,6 +53,7 @@ export const MESS = {
   NULL_MENU: 'Not yet updated.',
   EXPAND_CARD: 'VIEW ALL',
   CONTRACT_CARD: 'CLOSE',
+  NOTIFICATION_SUBSCRIPTION: 'Subscribe to update notifications',
 };
 
 export const ATTENDANCE = {

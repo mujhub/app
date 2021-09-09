@@ -7,6 +7,7 @@ import {
   Easing,
   TouchableWithoutFeedback,
   ActivityIndicator,
+  Switch,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -18,6 +19,9 @@ import {MESS} from '../../constants/strings';
 import {VIBRANTS} from '../../constants/colors';
 import {logMessMenu} from '../../services/analytics';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import ToggleSwitch from '../Shared/ToggleSwitch';
+import {mmkvMessMenuSubscription} from '../../utils/storage';
+import {subscribeMessUpdate} from '../../services/messaging';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -96,9 +100,18 @@ const MessMenuCard = () => {
   const [ongoingMeal, setOngoingMeal] = useState(0);
   const [menuData, setMenuData] = useState([]);
   const [updatedAt, setUpdatedAt] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
 
   // Refresh mess menu
   const [isRefreshEnabled, setIsRefreshEnabled] = useState(false);
+
+  const updateSubscription = async (value) => {
+    const {status} = await mmkvMessMenuSubscription(`${value}`);
+    if (status) {
+      setIsSubscribed(value);
+      subscribeMessUpdate(value);
+    }
+  };
 
   const ContractedCardData = () => {
     return (
@@ -171,7 +184,7 @@ const MessMenuCard = () => {
 
   const ExpandedCardData = () => {
     return Object.keys(menuData).map((category, i) => (
-      <View key={i.toString()} style={{width: '100%', position: 'relative'}}>
+      <View key={i.toString()} style={{minWidth: '100%', position: 'relative'}}>
         <View
           style={{
             display: 'flex',
@@ -282,6 +295,9 @@ const MessMenuCard = () => {
         }
       }
       logMessMenu({meal: menuData[ongoingMeal].name});
+      mmkvMessMenuSubscription().then(({status, value}) => {
+        if (status) setIsSubscribed(value);
+      });
     } catch (error) {}
   }, [menuData, ongoingMeal]);
 
@@ -350,6 +366,12 @@ const MessMenuCard = () => {
             <UpdatedAtDate />
           </Type>
           <ExpandedCardData />
+          <ToggleSwitch
+            value={isSubscribed}
+            label={MESS.NOTIFICATION_SUBSCRIPTION}
+            labelColor={colors.disabled}
+            onChange={updateSubscription}
+          />
         </Animated.View>
 
         <View
