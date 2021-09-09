@@ -21,6 +21,7 @@ export const light = {
     bottomNavigation: GRAY.T1,
     elevated: GRAY.T1,
   },
+  isDark: false,
 };
 
 export const dark = {
@@ -42,6 +43,7 @@ export const dark = {
     bottomNavigation: BACKGROUND.PRIMARY,
     elevated: GRAY.T9,
   },
+  isDark: true,
 };
 
 export const amoled = {
@@ -63,6 +65,7 @@ export const amoled = {
     bottomNavigation: GRAY.T10,
     elevated: GRAY.T9,
   },
+  isDark: true,
 };
 
 export const ROUNDNESS = 16;
