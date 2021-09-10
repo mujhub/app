@@ -5,15 +5,17 @@ import {useTheme} from 'react-native-paper';
 
 import {Type, ItemSeparator} from '.';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {BUNDLE_IDENTIFIER} from '../../constants/info';
+import {APP} from '../../constants/strings';
 
 const {width, height} = Dimensions.get('screen');
 
 const UpdateAppOption = () => {
   const onShare = async () => {
     const sharedMessage = {
-      message: 'MUJ HUB SAYS ELLO MATE',
+      title: APP.SHARE_APP.TITTLE,
+      message: APP.SHARE_APP.MESSAGE,
       // url: image,
-      title: 'Wow, did you see that?',
     };
     try {
       const result = await Share.open(sharedMessage);
@@ -43,7 +45,9 @@ const UpdateAppOption = () => {
           alignItems: 'flex-start',
         }}>
         <TouchableOpacity
-          onPress={() => Linking.openURL('market://details?id=com.whatsapp')}>
+          onPress={() =>
+            Linking.openURL(`market://details?id=${BUNDLE_IDENTIFIER}`)
+          }>
           <Type
             style={{
               color: colors.primary,

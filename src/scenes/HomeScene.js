@@ -42,10 +42,13 @@ const HomeScene = ({navigation}) => {
         <Header
           heading={HOME.HEADING}
           navigation={navigation}
-          iconNames={['settings-sharp']}
+          iconNames={['settings-sharp', 'person']}
           iconActions={[
             () => {
               setSettingsModal(true);
+            },
+            () => {
+              navigation.navigate('ProfileScreen');
             },
           ]}
         />

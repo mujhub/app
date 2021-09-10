@@ -14,6 +14,7 @@ import {LoginForm, Dashboard, WebViews} from '../components/Dms';
 import {DMS} from '../constants/strings';
 
 import {mmkvDMSDetails} from '../utils/storage';
+import {logoutScript} from '../constants/scripts';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -55,7 +56,17 @@ const DmsScene = ({navigation}) => {
       <ThemedModal visible={settingsModal} setVisible={setSettingsModal}>
         <Type style={{fontSize: width / 28, fontWeight: 'bold'}}>SETTINGS</Type>
         <View style={{paddingVertical: 15}}>
+          {data.isLoggedIn && (
+            <PrimaryButton
+              onPress={() => {
+                MainWVRef.current.injectJavaScript(logoutScript);
+                setSettingsModal(false);
+              }}>
+              Logout
+            </PrimaryButton>
+          )}
           <PrimaryButton
+            mode="outlined"
             onPress={async () => {
               const res = await mmkvDMSDetails(null, null, null, true);
               if (res.status) {

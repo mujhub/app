@@ -96,3 +96,15 @@ export const CART = {
     NOT_ACCEPTING: 'The restaurant is not not accepting orders at the moment',
   },
 };
+
+export const APP = {
+  SUPPORT_EMAIL: {
+    SUBJECT: 'Bug%20Report',
+    BODY:
+      'Brief Description - \n\nSteps to reproduce it - \n\nSystem Information -',
+  },
+  SHARE_APP: {
+    TITTLE: 'Wow, did you see that?',
+    MESSAGE: 'MUJ HUB SAYS ELLO MATE',
+  },
+};

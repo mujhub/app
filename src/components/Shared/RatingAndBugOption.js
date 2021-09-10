@@ -4,6 +4,8 @@ import {View, Dimensions, TouchableOpacity, Linking} from 'react-native';
 
 import {useTheme} from 'react-native-paper';
 import {Type} from '.';
+import {SUPPORT_EMAIL, BUNDLE_IDENTIFIER} from '../../constants/info';
+import {APP} from '../../constants/strings';
 const {width, height} = Dimensions.get('screen');
 
 const HelpAndFeedbackOption = () => {
@@ -11,7 +13,9 @@ const HelpAndFeedbackOption = () => {
   return (
     <>
       <TouchableOpacity
-        onPress={() => Linking.openURL('market://details?id=com.whatsapp')}>
+        onPress={() =>
+          Linking.openURL(`market://details?id=${BUNDLE_IDENTIFIER}`)
+        }>
         {/* On Press - app store */}
         <View>
           <Type style={{marginTop: 10, marginBottom: 5, fontSize: width / 24}}>
@@ -31,7 +35,7 @@ const HelpAndFeedbackOption = () => {
       <TouchableOpacity
         onPress={() =>
           Linking.openURL(
-            'mailto:mujhub@gmail.com?subject=Bug%20Report&body=Brief Description - \n\nSteps to reproduce it - \n\nSystem Information -',
+            `mailto:${SUPPORT_EMAIL}?subject=${APP.SUPPORT_EMAIL.SUBJECT}&body=${APP.SUPPORT_EMAIL.BODY}`,
           )
         }>
         <View>

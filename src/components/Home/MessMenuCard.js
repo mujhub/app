@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   Switch,
+  ToastAndroid,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -110,6 +111,10 @@ const MessMenuCard = () => {
     if (status) {
       setIsSubscribed(value);
       subscribeMessUpdate(value);
+      ToastAndroid.show(
+        value ? 'Subscribed' : 'Unsubscribed',
+        ToastAndroid.SHORT,
+      );
     }
   };
 

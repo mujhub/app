@@ -199,11 +199,13 @@ const OutletHero = ({
                   mode="outlined"
                   onPress={() => {
                     Linking.canOpenURL('upi://pay').then((can) => {
-                      if (can) {
-                        logPayment({name: data.slug});
-                        Linking.openURL(
-                          'upi://pay?pa=dustspeck@kotak&pn=Vaibhav Garg',
-                        );
+                      if (outletInfo.payments) {
+                        if (can && outletInfo.payments.upi) {
+                          logPayment({name: data.slug});
+                          Linking.openURL(
+                            `upi://pay?pa=${outletInfo.payments.upi}&pn=${outletInfo.title}&tn=Via MUJ HUB&cu=INR`,
+                          );
+                        }
                       }
                     });
                   }}>

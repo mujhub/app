@@ -59,10 +59,12 @@ const OutletHeader = ({
         <TouchableOpacity
           onPress={() => {
             Linking.canOpenURL('upi://pay').then((can) => {
-              if (can) {
-                Linking.openURL(
-                  'upi://pay?pa=dustspeck@kotak&pn=Vaibhav Garg&tn=Via MUJ HUB&cu=INR',
-                );
+              if (outletInfo.payments) {
+                if (can && outletInfo.payments.upi) {
+                  Linking.openURL(
+                    `upi://pay?pa=${outletInfo.payments.upi}&pn=${outletInfo.title}&tn=Via MUJ HUB&cu=INR`,
+                  );
+                }
               }
             });
           }}

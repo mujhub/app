@@ -23,15 +23,17 @@ const SearchBoxButton = ({handleSearch}) => {
             width: '100%',
             height: 45,
             backgroundColor: colors.surface,
+            borderColor: colors.text,
+            borderWidth: 0.5,
             borderRadius: ROUNDNESS / 2,
             justifyContent: 'center',
           }}>
-          <Type style={{marginHorizontal: ROUNDNESS, color: colors.disabled}}>
+          <Type style={{marginHorizontal: ROUNDNESS, color: colors.text}}>
             <Icon
               name="search"
               style={{
                 marginHorizontal: ROUNDNESS,
-                color: colors.disabled,
+                color: colors.text,
               }}
             />
             {'  SEARCH ITEMS'}

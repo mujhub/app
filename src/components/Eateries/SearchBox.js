@@ -29,7 +29,21 @@ const SearchBox = ({
           justifyContent: 'center',
           marginTop: 8,
         }}>
-        {searchQuery !== '' && isSearching ? (
+        {/* {searchQuery !== '' && isSearching ? (
+          <Icon
+            name="chevron-back"
+            color={colors.text}
+            size={24}
+            onPress={handleBack}
+            style={{
+              textAlignVertical: 'center',
+              marginRight: 10,
+              marginTop: 15,
+              marginLeft: 0,
+            }}
+          />
+        ) : null} */}
+        {isSearching ? (
           <Icon
             name="chevron-back"
             color={colors.text}

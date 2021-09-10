@@ -101,13 +101,13 @@ const Dashboard = (props) => {
           />
         </Card>
 
-        <PrimaryButton
+        {/* <PrimaryButton
           style={{marginTop: 24}}
           onPress={() => {
             props.MainWVRef.current.injectJavaScript(logoutScript);
           }}>
           Logout
-        </PrimaryButton>
+        </PrimaryButton> */}
 
         <Type
           style={{
