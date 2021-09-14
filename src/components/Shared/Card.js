@@ -9,21 +9,22 @@ const Card = ({heading, children}) => {
   const {colors} = useTheme();
   return (
     <View style={{width: '100%'}}>
-      <Type
-        style={{
-          // margin: 10,
-          marginBottom: 5,
-          // marginTop: 25,
-          fontSize: width / 28,
-          color: colors.disabled,
-        }}>
-        {heading}
-      </Type>
+      {heading && (
+        <Type
+          style={{
+            marginBottom: 5,
+            fontSize: width / 28,
+            color: colors.disabled,
+          }}>
+          {heading}
+        </Type>
+      )}
       <View
         style={{
           backgroundColor: colors.card,
           padding: 10,
           borderRadius: 10,
+          marginTop: heading ? 0 : 25,
         }}>
         {children}
       </View>

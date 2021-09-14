@@ -26,6 +26,10 @@ export const OUTLETS = {
   CALL: 'CALL OUTLET',
 };
 
+export const ORDER = {
+  HEADING: 'ORDER',
+};
+
 export const DMS = {
   USERNAME: 'Registration Number',
   PASSWORD: 'Password',
@@ -43,7 +47,7 @@ export const DMS = {
     "We're constantly improving the DMS integration. Make sure you keep the app updated!",
   SECURE_MESSAGE:
     'Your account details are encrypted and saved securely on your device.',
-  CLEAR_SESSION_BUTTON: 'Forget current session',
+  CLEAR_SESSION_BUTTON: 'Forget login credentials',
   CLEAR_SESSION:
     'This will will delete the session and the account details that are saved on your device.',
 };
@@ -93,7 +97,7 @@ export const CART = {
     PAYABLE_LABEL: 'Order Total',
     ADDITIONAL: 'Block Number: ',
     ACTION: 'PLACE ORDER',
-    NOT_ACCEPTING: 'The restaurant is not not accepting orders at the moment',
+    NOT_ACCEPTING: 'The restaurant is not not accepting orders at the moment.',
   },
 };
 

@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 
 import {UserAuth} from '../contexts/UserAuth';
-import {getEateryBySlug, placeOrder} from '../services/firestore';
+import {getEateryBySlug} from '../services/firestore';
+import {placeOrder} from '../services/api';
 
 import {
   Type,
@@ -19,12 +20,13 @@ import {
   SceneBuilder,
   PrimaryButton,
   InputBox,
+  Header,
 } from '../components/Shared';
 import ItemRow from '../components/Menu/ItemRow';
 
 import {isOpen} from '../utils/misc';
 import {PRIMARY} from '../constants/colors';
-import {CART} from '../constants/strings';
+import {CART, ORDER} from '../constants/strings';
 import InvoiceList from '../components/Menu/InvoiceList';
 import {mmkvDefaultBlock} from '../utils/storage';
 
@@ -98,23 +100,30 @@ const PlaceOrderScene = ({route, navigation}) => {
         return;
       }
       setPlacingOrder(true);
-      // let success = await placeOrder({uid: user.uid, slug, data});
-      let success = true;
-      if (success) {
-        DeviceEventEmitter.emit('event.clearCart');
-        Alert.alert(CART.ORDER_SUCCESS.HEADING, CART.ORDER_SUCCESS.BODY, [
-          {
-            text: CART.ORDER_SUCCESS.ACTION,
-            onPress: () => {
-              // navigation.popToTop();
-            },
-          },
-        ]);
-      } else {
-        Alert.alert(CART.ORDER_FAILURE.HEADING, CART.ORDER_FAILURE.BODY, [
-          {text: CART.ORDER_FAILURE.ACTION, onPress: () => navigation.goBack()},
-        ]);
-      }
+      console.log(slug, data);
+      let itemIds = data.map((item) => Object.keys(item)[0]);
+      let items = [];
+      itemIds.forEach((itemId, i) => {
+        items.push({itemId, variants: data[i][itemId].priceIndices});
+      });
+      console.log(slug, items);
+      let success = await placeOrder({items, shop: slug});
+      console.log(success);
+      // if (success) {
+      //   DeviceEventEmitter.emit('event.clearCart');
+      //   Alert.alert(CART.ORDER_SUCCESS.HEADING, CART.ORDER_SUCCESS.BODY, [
+      //     {
+      //       text: CART.ORDER_SUCCESS.ACTION,
+      //       onPress: () => {
+      //         // navigation.popToTop();
+      //       },
+      //     },
+      //   ]);
+      // } else {
+      //   Alert.alert(CART.ORDER_FAILURE.HEADING, CART.ORDER_FAILURE.BODY, [
+      //     {text: CART.ORDER_FAILURE.ACTION, onPress: () => navigation.goBack()},
+      //   ]);
+      // }
     } catch (error) {
       console.log(error);
     } finally {
@@ -141,6 +150,8 @@ const PlaceOrderScene = ({route, navigation}) => {
     <View>
       <PrivateNavigator user={user} navigation={navigation} />
       <SceneBuilder>
+        <Header heading={ORDER.HEADING} navigation={navigation} />
+
         {!loading ? (
           isAccepting ? (
             <InvoiceList
@@ -154,7 +165,9 @@ const PlaceOrderScene = ({route, navigation}) => {
               slug={slug}
             />
           ) : (
-            <Type>{CART.INVOICE.NOT_ACCEPTING}</Type>
+            <View style={{marginVertical: 50, marginHorizontal: 7}}>
+              <Type style={{fontSize: 22}}>{CART.INVOICE.NOT_ACCEPTING}</Type>
+            </View>
           )
         ) : (
           <ActivityIndicator color={PRIMARY} size={28} />

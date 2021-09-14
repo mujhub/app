@@ -2,9 +2,14 @@ import React from 'react';
 import {View, Dimensions, KeyboardAvoidingView, ScrollView} from 'react-native';
 
 import ItemRow from './ItemRow';
-import {Type, InputBox, PrimaryButton} from '../Shared';
+import {Type, InputBox, PrimaryButton, ItemSeparator, Card} from '../Shared';
 
 import {CART} from '../../constants/strings';
+import {useTheme} from 'react-native-paper';
+import Icon from 'react-native-vector-icons/Ionicons';
+import {ROUNDNESS} from '../../styles/theme';
+import {mmkvDefaultBlock} from '../../utils/storage';
+import OrderHeaderCard from '../Order/OrderHeaderCard';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -18,17 +23,41 @@ const InvoiceList = ({
   outletInfo,
   slug,
 }) => {
+  const {colors} = useTheme();
   return (
-    <View style={{minHeight: height - 30}}>
+    <View style={{minHeight: height - 50, marginTop: 20}}>
       <KeyboardAvoidingView behavior={'padding'} style={{flex: 1}}>
-        <ScrollView>
-          <Type>{JSON.stringify(user)}</Type>
+        <OrderHeaderCard outletInfo={outletInfo} user={user} />
+        {/* <Type>{JSON.stringify(cart)}</Type> */}
+        {/* <Type>{JSON.stringify(user)}</Type>
           <Type>{JSON.stringify(outletInfo)}</Type>
-          <Type>{JSON.stringify(slug)}</Type>
-          {cart.map((cartItem, i) => (
-            <ItemRow item={cartItem} i={i} />
-          ))}
-          <Type>{`${CART.INVOICE.TOTAL_LABEL} ${cartTotal}`}</Type>
+          <Type>{JSON.stringify(slug)}</Type> */}
+
+        <ScrollView
+          stickyHeaderIndices={[0]}
+          showsVerticalScrollIndicator={false}>
+          <View style={{backgroundColor: colors.background}}>
+            <Type
+              style={{
+                marginBottom: 5,
+                fontSize: width / 28,
+                color: colors.disabled,
+              }}>
+              ORDER ITEMS
+            </Type>
+          </View>
+          <Card>
+            <View>
+              {cart.map((cartItem, i) => (
+                <ItemRow
+                  viewStyle={{paddingVertical: 5, paddingHorizontal: 0}}
+                  item={cartItem}
+                  i={i}
+                  key={i}
+                />
+              ))}
+            </View>
+          </Card>
         </ScrollView>
         <View style={{minHeight: 200}}>
           <View

@@ -5,13 +5,16 @@ import {Type} from '../Shared';
 
 const {width, height} = Dimensions.get('screen');
 
-const ItemRow = ({item, i}) => {
+const ItemRow = ({item, i, viewStyle}) => {
   const {colors} = useTheme();
 
   return (
     <View
       key={i.toString()}
-      style={{paddingVertical: 5, paddingHorizontal: 10}}>
+      style={{paddingVertical: 5, paddingHorizontal: 10}}
+      style={
+        viewStyle ? {...viewStyle} : {paddingVertical: 5, paddingHorizontal: 10}
+      }>
       <View
         style={{
           flexDirection: 'row',
@@ -19,7 +22,7 @@ const ItemRow = ({item, i}) => {
           justifyContent: 'space-between',
           paddingVertical: 2,
           paddingHorizontal: 5,
-          backgroundColor: i % 2 ? null : colors.disabled + '55',
+          backgroundColor: (i + 1) % 2 ? null : colors.disabled + '55',
         }}>
         <View
           style={{
