@@ -35,6 +35,7 @@ const UpdateAppOption = () => {
           fontSize: width / 30,
           color: colors.disabled,
         }}>
+        {/* ROLL OUT UPDATE CHANGES*/}
         MUJ HUB v1 (Beta)
       </Type>
       <View

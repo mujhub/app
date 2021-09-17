@@ -1,3 +1,3 @@
-export const APP_VERSION = 1;
+export const APP_VERSION = 2; // ROLL OUT UPDATE CHANGES
 export const BUNDLE_IDENTIFIER = 'com.mujhub';
 export const SUPPORT_EMAIL = 'mujhub@gmail.com';
