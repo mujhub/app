@@ -19,6 +19,7 @@ const InvoiceList = ({
   additionalInfo,
   setAdditionalInfo,
   handlePlaceOrder,
+  placingOrder,
   user,
   outletInfo,
   slug,
@@ -85,7 +86,10 @@ const InvoiceList = ({
               {`${CART.INVOICE.PAYABLE_LABEL}  ₹ ${cartTotal}`}
             </Type>
           </View>
-          <PrimaryButton onPress={handlePlaceOrder}>
+          <PrimaryButton
+            onPress={handlePlaceOrder}
+            loading={placingOrder}
+            loadingText="Please Wait...">
             {CART.INVOICE.ACTION}
           </PrimaryButton>
         </View>

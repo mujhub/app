@@ -2,7 +2,11 @@ import React from 'react';
 import {View, Text} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-const ItemSeparator = ({widthPercentage = '90%', opacityHex = '55'}) => {
+const ItemSeparator = ({
+  widthPercentage = '90%',
+  opacityHex = '55',
+  viewStyle,
+}) => {
   const {colors} = useTheme();
   return (
     <View
@@ -11,6 +15,7 @@ const ItemSeparator = ({widthPercentage = '90%', opacityHex = '55'}) => {
         height: 0.5,
         backgroundColor: colors.disabled + opacityHex,
         alignSelf: 'center',
+        ...viewStyle,
       }}></View>
   );
 };

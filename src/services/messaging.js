@@ -9,3 +9,5 @@ export const subscribeMessUpdate = (value) => {
     console.log('unsubscribed');
   }
 };
+
+export default messaging;

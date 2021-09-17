@@ -8,9 +8,11 @@ import {
   KeyboardAvoidingView,
   ActivityIndicator,
   ToastAndroid,
+  StatusBar,
 } from 'react-native';
 
 import {UserAuth} from '../contexts/UserAuth';
+import messaging from '../services/messaging';
 import {getEateryBySlug} from '../services/firestore';
 import {placeOrder} from '../services/api';
 
@@ -29,6 +31,7 @@ import {PRIMARY} from '../constants/colors';
 import {CART, ORDER} from '../constants/strings';
 import InvoiceList from '../components/Menu/InvoiceList';
 import {mmkvDefaultBlock} from '../utils/storage';
+import {useTheme} from 'react-native-paper';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -42,6 +45,8 @@ const PlaceOrderScene = ({route, navigation}) => {
   const [invoice, setInvoice] = useState([]);
   const [placingOrder, setPlacingOrder] = useState(false);
   const [additionalInfo, setAdditionalInfo] = useState('');
+
+  const {colors, isDark} = useTheme();
 
   const {slug, data, cartTotal} = route.params;
 
@@ -107,23 +112,31 @@ const PlaceOrderScene = ({route, navigation}) => {
         items.push({itemId, variants: data[i][itemId].priceIndices});
       });
       console.log(slug, items);
-      let success = await placeOrder({items, shop: slug});
+      let block = additionalInfo;
+      let token = null;
+      try {
+        token = await messaging().getToken();
+      } catch (error) {
+        console.log(error);
+      }
+      console.log(token);
+      let success = await placeOrder({items, shop: slug, block, token});
       console.log(success);
-      // if (success) {
-      //   DeviceEventEmitter.emit('event.clearCart');
-      //   Alert.alert(CART.ORDER_SUCCESS.HEADING, CART.ORDER_SUCCESS.BODY, [
-      //     {
-      //       text: CART.ORDER_SUCCESS.ACTION,
-      //       onPress: () => {
-      //         // navigation.popToTop();
-      //       },
-      //     },
-      //   ]);
-      // } else {
-      //   Alert.alert(CART.ORDER_FAILURE.HEADING, CART.ORDER_FAILURE.BODY, [
-      //     {text: CART.ORDER_FAILURE.ACTION, onPress: () => navigation.goBack()},
-      //   ]);
-      // }
+      if (success) {
+        DeviceEventEmitter.emit('event.clearCart');
+        Alert.alert(CART.ORDER_SUCCESS.HEADING, CART.ORDER_SUCCESS.BODY, [
+          {
+            text: CART.ORDER_SUCCESS.ACTION,
+            onPress: () => {
+              navigation.popToTop();
+            },
+          },
+        ]);
+      } else {
+        Alert.alert(CART.ORDER_FAILURE.HEADING, CART.ORDER_FAILURE.BODY, [
+          {text: CART.ORDER_FAILURE.ACTION, onPress: () => navigation.goBack()},
+        ]);
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -149,6 +162,11 @@ const PlaceOrderScene = ({route, navigation}) => {
   return (
     <View>
       <PrivateNavigator user={user} navigation={navigation} />
+      <StatusBar
+        barStyle={isDark ? 'light-content' : 'dark-content'}
+        backgroundColor="transparent"
+        translucent
+      />
       <SceneBuilder>
         <Header heading={ORDER.HEADING} navigation={navigation} />
 
@@ -160,6 +178,7 @@ const PlaceOrderScene = ({route, navigation}) => {
               additionalInfo={additionalInfo}
               setAdditionalInfo={setAdditionalInfo}
               handlePlaceOrder={handlePlaceOrder}
+              placingOrder={placingOrder}
               user={user}
               outletInfo={outletInfo}
               slug={slug}
