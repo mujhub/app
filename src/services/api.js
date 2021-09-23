@@ -24,7 +24,6 @@ export const placeOrder = async ({items, shop, block, token}) => {
 export const getOrderHistory = async () => {
   const authToken = await auth().currentUser.getIdToken();
   const userId = await auth().currentUser.uid;
-  console.log(userId, authToken);
   let orders = [];
   try {
     const res = await axios({
@@ -32,7 +31,7 @@ export const getOrderHistory = async () => {
       method: 'get',
       headers: {Authorization: `Bearer ${authToken}`},
     });
-    console.log(res.data);
+    console.log(JSON.stringify(res.data));
     const {data} = res.data;
     orders = data.orders;
   } catch (error) {

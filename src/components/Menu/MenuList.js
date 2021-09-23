@@ -26,6 +26,7 @@ const MenuList = ({
   setCartTotal,
   cartCount,
   setCartCount,
+  hasCounter,
 }) => {
   const {colors} = useTheme();
 
@@ -42,7 +43,6 @@ const MenuList = ({
         break;
       }
     }
-    setCartCount(cartCount + 1);
     let item = {[id]: {priceIndices: []}, ...items[cartIndex]};
     item[id].priceIndices.push(priceIndex);
     setCartTotal(cartTotal + price);
@@ -54,7 +54,6 @@ const MenuList = ({
   const subtractItem = ({id, priceIndex, price}) => {
     let items = cartItems;
     let cartIndex = -1;
-    setCartCount(cartCount - 1);
     for (let i = 0; i < items.length; i++) {
       const item = items[i];
       if (item[id]) {
@@ -145,6 +144,7 @@ const MenuList = ({
                     i={i}
                     item={item}
                     showCounter={!isSearching}
+                    isOnline={hasCounter}
                     addItem={addItem}
                     subtractItem={subtractItem}
                   />

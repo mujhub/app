@@ -109,7 +109,8 @@ const MessMenuCard = () => {
   const updateSubscription = async (value) => {
     const {status} = await mmkvMessMenuSubscription(`${value}`);
     if (status) {
-      setIsSubscribed(value);
+      console.log(typeof status, status);
+      setIsSubscribed(value === 'true' || value ? true : false);
       subscribeMessUpdate(value);
       ToastAndroid.show(
         value ? 'Subscribed' : 'Unsubscribed',
@@ -267,6 +268,9 @@ const MessMenuCard = () => {
   };
 
   const getData = async () => {
+    const {status} = await mmkvMessMenuSubscription();
+    console.log('status', status);
+    if (status) setIsSubscribed(true);
     setIsLoading(true);
     const res = await getMessMenu();
     console.log(JSON.stringify(res.data()));
@@ -301,7 +305,7 @@ const MessMenuCard = () => {
       }
       logMessMenu({meal: menuData[ongoingMeal].name});
       mmkvMessMenuSubscription().then(({status, value}) => {
-        if (status) setIsSubscribed(value);
+        if (status) setIsSubscribed(value === 'true' ? true : false);
       });
     } catch (error) {}
   }, [menuData, ongoingMeal]);

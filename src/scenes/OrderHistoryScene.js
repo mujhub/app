@@ -51,11 +51,7 @@ const OrderHistoryScene = ({navigation}) => {
         heading="HISTORY"
         navigation={navigation}
         iconNames={['refresh']}
-        iconActions={[
-          () => {
-            fetchData();
-          },
-        ]}
+        iconActions={[fetchData]}
       />
       {!isLoading ? (
         <FlatList

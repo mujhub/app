@@ -20,7 +20,22 @@ const ViewCartButton = ({slug, data, cartTotal, navigation, cartCount}) => {
           justifyContent: 'space-between',
           alignItems: 'center',
         }}>
-        <Type>Cart: {cartCount} Items</Type>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            width: '50%',
+            justifyContent: 'space-between',
+          }}>
+          <View>
+            <Type style={{textAlign: 'center'}}>{cartCount}</Type>
+            <Type>Items</Type>
+          </View>
+          <View>
+            <Type style={{textAlign: 'center'}}>₹ {cartTotal}</Type>
+            <Type>Total Price</Type>
+          </View>
+        </View>
         <TouchableOpacity
           style={{
             paddingVertical: 5,

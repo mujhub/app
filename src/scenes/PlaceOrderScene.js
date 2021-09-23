@@ -41,6 +41,7 @@ const PlaceOrderScene = ({route, navigation}) => {
   const [outletInfo, setOutletInfo] = useState(null);
   const [outletMenu, setOutletMenu] = useState(null);
   const [isAccepting, setIsAccepting] = useState(false);
+  const [isStoreOpen, setIsStoreOpen] = useState(false);
   const [cart, setCart] = useState([]);
   const [invoice, setInvoice] = useState([]);
   const [placingOrder, setPlacingOrder] = useState(false);
@@ -150,7 +151,8 @@ const PlaceOrderScene = ({route, navigation}) => {
 
   useEffect(() => {
     if (!loading) {
-      let {opens_at, closes_at} = outletInfo;
+      let {opens_at, closes_at, is_open} = outletInfo;
+      setIsStoreOpen(is_open);
       let is_accepting = isOpen({opens_at, closes_at});
       setIsAccepting(is_accepting);
       buildCart();
@@ -167,11 +169,12 @@ const PlaceOrderScene = ({route, navigation}) => {
         backgroundColor="transparent"
         translucent
       />
+      {/* {isStoreOpen && ( */}
       <SceneBuilder>
         <Header heading={ORDER.HEADING} navigation={navigation} />
 
         {!loading ? (
-          isAccepting ? (
+          isAccepting && isStoreOpen ? (
             <InvoiceList
               cart={cart}
               cartTotal={cartTotal}
@@ -192,6 +195,7 @@ const PlaceOrderScene = ({route, navigation}) => {
           <ActivityIndicator color={PRIMARY} size={28} />
         )}
       </SceneBuilder>
+      {/* )} */}
     </View>
   );
 };

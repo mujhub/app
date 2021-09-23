@@ -46,22 +46,23 @@ const EateriesScene = ({navigation}) => {
     fetchData();
   }, []);
 
-  const renderer = ({item}) => (
-    <TouchableOpacity
-      key={item.slug}
-      activeOpacity={0.75}
-      onPress={() => {
-        logMenuFetch({name: item.slug});
-        navigation.navigate('MenuScene', {info: {...item}, slug: item.slug});
-      }}>
+  const renderer = ({item}) =>
+    item.is_visible && (
+      <TouchableOpacity
+        key={item.slug}
+        activeOpacity={0.75}
+        onPress={() => {
+          logMenuFetch({name: item.slug});
+          navigation.navigate('MenuScene', {info: {...item}, slug: item.slug});
+        }}>
+        <ListItem navigation={navigation} data={item} />
+        {/* <ListItem navigation={navigation} data={item} />
       <ListItem navigation={navigation} data={item} />
       <ListItem navigation={navigation} data={item} />
       <ListItem navigation={navigation} data={item} />
-      <ListItem navigation={navigation} data={item} />
-      <ListItem navigation={navigation} data={item} />
-      <ListItem navigation={navigation} data={item} />
-    </TouchableOpacity>
-  );
+      <ListItem navigation={navigation} data={item} /> */}
+      </TouchableOpacity>
+    );
 
   const eateriesHeader = () => (
     <>

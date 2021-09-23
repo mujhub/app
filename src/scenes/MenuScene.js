@@ -63,7 +63,7 @@ const MenuScene = ({navigation, route}) => {
   const [outletMenu, setOutletMenu] = useState(null);
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
-  const [cartCount, setCartCount] = useState(0);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
   const [hasItemsInCart, setHasItemsInCart] = useState(false);
 
   const fetchData = async () => {
@@ -115,6 +115,13 @@ const MenuScene = ({navigation, route}) => {
 
   useEffect(() => {
     setHasItemsInCart(cartItems.length > 0 ? true : false);
+    let total = 0;
+    cartItems.forEach((item) => {
+      Object.keys(item).forEach((id) => {
+        total += item[id].priceIndices.length;
+      });
+    });
+    setCartItemsCount(total);
   }, [cartItems]);
 
   if (!route.params) return null;
@@ -150,8 +157,9 @@ const MenuScene = ({navigation, route}) => {
           {!isLoadingMenu && outletInfo ? (
             <View style={{minHeight: height}}>
               <MenuList
-                cartCount={cartCount}
-                setCartCount={setCartCount}
+                hasCounter={outletInfo.is_online}
+                cartCount={cartItemsCount}
+                setCartCount={setCartItemsCount}
                 data={outletMenu}
                 navigation={navigation}
                 cartItems={cartItems}
@@ -167,7 +175,7 @@ const MenuScene = ({navigation, route}) => {
 
         {cartItems.length ? (
           <ViewCartButton
-            cartCount={cartCount}
+            cartCount={cartItemsCount}
             data={cartItems}
             navigation={navigation}
             slug={route.params.slug}

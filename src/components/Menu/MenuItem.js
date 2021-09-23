@@ -7,7 +7,7 @@ import CounterBtn from './CounterButton';
 
 const {width, height} = Dimensions.get('screen');
 
-const MenuItem = ({item, i, addItem, subtractItem, showCounter}) => {
+const MenuItem = ({item, i, addItem, subtractItem, showCounter, isOnline}) => {
   const {colors} = useTheme();
   return (
     <View
@@ -76,7 +76,7 @@ const MenuItem = ({item, i, addItem, subtractItem, showCounter}) => {
           </View>
         </View>
 
-        {showCounter && (
+        {showCounter && isOnline && (
           <View
             style={{
               height: '100%',
