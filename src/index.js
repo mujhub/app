@@ -6,6 +6,8 @@ import {AppNavigator} from './navigations/';
 import {CustomTheme} from './contexts/CustomTheme';
 import {UserAuth} from './contexts/UserAuth';
 
+import {subscribeLoggedInUser} from './services/messaging';
+
 import {light, dark, amoled} from './styles/theme';
 import {mmkvCurrentTheme} from './utils/storage';
 
@@ -63,6 +65,13 @@ const App = () => {
   const onAuthStateChanged = (user) => {
     setUser(user);
     if (initializing) setInitializing(false);
+    if (user) {
+      subscribeLoggedInUser(true);
+      console.log('user subscribed');
+    } else {
+      subscribeLoggedInUser(false);
+      console.log('user unsubscribed');
+    }
   };
 
   useEffect(() => {
