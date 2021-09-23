@@ -62,7 +62,10 @@ const InputBox = (props) => {
           {...props}
           style={{
             height: 45,
-            color: colors.text,
+            color:
+              typeof props.editable === 'boolean' && !!!props.editable
+                ? colors.disabled
+                : colors.text,
             fontSize: width / 24,
             borderRadius: ROUNDNESS / 4,
             paddingHorizontal: ROUNDNESS,

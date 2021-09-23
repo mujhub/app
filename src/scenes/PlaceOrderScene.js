@@ -169,10 +169,8 @@ const PlaceOrderScene = ({route, navigation}) => {
         backgroundColor="transparent"
         translucent
       />
-      {/* {isStoreOpen && ( */}
       <SceneBuilder>
         <Header heading={ORDER.HEADING} navigation={navigation} />
-
         {!loading ? (
           isAccepting && isStoreOpen ? (
             <InvoiceList
@@ -195,7 +193,6 @@ const PlaceOrderScene = ({route, navigation}) => {
           <ActivityIndicator color={PRIMARY} size={28} />
         )}
       </SceneBuilder>
-      {/* )} */}
     </View>
   );
 };

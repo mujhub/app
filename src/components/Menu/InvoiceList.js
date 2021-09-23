@@ -1,5 +1,11 @@
 import React from 'react';
-import {View, Dimensions, KeyboardAvoidingView, ScrollView} from 'react-native';
+import {
+  View,
+  Dimensions,
+  KeyboardAvoidingView,
+  ScrollView,
+  StatusBar,
+} from 'react-native';
 
 import ItemRow from './ItemRow';
 import {Type, InputBox, PrimaryButton, ItemSeparator, Card} from '../Shared';
@@ -26,14 +32,10 @@ const InvoiceList = ({
 }) => {
   const {colors} = useTheme();
   return (
-    <View style={{minHeight: height - 50, marginTop: 20}}>
+    <View
+      style={{minHeight: height - StatusBar.currentHeight - 50, marginTop: 20}}>
       <KeyboardAvoidingView behavior={'padding'} style={{flex: 1}}>
         <OrderHeaderCard outletInfo={outletInfo} user={user} />
-        {/* <Type>{JSON.stringify(cart)}</Type> */}
-        {/* <Type>{JSON.stringify(user)}</Type>
-          <Type>{JSON.stringify(outletInfo)}</Type>
-          <Type>{JSON.stringify(slug)}</Type> */}
-
         <ScrollView
           stickyHeaderIndices={[0]}
           showsVerticalScrollIndicator={false}>

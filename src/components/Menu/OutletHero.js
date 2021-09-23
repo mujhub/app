@@ -38,8 +38,8 @@ const OutletHero = ({
     opens_at: '',
     closes_at: '',
     offers: [],
+    cover: '',
     ...outletInfo,
-    cover: 'https://picsum.photos/seed/picsum/400/300/',
   };
 
   const {isDarkMode} = useContext(CustomTheme);
@@ -61,9 +61,6 @@ const OutletHero = ({
   }, [data.closes_at, data.opens_at, outletInfo]);
 
   useEffect(() => {
-    // console.log(yOffset);
-    // console.log(yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier)));
-    // console.log(headingTint);
     setParallaxMultiplier(yOffset !== 0 ? 0.01 * yOffset + 1 : 1);
     setParallaxOpacity(
       1 - yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier) - 30),
@@ -108,8 +105,9 @@ const OutletHero = ({
           <Image
             source={{uri: data.cover}}
             style={{
-              height: height / (HEIGHT_FACTOR * parallaxMultiplier),
-              opacity: parallaxOpacity,
+              // height: height / (HEIGHT_FACTOR * parallaxMultiplier),
+              // opacity: parallaxOpacity,
+              height: height / HEIGHT_FACTOR,
             }}
             resizeMode="cover"
             resizeMethod="resize"
