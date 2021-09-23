@@ -435,11 +435,6 @@ const MessMenuCard = () => {
                   fontWeight: 'bold',
                   color: colors.primary,
                 }}>
-                {/* {!hasCardExpanded ? (
-                <Icon name="chevron-down" size={width / 25} />
-              ) : (
-                <Icon name="chevron-up" size={width / 25} />
-              )} */}
                 {!hasCardExpanded ? MESS.EXPAND_CARD : MESS.CONTRACT_CARD}
               </Type>
             </View>
@@ -448,7 +443,23 @@ const MessMenuCard = () => {
       </Animated.View>
     </View>
   ) : (
-    <ActivityIndicator color="white" size={28} />
+    <View
+      style={{
+        width: '100%',
+        height: contractedCardHeight,
+        backgroundColor: colors.elevated,
+        borderRadius: ROUNDNESS,
+        overflow: 'hidden',
+        marginTop: 30,
+        display: 'flex',
+        alignItems: 'center',
+      }}>
+      <ActivityIndicator
+        color={colors.text}
+        size={28}
+        style={{height: '100%'}}
+      />
+    </View>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, Text, ToastAndroid} from 'react-native';
+import {View, Text, ToastAndroid, Image, Dimensions} from 'react-native';
 import auth, {firebase} from '@react-native-firebase/auth';
 
 import {UserAuth} from '../contexts/UserAuth';
@@ -12,6 +12,10 @@ import {
 } from '../components/Shared';
 
 import {validatePhone, validateOTP} from '../utils/validators';
+
+import logo from '../assets/images/logo128.png';
+
+const {width, height} = Dimensions.get('screen');
 
 const LoginScene = ({navigation}) => {
   const {user} = useContext(UserAuth);
@@ -84,7 +88,20 @@ const LoginScene = ({navigation}) => {
 
   return (
     <SceneBuilder>
-      <Type style={{fontSize: 25}}>{'Welcome'.toUpperCase()}</Type>
+      <View
+        style={{
+          display: 'flex',
+          minWidth: '100%',
+          alignItems: 'center',
+        }}>
+        <Type style={{fontSize: 25, fontWeight: 'bold', marginVertical: 20}}>
+          {'Welcome to MUJ HUB'.toUpperCase()}
+        </Type>
+        <Image
+          source={logo}
+          style={{height: width / 3, width: width / 3, marginVertical: 45}}
+        />
+      </View>
       <InputBox
         value={phone}
         onChangeText={(value) => setPhone(value)}

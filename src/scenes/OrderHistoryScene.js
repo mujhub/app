@@ -67,7 +67,9 @@ const OrderHistoryScene = ({navigation}) => {
           ListFooterComponent={<View style={{height: height / 5}} />}
         />
       ) : (
-        <ActivityIndicator color={PRIMARY} size={28} />
+        <View style={{marginTop: '10%'}}>
+          <ActivityIndicator color={PRIMARY} size={35} />
+        </View>
       )}
     </SceneBuilder>
   );
