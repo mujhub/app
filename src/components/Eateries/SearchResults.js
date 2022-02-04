@@ -148,13 +148,13 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
                           ₹
                         </Type>
                         <Type style={{fontSize: width / 25, margin: 2}}>
-                          {typeof key.price === 'object'
+                          {typeof results[key].price === 'object'
                             ? results[key].price.map((p, i) =>
                                 i < results[key].price.length - 1
-                                  ? p + ', '
-                                  : p,
+                                  ? `${p}/`
+                                  : `${p} `,
                               )
-                            : results[key].price}
+                            : `${results[key].price}`}
                         </Type>
                       </View>
                     </View>
