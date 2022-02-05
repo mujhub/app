@@ -1,5 +1,6 @@
 import React from 'react';
 import {Dimensions} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {TYPE} from '../../constants/colors';
@@ -7,6 +8,7 @@ import {TYPE} from '../../constants/colors';
 const {width, height} = Dimensions.get('screen');
 
 const FoodType = ({type}) => {
+  const {colors} = useTheme();
   let icon = '';
   let color = null;
   switch (type) {
@@ -28,12 +30,20 @@ const FoodType = ({type}) => {
       color = TYPE.VEG;
       break;
   }
+  // return (
+  //   <Icon
+  //     name={icon}
+  //     size={width / 28}
+  //     color={color}
+  //     style={{marginHorizontal: 5}}
+  //   />
+  // );
   return (
     <Icon
-      name={icon}
-      size={width / 28}
-      color={color}
-      style={{marginHorizontal: 5}}
+      name={'ellipse'}
+      size={width / 40}
+      color={`${colors.text}aa`}
+      style={{marginHorizontal: 10}}
     />
   );
 };
