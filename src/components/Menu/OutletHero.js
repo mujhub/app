@@ -61,7 +61,7 @@ const OutletHero = ({
   }, [data.closes_at, data.opens_at, outletInfo]);
 
   useEffect(() => {
-    setParallaxMultiplier(yOffset !== 0 ? 0.01 * yOffset + 1 : 1);
+    setParallaxMultiplier(yOffset != 0 ? 0.01 * yOffset + 1 : 1);
     setParallaxOpacity(
       1 - yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier) - 30),
     );
@@ -83,14 +83,7 @@ const OutletHero = ({
         onParallaxImageScrolled(false);
       }
     }
-  }, [
-    colors.elevated,
-    isDarkMode,
-    onParallaxImageScrolled,
-    parallaxMultiplier,
-    setHeadingTint,
-    yOffset,
-  ]);
+  }, [yOffset]);
 
   return (
     <>
@@ -105,9 +98,9 @@ const OutletHero = ({
           <Image
             source={{uri: data.cover}}
             style={{
-              // height: height / (HEIGHT_FACTOR * parallaxMultiplier),
-              // opacity: parallaxOpacity,
-              height: height / HEIGHT_FACTOR,
+              height: height / (HEIGHT_FACTOR * parallaxMultiplier),
+              opacity: parallaxOpacity,
+              // height: height / HEIGHT_FACTOR,
             }}
             resizeMode="cover"
             resizeMethod="resize"
