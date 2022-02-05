@@ -29,6 +29,7 @@ const MenuItem = ({item, i, addItem, subtractItem, showCounter, isOnline}) => {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: !showCounter ? 'space-between' : null,
+            maxWidth: width * 0.6,
           }}>
           <View
             style={{
@@ -40,6 +41,8 @@ const MenuItem = ({item, i, addItem, subtractItem, showCounter, isOnline}) => {
               style={{
                 fontSize: width / 25,
                 margin: 2,
+                flexShrink: 1,
+                minWidth: isOnline && showCounter ? 0 : width * 0.5,
               }}>
               {item.name}
             </Type>

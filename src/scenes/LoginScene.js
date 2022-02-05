@@ -45,10 +45,12 @@ const LoginScene = ({navigation}) => {
 
   const signInWithPhoneNumber = async () => {
     if (phone !== '') {
-      if (validatePhone(phone)) {
+      if (validatePhone(`+91${phone}`)) {
         try {
           setPhoneLoading(true);
-          const confirmation = await auth().signInWithPhoneNumber(phone);
+          const confirmation = await auth().signInWithPhoneNumber(
+            `+91${phone}`,
+          );
           setConfirm(confirmation);
           console.log('otp sent');
         } catch (error) {
@@ -102,17 +104,22 @@ const LoginScene = ({navigation}) => {
           style={{height: width / 3, width: width / 3, marginVertical: 45}}
         />
       </View>
-      <InputBox
-        value={phone}
-        onChangeText={(value) => setPhone(value)}
-        label={'Phone Number'}
-        keyboardType="phone-pad"
-        isRequired={true}
-      />
-      <PrimaryButton onPress={signInWithPhoneNumber} loading={phoneLoading}>
-        <Type>Send OTP</Type>
-      </PrimaryButton>
 
+      {!confirm && (
+        <>
+          <InputBox
+            value={phone}
+            onChangeText={(value) => setPhone(value)}
+            maxLength={10}
+            label={'Phone Number'}
+            keyboardType="phone-pad"
+            isRequired={true}
+          />
+          <PrimaryButton onPress={signInWithPhoneNumber} loading={phoneLoading}>
+            <Type>Send OTP</Type>
+          </PrimaryButton>
+        </>
+      )}
       {confirm && (
         <>
           <InputBox

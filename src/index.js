@@ -12,9 +12,9 @@ import {light, dark, amoled} from './styles/theme';
 import {mmkvCurrentTheme} from './utils/storage';
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [currTheme, setCurrTheme] = useState(light);
-  const [themeValue, setThemeValue] = useState(1);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+  const [currTheme, setCurrTheme] = useState(dark);
+  const [themeValue, setThemeValue] = useState(2);
 
   const [initializing, setInitializing] = useState(true);
   const [user, setUser] = useState(null);

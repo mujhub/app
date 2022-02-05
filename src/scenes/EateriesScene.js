@@ -56,11 +56,6 @@ const EateriesScene = ({navigation}) => {
           navigation.navigate('MenuScene', {info: {...item}, slug: item.slug});
         }}>
         <ListItem navigation={navigation} data={item} />
-        {/* <ListItem navigation={navigation} data={item} />
-      <ListItem navigation={navigation} data={item} />
-      <ListItem navigation={navigation} data={item} />
-      <ListItem navigation={navigation} data={item} />
-      <ListItem navigation={navigation} data={item} /> */}
       </TouchableOpacity>
     );
 
@@ -80,12 +75,12 @@ const EateriesScene = ({navigation}) => {
         <Header
           heading={FOOD.HEADING}
           navigation={navigation}
-          iconNames={['time']}
-          iconActions={[
-            () => {
-              navigation.navigate('OrderHistoryScreen');
-            },
-          ]}
+          // iconNames={['time']}
+          // iconActions={[
+          //   () => {
+          //     navigation.navigate('OrderHistoryScreen');
+          //   },
+          // ]}
         />
 
         <SearchBox
@@ -116,7 +111,7 @@ const EateriesScene = ({navigation}) => {
         )}
       </SceneBuilder>
 
-      {!isSearching && <FloatingPill navigation={navigation} />}
+      {/* {!isSearching && <FloatingPill navigation={navigation} />} */}
     </>
   );
 };

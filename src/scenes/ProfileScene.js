@@ -89,7 +89,9 @@ const ProfileScene = ({navigation}) => {
           <InputBox
             defaultValue={userProfile.displayName}
             value={userProfile.displayName}
-            onChangeText={(value) => setUserProfile({displayName: `${value}`})}
+            onChangeText={(value) =>
+              setUserProfile({...userProfile, displayName: `${value}`})
+            }
             label={'Name'}
             isRequired
           />

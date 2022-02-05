@@ -97,7 +97,7 @@ export const CART = {
     PAYABLE_LABEL: 'Order Total',
     ADDITIONAL: 'Block Number: ',
     ACTION: 'PLACE ORDER',
-    NOT_ACCEPTING: 'The restaurant is not not accepting orders at the moment.',
+    NOT_ACCEPTING: 'The restaurant is not accepting orders at the moment.',
   },
 };
 
