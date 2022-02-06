@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Dimensions} from 'react-native';
+import {View, Text, Dimensions, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 
 import SearchBox from './SearchBox';

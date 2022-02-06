@@ -72,7 +72,6 @@ const LoginScene = ({navigation}) => {
         try {
           setConfirmLoading(true);
           await confirm.confirm(otp);
-          console.log(JSON.stringify(confirm));
           navigation.reset({index: 0, routes: [{name: 'ProfileScreen'}]});
         } catch (error) {
           console.log(error);

@@ -9,7 +9,6 @@ import {ATTENDANCE} from '../../constants/strings';
 const {width, height} = Dimensions.get('screen');
 
 const AttendanceRowModal = ({data, headingArr}) => {
-  console.log(data);
   const {colors} = useTheme();
 
   const THRESHOLD = 0.75;

@@ -106,13 +106,11 @@ const PlaceOrderScene = ({route, navigation}) => {
         return;
       }
       setPlacingOrder(true);
-      console.log(slug, data);
       let itemIds = data.map((item) => Object.keys(item)[0]);
       let items = [];
       itemIds.forEach((itemId, i) => {
         items.push({itemId, variants: data[i][itemId].priceIndices});
       });
-      console.log(slug, items);
       let block = additionalInfo;
       let token = null;
       try {
@@ -120,9 +118,7 @@ const PlaceOrderScene = ({route, navigation}) => {
       } catch (error) {
         console.log(error);
       }
-      console.log(token);
       let success = await placeOrder({items, shop: slug, block, token});
-      console.log(success);
       if (success) {
         DeviceEventEmitter.emit('event.clearCart');
         Alert.alert(CART.ORDER_SUCCESS.HEADING, CART.ORDER_SUCCESS.BODY, [

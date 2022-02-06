@@ -29,7 +29,6 @@ const DataTable = ({
   };
 
   const handleKnowMore = (index) => {
-    console.log(data[index]);
     if (!hasHeader || index) {
       setShowModal([true, index]);
     }

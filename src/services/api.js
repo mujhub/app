@@ -12,7 +12,6 @@ export const placeOrder = async ({items, shop, block, token}) => {
       data: token ? {items, shop, block, token} : {items, shop, block},
       headers: {Authorization: `Bearer ${authToken}`},
     });
-    console.log(res.data);
     order = res.data;
   } catch (error) {
     console.log(JSON.stringify(error));
@@ -31,7 +30,6 @@ export const getOrderHistory = async () => {
       method: 'get',
       headers: {Authorization: `Bearer ${authToken}`},
     });
-    console.log(JSON.stringify(res.data));
     const {data} = res.data;
     orders = data.orders;
   } catch (error) {

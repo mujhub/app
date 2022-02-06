@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Switch,
   ToastAndroid,
+  TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -19,7 +20,7 @@ import {getMessMenu} from '../../services/firestore';
 import {MESS} from '../../constants/strings';
 import {VIBRANTS} from '../../constants/colors';
 import {logMessMenu} from '../../services/analytics';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 import ToggleSwitch from '../Shared/ToggleSwitch';
 import {mmkvMessMenuSubscription} from '../../utils/storage';
 import {subscribeMessUpdate} from '../../services/messaging';
@@ -109,7 +110,6 @@ const MessMenuCard = () => {
   const updateSubscription = async (value) => {
     const {status} = await mmkvMessMenuSubscription(`${value}`);
     if (status) {
-      console.log(typeof status, status);
       setIsSubscribed(value === 'true' || value ? true : false);
       subscribeMessUpdate(value);
       ToastAndroid.show(
@@ -269,11 +269,9 @@ const MessMenuCard = () => {
 
   const getData = async () => {
     const {status} = await mmkvMessMenuSubscription();
-    console.log('status', status);
     if (status) setIsSubscribed(true);
     setIsLoading(true);
     const res = await getMessMenu();
-    console.log(JSON.stringify(res.data()));
     const data = res.data();
 
     setMenuData(data.meals ? data.meals : []);

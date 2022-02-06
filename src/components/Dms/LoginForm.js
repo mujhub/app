@@ -58,7 +58,6 @@ const LoginForm = (props) => {
   useEffect(() => {
     const getCredentials = async () => {
       const res = await mmkvDMSDetails();
-      console.log('res', res);
       if (res.username) {
         setLocalUsername(res.username);
         setLocalPassword(res.password);
@@ -164,7 +163,7 @@ const LoginForm = (props) => {
             fontSize: width / 28,
             alignSelf: 'center',
           }}>
-          {props.error}
+          {`${props.error}. Try reloading.`}
         </Type>
       ) : null}
 

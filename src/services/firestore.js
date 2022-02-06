@@ -37,7 +37,6 @@ export const getSearchResults = (query) => {
 };
 
 export const placeOrder = async ({uid, slug, data}) => {
-  console.log(uid, slug, data);
   if (!uid || !slug || !data) return;
   // order status:- 0: placed 1: under process 2: completed 3: delivered 4: cancelled
   let oid = generateOrderId();

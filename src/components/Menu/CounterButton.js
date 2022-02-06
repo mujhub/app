@@ -5,8 +5,9 @@ import {
   Dimensions,
   ToastAndroid,
   ViewPropTypes,
+  TouchableOpacity,
 } from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {PRIMARY, VIBRANTS} from '../../constants/colors';
 import {Type} from '../Shared';

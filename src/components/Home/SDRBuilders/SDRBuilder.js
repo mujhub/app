@@ -13,7 +13,6 @@ const SDRBuilder = ({navigation}) => {
       let res = await getHomeComponents();
       if (!res.exists) return;
       if (res.data()) {
-        console.log(res.data());
         setData(res.data());
       }
     } catch (error) {
@@ -30,7 +29,6 @@ const SDRBuilder = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    console.log(data);
     if (data) {
       setModals(data.modals);
       setCards(data.cards);

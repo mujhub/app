@@ -11,7 +11,6 @@ const SDRCards = ({cards, navigation}) => {
 
   useEffect(() => {
     setSortedCards([...cards.sort((a, b) => a.position - b.position)]);
-    console.log(sortedCards);
   }, [cards]);
 
   return (

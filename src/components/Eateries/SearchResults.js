@@ -1,8 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {View, Dimensions, FlatList, ScrollView} from 'react-native';
+import {
+  View,
+  Dimensions,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {Type, ItemSeparator, ListItem, FoodType} from '../Shared';
 
@@ -100,7 +106,10 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
                           fontSize: width / 24,
                           paddingVertical: 5,
                         }}>
-                        {results[key].eatery}
+                        {/* {results[key].eatery} */}
+                        {`${results[key].eatery}`
+                          .replace(/-/g, ' ')
+                          .toUpperCase()}
                       </Type>
                     </View>
 

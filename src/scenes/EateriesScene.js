@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {FlatList, View, Dimensions} from 'react-native';
+import {FlatList, View, Dimensions, TouchableOpacity} from 'react-native';
 
 import {
   SceneBuilder,
@@ -11,7 +11,7 @@ import {
   ThemedModal,
   ThemeControl,
 } from '../components/Shared';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+// import {TouchableOpacity} from 'react-native-gesture-handler';
 import {FOOD, OUTLETS} from '../constants/strings';
 
 import {getEateries} from '../services/firestore';
@@ -37,7 +37,6 @@ const EateriesScene = ({navigation}) => {
       Object.keys(objData).forEach((eatery) => {
         arrData.push(objData[eatery]);
       });
-      console.log(arrData);
       setEateries(arrData);
     }
   };
