@@ -10,7 +10,7 @@ import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 
-import {Type, ItemSeparator, ListItem, FoodType} from '../Shared';
+import {Type, ItemSeparator, FoodType} from '../Shared';
 
 import {getSearchResults} from '../../services/firestore';
 import {VIBRANTS, TYPE} from '../../constants/colors';

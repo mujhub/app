@@ -24,6 +24,9 @@ export const OUTLETS = {
   SCANNER_TEXT: 'SCAN MENU QR',
   PAYMENT: 'PAY',
   CALL: 'CALL OUTLET',
+  NO_CONTACT: 'No contact details found.',
+  NO_PAYMENT: 'No payment details found.',
+  NO_UPI: 'No UPI details found.',
 };
 
 export const ORDER = {

@@ -14,7 +14,16 @@ const {width, height} = Dimensions.get('screen');
 const ListItem = ({navigation, data}) => {
   const {colors} = useTheme();
   return (
-    <View style={{flexDirection: 'row', width: '100%'}}>
+    <View
+      style={{
+        flexDirection: 'row',
+        width: '110%',
+        backgroundColor: colors.background,
+        borderRadius: 10,
+        marginLeft: -20,
+        paddingLeft: 20,
+        paddingRight: 20,
+      }}>
       <View
         style={{
           width: width / 8,

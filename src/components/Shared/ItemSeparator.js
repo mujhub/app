@@ -12,7 +12,7 @@ const ItemSeparator = ({
     <View
       style={{
         width: widthPercentage,
-        height: 0.5,
+        height: 0.75,
         backgroundColor: colors.disabled + opacityHex,
         alignSelf: 'center',
         ...viewStyle,

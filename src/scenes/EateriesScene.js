@@ -1,5 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, View, Dimensions, TouchableOpacity} from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {
+  FlatList,
+  View,
+  Dimensions,
+  TouchableOpacity,
+  Text,
+  Linking,
+  ToastAndroid,
+} from 'react-native';
 
 import {
   SceneBuilder,
@@ -11,7 +19,8 @@ import {
   ThemedModal,
   ThemeControl,
 } from '../components/Shared';
-// import {TouchableOpacity} from 'react-native-gesture-handler';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
+import LinearGradient from 'react-native-linear-gradient';
 import {FOOD, OUTLETS} from '../constants/strings';
 
 import {getEateries} from '../services/firestore';
@@ -21,13 +30,18 @@ import SearchBox from '../components/Eateries/SearchBox';
 import SearchResults from '../components/Eateries/SearchResults';
 import {logMenuFetch} from '../services/analytics';
 import SDRBuilder from '../components/Eateries/SDRBuilders/SDRBuilders';
+import {VIBRANTS} from '../constants/colors';
+import IonIcon from 'react-native-vector-icons/Ionicons';
+import {useTheme} from 'react-native-paper';
 
 const {width, height} = Dimensions.get('screen');
 
 const EateriesScene = ({navigation}) => {
+  const {colors} = useTheme();
   const [eateries, setEateries] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const openRow = useRef([]);
 
   const fetchData = async () => {
     const eateriesData = await getEateries();
@@ -45,17 +59,123 @@ const EateriesScene = ({navigation}) => {
     fetchData();
   }, []);
 
-  const renderer = ({item}) =>
-    item.is_visible && (
-      <TouchableOpacity
-        key={item.slug}
-        activeOpacity={0.75}
-        onPress={() => {
-          logMenuFetch({name: item.slug});
-          navigation.navigate('MenuScene', {info: {...item}, slug: item.slug});
+  const handleRightSwipe = async (item) => {
+    if (!item.payments) {
+      ToastAndroid.show(OUTLETS.NO_PAYMENT, ToastAndroid.SHORT);
+      return;
+    }
+    if (`${item.payments.upi}`.length < 1) {
+      ToastAndroid.show(OUTLETS.NO_UPI, ToastAndroid.SHORT);
+      return;
+    }
+    const canOpen = await Linking.canOpenURL('upi://');
+    if (canOpen)
+      await Linking.openURL(
+        `upi://pay?pa=${item.payments.upi}&pn=${item.title}&tn=Via MUJ HUB&cu=INR`,
+      );
+  };
+  const handleLeftSwipe = async (item) => {
+    if (`${item.contact}`.length < 1) {
+      ToastAndroid.show(OUTLETS.NO_CONTACT, ToastAndroid.SHORT);
+      return;
+    }
+    const canOpen = await Linking.canOpenURL('tel:');
+    if (canOpen) await Linking.openURL(`tel:${item.contact}`);
+  };
+
+  const leftSwipeActions = () => {
+    return (
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        colors={['#219653', '#27AE89']}
+        style={{
+          flex: 1,
+          justifyContent: 'center',
         }}>
-        <ListItem navigation={navigation} data={item} />
-      </TouchableOpacity>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 45,
+          }}>
+          <Text
+            style={{
+              fontSize: 16,
+              marginRight: 48,
+              color: `${colors.text}99`,
+              fontWeight: 'bold',
+            }}>
+            CALL
+          </Text>
+          <IonIcon name="arrow-forward" size={20} color={`${colors.text}99`} />
+        </View>
+      </LinearGradient>
+    );
+  };
+  const rightSwipeActions = () => {
+    return (
+      <LinearGradient
+        start={{x: 0, y: 0}}
+        end={{x: 1, y: 0}}
+        colors={['#21CCF5', '#2795A3']}
+        style={{
+          flex: 1,
+          justifyContent: 'center',
+          alignItems: 'flex-end',
+        }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            paddingHorizontal: 45,
+          }}>
+          <IonIcon name="arrow-back" size={20} color={`${colors.text}99`} />
+          <Text
+            style={{
+              fontSize: 16,
+              marginLeft: 48,
+              color: `${colors.text}99`,
+              fontWeight: 'bold',
+            }}>
+            PAY
+          </Text>
+        </View>
+      </LinearGradient>
+    );
+  };
+
+  const renderer = ({item, index}) =>
+    item.is_visible && (
+      <Swipeable
+        ref={(ref) => (openRow.current[index] = ref)}
+        friction={1.5}
+        key={item.slug}
+        onSwipeableOpen={() => {
+          openRow.current.forEach((row) => {
+            row.close();
+          });
+        }}
+        onSwipeableLeftOpen={() => {
+          handleLeftSwipe(item);
+        }}
+        onSwipeableRightOpen={() => {
+          handleRightSwipe(item);
+        }}
+        renderLeftActions={leftSwipeActions}
+        renderRightActions={rightSwipeActions}>
+        <TouchableOpacity
+          onPress={() => {
+            logMenuFetch({name: item.slug});
+            navigation.navigate('MenuScene', {
+              info: {...item},
+              slug: item.slug,
+            });
+          }}
+          activeOpacity={1}>
+          <ListItem navigation={navigation} data={item} />
+        </TouchableOpacity>
+      </Swipeable>
     );
 
   const eateriesHeader = () => (
