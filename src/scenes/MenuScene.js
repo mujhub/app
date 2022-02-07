@@ -25,6 +25,7 @@ import {PRIMARY} from '../constants/colors';
 import {OUTLETS, CART} from '../constants/strings';
 import {logPlaceCall} from '../services/analytics';
 import ViewCartButton from '../components/Menu/ViewCartButton';
+import {placeCall} from '../utils/misc';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -183,24 +184,16 @@ const MenuScene = ({navigation, route}) => {
           />
         ) : null}
 
-        {/* <View>
+        <View>
           <FloatingButton
             icon="call"
             iconColor="white"
             color={PRIMARY}
             onPress={() => {
-              // Linking.canOpenURL('tel:').then((can) => {
-              //   if (can) {
-              //     logPlaceCall({name: outletInfo.slug});
-              //     Linking.openURL('tel:7668310023');
-              //   }
-              // });
-            }}>
-            <Type style={{marginHorizontal: 8, color: 'white'}}>
-              {'View Cart'.toUpperCase()}
-            </Type>
-          </FloatingButton>
-        </View> */}
+              placeCall({contact: outletInfo.contact, name: outletInfo});
+            }}
+          />
+        </View>
       </>
     )
   );

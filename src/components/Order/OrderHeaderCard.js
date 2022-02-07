@@ -100,7 +100,6 @@ const OrderHeaderCard = ({outletInfo, user}) => {
             style={{
               fontSize: 20,
               fontWeight: 'bold',
-              maxWidth: '60%',
             }}>
             {`${user.displayName}`.substr(0, 20)}
           </Type>

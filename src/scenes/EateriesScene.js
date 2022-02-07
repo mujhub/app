@@ -33,6 +33,7 @@ import SDRBuilder from '../components/Eateries/SDRBuilders/SDRBuilders';
 import {VIBRANTS} from '../constants/colors';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import {useTheme} from 'react-native-paper';
+import {payUPI, placeCall} from '../utils/misc';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -60,27 +61,10 @@ const EateriesScene = ({navigation}) => {
   }, []);
 
   const handleRightSwipe = async (item) => {
-    if (!item.payments) {
-      ToastAndroid.show(OUTLETS.NO_PAYMENT, ToastAndroid.SHORT);
-      return;
-    }
-    if (`${item.payments.upi}`.length < 1) {
-      ToastAndroid.show(OUTLETS.NO_UPI, ToastAndroid.SHORT);
-      return;
-    }
-    const canOpen = await Linking.canOpenURL('upi://');
-    if (canOpen)
-      await Linking.openURL(
-        `upi://pay?pa=${item.payments.upi}&pn=${item.title}&tn=Via MUJ HUB&cu=INR`,
-      );
+    await payUPI({payments: item.payments, title: item.title});
   };
   const handleLeftSwipe = async (item) => {
-    if (`${item.contact}`.length < 1) {
-      ToastAndroid.show(OUTLETS.NO_CONTACT, ToastAndroid.SHORT);
-      return;
-    }
-    const canOpen = await Linking.canOpenURL('tel:');
-    if (canOpen) await Linking.openURL(`tel:${item.contact}`);
+    await placeCall({contact: item.contact, name: item.title});
   };
 
   const leftSwipeActions = () => {

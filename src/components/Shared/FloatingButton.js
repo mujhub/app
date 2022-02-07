@@ -12,10 +12,9 @@ const FloatingButton = ({icon, iconColor, color, onPress, children}) => {
       style={{
         position: 'absolute',
         flexDirection: 'row',
-        bottom: width / 15,
+        bottom: height / 10,
         right: width / 15,
         height: width / 10,
-        width: null,
         paddingVertical: width / 15,
         paddingHorizontal: width / 20,
         borderRadius: width / 12,

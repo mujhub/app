@@ -77,7 +77,7 @@ const LoginForm = (props) => {
       {props.isSaved && <InfoCard name={localName} id={localUsername} />}
 
       {!props.isSaved && (
-        <>
+        <View style={{marginTop: 20}}>
           <InputBox
             defaultValue={localUsername}
             value={props.username}
@@ -96,7 +96,7 @@ const LoginForm = (props) => {
             error={errors.password}
             isRequired={true}
           />
-        </>
+        </View>
       )}
       <View style={{marginTop: 16}}>
         <Type style={{color: colors.disabled}}>SECURITY CAPTCHA</Type>

@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, TouchableOpacity, Dimensions, Linking} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {FOOD} from '../../constants/strings';
+import {payUPI} from '../../utils/misc';
 import {Type} from '../Shared';
 
 const {width, height} = Dimensions.get('screen');
@@ -58,15 +59,7 @@ const OutletHeader = ({
       {hasScrolled && (
         <TouchableOpacity
           onPress={() => {
-            Linking.canOpenURL('upi://pay').then((can) => {
-              if (outletInfo.payments) {
-                if (can && outletInfo.payments.upi) {
-                  Linking.openURL(
-                    `upi://pay?pa=${outletInfo.payments.upi}&pn=${outletInfo.title}&tn=Via MUJ HUB&cu=INR`,
-                  );
-                }
-              }
-            });
+            payUPI({payments: outletInfo.payments, title: outletInfo.title});
           }}
           activeOpacity={0.75}>
           <Icon

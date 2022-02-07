@@ -1,4 +1,6 @@
-import {SLUG_IDENTIFIER} from '../constants/strings';
+import {Linking, ToastAndroid} from 'react-native';
+import {OUTLETS, SLUG_IDENTIFIER} from '../constants/strings';
+import {logPayment, logPlaceCall} from '../services/analytics';
 
 export const nameInitials = (name) => {
   let init = '';
@@ -41,5 +43,35 @@ export const parseQRCode = (data) => {
     let slug = link.substring(start, end);
     console.log(slug);
     return slug;
+  }
+};
+
+export const placeCall = async ({contact, name}) => {
+  if (`${contact}`.length < 1) {
+    ToastAndroid.show(OUTLETS.NO_CONTACT, ToastAndroid.SHORT);
+    return;
+  }
+  const canOpen = await Linking.canOpenURL('tel:');
+  if (canOpen) {
+    logPlaceCall({name});
+    await Linking.openURL(`tel:${contact}`);
+  }
+};
+
+export const payUPI = async ({payments, title}) => {
+  if (!payments) {
+    ToastAndroid.show(OUTLETS.NO_PAYMENT, ToastAndroid.SHORT);
+    return;
+  }
+  if (`${payments.upi}`.length < 1) {
+    ToastAndroid.show(OUTLETS.NO_UPI, ToastAndroid.SHORT);
+    return;
+  }
+  const canOpen = await Linking.canOpenURL('upi://pay');
+  if (canOpen) {
+    logPayment({name: title});
+    await Linking.openURL(
+      `upi://pay?pa=${payments.upi}&pn=${title}&tn=Via MUJ HUB&cu=INR`,
+    );
   }
 };
