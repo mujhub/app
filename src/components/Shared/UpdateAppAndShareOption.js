@@ -36,7 +36,7 @@ const UpdateAppOption = () => {
           color: colors.disabled,
         }}>
         {/* ROLL OUT UPDATE CHANGES*/}
-        MUJ HUB v1 (Beta)
+        MUJ HUB v1
       </Type>
       <View
         style={{
