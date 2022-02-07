@@ -68,6 +68,36 @@ export const mmkvDefaultBlock = async (block = null) => {
   }
 };
 
+export const mmkvEateriesList = async (array = null) => {
+  try {
+    if (array) {
+      await MMKV.setStringAsync('eateriesList', JSON.stringify(array));
+      return {status: true};
+    } else {
+      const enc_array = await MMKV.getStringAsync('eateriesList');
+      return {status: true, value: JSON.parse(enc_array)};
+    }
+  } catch (error) {
+    console.log(error);
+    return {status: false};
+  }
+};
+
+export const mmkvEateriesCards = async (array = null) => {
+  try {
+    if (array) {
+      await MMKV.setStringAsync('eateriesCards', JSON.stringify(array));
+      return {status: true};
+    } else {
+      const enc_array = await MMKV.getStringAsync('eateriesCards');
+      return {status: true, value: JSON.parse(enc_array)};
+    }
+  } catch (error) {
+    console.log(error);
+    return {status: false};
+  }
+};
+
 export const mmkvMessMenuSubscription = async (value = null) => {
   try {
     if (value) {
