@@ -1,62 +1,127 @@
-import React from 'react';
-import {View, Text, TouchableOpacity, Dimensions, Linking} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Dimensions,
+  Linking,
+  Animated,
+} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {GRAY, VIBRANTS} from '../../constants/colors';
 import {FOOD} from '../../constants/strings';
-import {payUPI} from '../../utils/misc';
+import {isOpen, payUPI} from '../../utils/misc';
 import {Type} from '../Shared';
 
 const {width, height} = Dimensions.get('screen');
 
-const OutletHeader = ({
-  headerColor,
-  handleBack,
-  headingTint,
-  hasScrolled,
-  outletInfo,
-}) => {
+const OutletHeader = ({handleBack, outletInfo, offset}) => {
   const data = {
     title: '',
     ...outletInfo,
   };
+  const headerOpacity = offset.interpolate({
+    inputRange: [0, 100],
+    outputRange: [1, 0],
+    extrapolate: 'clamp',
+  });
+
+  const headerPosition = offset.interpolate({
+    inputRange: [0, 150],
+    outputRange: [-150, 0],
+    extrapolate: 'clamp',
+  });
+
+  const {colors} = useTheme();
+  const [isOutletOpen, setIsOutletOpen] = useState(false);
+  useEffect(() => {
+    setIsOutletOpen(
+      isOpen({opens_at: data.opens_at, closes_at: data.closes_at}),
+    );
+  }, [data.closes_at, data.opens_at, outletInfo]);
+
   return (
-    <View
-      style={{
-        marginTop: 30,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-      }}>
-      <View
+    <>
+      <Animated.View
         style={{
-          display: 'flex',
+          paddingTop: 30,
           flexDirection: 'row',
-          alignContent: 'center',
-          justifyContent: 'center',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          position: 'absolute',
+          top: 0,
+          opacity: headerOpacity,
         }}>
-        <TouchableOpacity onPress={handleBack} activeOpacity={0.75}>
-          <Icon
-            name="chevron-back"
-            size={24}
-            style={{
-              marginVertical: 17,
-              marginHorizontal: 10,
-              color: `rgb(${headingTint},${headingTint},${headingTint})`,
-            }}
-          />
-        </TouchableOpacity>
-
-        <Type
+        <View
           style={{
-            marginTop: 16,
-            fontSize: width / 24,
-            color: `rgb(${headingTint},${headingTint},${headingTint})`,
-            // fontWeight: 'bold',
-          }}
-          viewStyle={{margin: 10}}>
-          {hasScrolled ? data.title : 'Food'}
-        </Type>
-      </View>
+            display: 'flex',
+            flexDirection: 'row',
+            alignContent: 'center',
+            justifyContent: 'center',
+          }}>
+          <TouchableOpacity onPress={handleBack} activeOpacity={0.75}>
+            <Icon
+              name="chevron-back"
+              size={24}
+              style={{
+                marginVertical: 17,
+                marginHorizontal: 10,
+                color: GRAY.T2,
+              }}
+            />
+          </TouchableOpacity>
 
-      {hasScrolled && (
+          <Type
+            style={{
+              marginTop: 16,
+              fontSize: width / 24,
+              color: GRAY.T2,
+            }}
+            viewStyle={{margin: 10}}>
+            Food
+          </Type>
+        </View>
+      </Animated.View>
+      <Animated.View
+        style={{
+          paddingTop: 30,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          position: 'relative',
+          top: headerPosition,
+          backgroundColor: colors.surface,
+        }}>
+        <View
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignContent: 'center',
+            justifyContent: 'center',
+          }}>
+          <TouchableOpacity onPress={handleBack} activeOpacity={0.75}>
+            <Icon
+              name="chevron-back"
+              size={24}
+              style={{
+                marginVertical: 17,
+                marginHorizontal: 10,
+                color: colors.text,
+              }}
+            />
+          </TouchableOpacity>
+
+          <Type
+            style={{
+              marginTop: 16,
+              fontSize: width / 24,
+            }}
+            viewStyle={{margin: 10}}>
+            {data.title}
+          </Type>
+        </View>
+
         <TouchableOpacity
           onPress={() => {
             payUPI({payments: outletInfo.payments, title: outletInfo.title});
@@ -68,12 +133,12 @@ const OutletHeader = ({
             style={{
               margin: 10,
               marginHorizontal: 20,
-              color: `rgb(${headingTint},${headingTint},${headingTint})`,
+              color: colors.text,
             }}
           />
         </TouchableOpacity>
-      )}
-    </View>
+      </Animated.View>
+    </>
   );
 };
 

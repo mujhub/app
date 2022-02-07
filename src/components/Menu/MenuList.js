@@ -155,7 +155,7 @@ const MenuList = ({
         ))}
       </View>
 
-      <View style={{height: height / 8}}></View>
+      <View style={{height: height / 5}}></View>
     </View>
   );
 };

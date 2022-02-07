@@ -72,7 +72,7 @@ const EateriesScene = ({navigation}) => {
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        colors={['#219653', '#27AE89']}
+        colors={[VIBRANTS.GREEN1, VIBRANTS.GREEN2]}
         style={{
           flex: 1,
           justifyContent: 'center',
@@ -102,7 +102,7 @@ const EateriesScene = ({navigation}) => {
       <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 1, y: 0}}
-        colors={['#21CCF5', '#2795A3']}
+        colors={[VIBRANTS.BLUE2, VIBRANTS.BLUE1]}
         style={{
           flex: 1,
           justifyContent: 'center',

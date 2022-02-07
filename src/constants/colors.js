@@ -39,11 +39,12 @@ export const GRAY = {
 
 export const VIBRANTS = {
   GREEN1: '#219653',
-  GREEN2: '#27AE60',
+  GREEN2: '#27AE89',
   PURPLE1: '#9B51E0',
   PURPLE2: '#BB6BD9',
   RED: '#EB5757',
-  BLUE: '#56CCF2',
+  BLUE1: '#2795A3',
+  BLUE2: '#56CCF2',
   YELLOW: '#F2C94C',
 };
 

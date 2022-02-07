@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   ScrollView,
   Linking,
   DeviceEventEmitter,
+  Animated,
 } from 'react-native';
 import {useTheme, ActivityIndicator} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -21,7 +22,7 @@ import MenuList from '../components/Menu/MenuList';
 import {InputBox, Type, FloatingButton} from '../components/Shared';
 import SearchBox from '../components/Menu/SearchBox';
 import {getEateryBySlug} from '../services/firestore';
-import {PRIMARY} from '../constants/colors';
+import {PRIMARY, VIBRANTS} from '../constants/colors';
 import {OUTLETS, CART} from '../constants/strings';
 import {logPlaceCall} from '../services/analytics';
 import ViewCartButton from '../components/Menu/ViewCartButton';
@@ -32,31 +33,10 @@ const {width, height} = Dimensions.get('screen');
 const MenuScene = ({navigation, route}) => {
   const {colors} = useTheme();
   const {isDarkMode} = useContext(CustomTheme);
-
-  const [scrollYPosition, setScrollYPosition] = useState(0);
-  const [hasScrolled, setHasScrolled] = useState(false);
-  const [headerColor, setHeaderColor] = useState('transparent');
-  const [headingTint, setHeadingTint] = useState(255);
-
-  const handleOnScroll = (event) => {
-    if (event.nativeEvent.contentOffset.y < height / 2) {
-      setScrollYPosition(event.nativeEvent.contentOffset.y);
-    }
-  };
+  const offset = useRef(new Animated.Value(0)).current;
 
   const handleBack = () => {
     navigation.goBack();
-  };
-
-  const handleParallaxImageScrolled = (scrolled) => {
-    if (scrolled) {
-      setHasScrolled(true);
-      setHeaderColor(colors.elevated);
-      setHeadingTint(isDarkMode ? 255 : 0);
-    } else {
-      setHasScrolled(false);
-      setHeaderColor('transparent');
-    }
   };
 
   const [isLoadingMenu, setIsLoadingMenu] = useState(true);
@@ -131,32 +111,31 @@ const MenuScene = ({navigation, route}) => {
   return (
     outletInfo && (
       <>
-        <ScrollView onScroll={handleOnScroll} stickyHeaderIndices={[1]}>
-          <OutletHero
-            yOffset={scrollYPosition}
-            onParallaxImageScrolled={handleParallaxImageScrolled}
-            headingTint={headingTint}
-            setHeadingTint={setHeadingTint}
-            outletInfo={outletInfo}
-          />
+        <ScrollView
+          onScroll={Animated.event(
+            [{nativeEvent: {contentOffset: {y: offset}}}],
+            {
+              useNativeDriver: false,
+            },
+          )}
+          stickyHeaderIndices={[1]}>
+          <OutletHero offset={offset} outletInfo={outletInfo} />
 
           <View
             style={{
               position: 'absolute',
               width,
-              backgroundColor: headerColor,
             }}>
             <OutletHeader
-              headerColor={headerColor}
+              offset={offset}
               handleBack={handleBack}
-              headingTint={headingTint}
-              hasScrolled={hasScrolled}
               outletInfo={outletInfo}
             />
           </View>
 
           {!isLoadingMenu && outletInfo ? (
-            <View style={{minHeight: height}}>
+            <View
+              style={{minHeight: height, backgroundColor: colors.background}}>
               <MenuList
                 hasCounter={outletInfo.is_online}
                 cartCount={cartItemsCount}
@@ -170,7 +149,10 @@ const MenuScene = ({navigation, route}) => {
               />
             </View>
           ) : (
-            <ActivityIndicator color={PRIMARY} size="large" />
+            <View
+              style={{minHeight: height, backgroundColor: colors.background}}>
+              <ActivityIndicator color={PRIMARY} size="large" />
+            </View>
           )}
         </ScrollView>
 
@@ -188,7 +170,7 @@ const MenuScene = ({navigation, route}) => {
           <FloatingButton
             icon="call"
             iconColor="white"
-            color={PRIMARY}
+            color={VIBRANTS.GREEN2}
             onPress={() => {
               placeCall({contact: outletInfo.contact, name: outletInfo});
             }}

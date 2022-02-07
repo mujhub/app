@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   Linking,
+  Animated,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -18,19 +19,13 @@ import LinearGradient from 'react-native-linear-gradient';
 import {CustomTheme} from '../../contexts/CustomTheme';
 import {Type, ItemSeparator, PrimaryButton} from '../Shared';
 import {VIBRANTS, PRIMARY} from '../../constants/colors';
-import {isOpen} from '../../utils/misc';
+import {isOpen, payUPI} from '../../utils/misc';
 import {OUTLETS} from '../../constants/strings';
 import {logPayment} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
-const OutletHero = ({
-  yOffset,
-  onParallaxImageScrolled,
-  headingTint,
-  setHeadingTint,
-  outletInfo,
-}) => {
+const OutletHero = ({yOffset, offset, onParallaxImageScrolled, outletInfo}) => {
   const data = {
     title: '',
     description: '',
@@ -46,12 +41,12 @@ const OutletHero = ({
   const {colors} = useTheme();
 
   const HEIGHT_FACTOR = 3;
-  const [parallaxMultiplier, setParallaxMultiplier] = useState(1);
-  const [parallaxOpacity, setParallaxOpacity] = useState(1);
-  const [statusColor, setStatusColor] = useState('#0005');
-  const [statusStyle, setStatusStyle] = useState('light-content');
+  const headerHeight = offset.interpolate({
+    inputRange: [0, 300],
+    outputRange: [height / HEIGHT_FACTOR, 0],
+    extrapolate: 'clamp',
+  });
   const [isReadMore, setIsReadMore] = useState(true);
-
   const [isOutletOpen, setIsOutletOpen] = useState(true);
 
   useEffect(() => {
@@ -60,88 +55,37 @@ const OutletHero = ({
     );
   }, [data.closes_at, data.opens_at, outletInfo]);
 
-  useEffect(() => {
-    setParallaxMultiplier(yOffset != 0 ? 0.01 * yOffset + 1 : 1);
-    setParallaxOpacity(
-      1 - yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier) - 30),
-    );
-    if (yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier)) < 1) {
-      setHeadingTint(
-        255 * (1 - yOffset / (height / (HEIGHT_FACTOR * parallaxMultiplier))),
-      );
-    }
-    if (yOffset + 30 > height / (HEIGHT_FACTOR * parallaxMultiplier)) {
-      setStatusColor(colors.elevated);
-      setStatusStyle(isDarkMode ? 'light-content' : 'dark-content');
-      if (onParallaxImageScrolled) {
-        onParallaxImageScrolled(true);
-      }
-    } else {
-      setStatusColor('#0005');
-      setStatusStyle('light-content');
-      if (onParallaxImageScrolled) {
-        onParallaxImageScrolled(false);
-      }
-    }
-  }, [yOffset]);
-
   return (
     <>
       <StatusBar
         translucent={true}
-        backgroundColor={statusColor}
-        barStyle={statusStyle}
+        barStyle={'light-content'}
+        backgroundColor={'#00000050'}
       />
 
       <ScrollView>
-        <View ref={(r) => (this.image = r)}>
+        <Animated.View
+          style={{
+            height: headerHeight,
+            overflow: 'hidden',
+          }}>
           <Image
             source={{uri: data.cover}}
             style={{
-              height: height / (HEIGHT_FACTOR * parallaxMultiplier),
-              opacity: parallaxOpacity,
-              // height: height / HEIGHT_FACTOR,
+              height: height / HEIGHT_FACTOR,
             }}
             resizeMode="cover"
             resizeMethod="resize"
           />
-          <LinearGradient
-            ref={(r) => (this.gradiant = r)}
-            locations={[0, 1.0]}
-            colors={['rgba(0,0,0,10)', 'rgba(0,0,0,0.10)']}
-            style={{
-              position: 'absolute',
-              width: '100%',
-              height: '100%',
-            }}
-          />
-        </View>
-
-        {/* ----------------------- */}
-        {/* TEXT OVER IMAGE */}
-        {/* ----------------------- */}
-        {/* <View
+        </Animated.View>
+        <LinearGradient
+          colors={['rgba(0, 0, 0, 0.6)', 'rgba(0, 0, 0, 0)']}
           style={{
             position: 'absolute',
-            top: height / (2 * HEIGHT_FACTOR),
-            opacity: parallaxOpacity,
-          }}>
-          <View style={{width}}>
-            <Type
-              style={{
-                fontSize: width / 14,
-                color: 'white',
-                fontWeight: 'bold',
-                textShadowColor: 'rgba(0, 0, 0, 0.5)',
-                textShadowRadius: 20,
-                textAlign: 'center',
-              }}
-              viewStyle={{margin: 10}}>
-              {data.title}
-            </Type>
-          </View>
-        </View> */}
-        {/* ------------------------ */}
+            width: '100%',
+            height: '100%',
+          }}
+        />
 
         <View style={{backgroundColor: colors.background}}>
           <View style={{margin: 20}}>
@@ -189,15 +133,9 @@ const OutletHero = ({
                 <PrimaryButton
                   mode="outlined"
                   onPress={() => {
-                    Linking.canOpenURL('upi://pay').then((can) => {
-                      if (outletInfo.payments) {
-                        if (can && outletInfo.payments.upi) {
-                          logPayment({name: data.slug});
-                          Linking.openURL(
-                            `upi://pay?pa=${outletInfo.payments.upi}&pn=${outletInfo.title}&tn=Via MUJ HUB&cu=INR`,
-                          );
-                        }
-                      }
+                    payUPI({
+                      payments: outletInfo.payments,
+                      title: outletInfo.title,
                     });
                   }}>
                   <Type style={{color: colors.primary}}>{OUTLETS.PAYMENT}</Type>
@@ -242,24 +180,6 @@ const OutletHero = ({
               </View>
             </View>
           </View>
-
-          {/* <TouchableOpacity
-            activeOpacity={0.75}
-            style={{
-              position: 'absolute',
-              top: -width / 14,
-              right: width / 14,
-              height: width / 7,
-              width: width / 7,
-              borderRadius: width / 14,
-              backgroundColor: PRIMARY,
-              justifyContent: 'center',
-              alignItems: 'center',
-              opacity: parallaxOpacity,
-              elevation: 5,
-            }}>
-            <Icon name="call" size={width / 18} color="white" />
-          </TouchableOpacity> */}
         </View>
       </ScrollView>
     </>
