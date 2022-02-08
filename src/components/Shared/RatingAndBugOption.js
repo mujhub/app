@@ -13,6 +13,7 @@ const HelpAndFeedbackOption = () => {
   return (
     <>
       <TouchableOpacity
+        activeOpacity={0.8}
         onPress={() =>
           Linking.openURL(`market://details?id=${BUNDLE_IDENTIFIER}`)
         }>
@@ -33,6 +34,7 @@ const HelpAndFeedbackOption = () => {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
+        activeOpacity={0.8}
         onPress={() =>
           Linking.openURL(
             `mailto:${SUPPORT_EMAIL}?subject=${APP.SUPPORT_EMAIL.SUBJECT}&body=${APP.SUPPORT_EMAIL.BODY}`,

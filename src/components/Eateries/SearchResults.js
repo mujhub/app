@@ -105,6 +105,7 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
                         style={{
                           fontSize: width / 24,
                           paddingVertical: 5,
+                          color: colors.disabled,
                         }}>
                         {/* {results[key].eatery} */}
                         {`${results[key].eatery}`
@@ -125,6 +126,7 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
                           flexDirection: 'row',
                           alignItems: 'center',
                           paddingVertical: 5,
+                          maxWidth: width * 0.6,
                         }}>
                         <View
                           style={{
@@ -172,7 +174,7 @@ const SearchResults = ({isSearching, searchQuery, navigation}) => {
                 </TouchableOpacity>
               ),
           )}
-          <View style={{height: 500}} />
+          <View collapsable={false} style={{height: 500}} />
         </ScrollView>
       )}
     </View>

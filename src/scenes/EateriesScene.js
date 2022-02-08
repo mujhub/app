@@ -258,7 +258,7 @@ const EateriesScene = ({navigation}) => {
         )}
         {/* --> Causes Virtual List nesting warning, try and find another way. */}
         <ScrollView>
-          {cards.length > 0 && (
+          {!isSearching && cards.length > 0 && (
             <AnimatedMount maxHeight={height / 6}>
               <SDRBuilder cards={cards} />
             </AnimatedMount>

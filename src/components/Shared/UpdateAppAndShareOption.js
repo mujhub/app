@@ -46,6 +46,7 @@ const UpdateAppOption = () => {
           alignItems: 'flex-start',
         }}>
         <TouchableOpacity
+          activeOpacity={0.6}
           onPress={() =>
             Linking.openURL(`market://details?id=${BUNDLE_IDENTIFIER}`)
           }>
@@ -57,7 +58,7 @@ const UpdateAppOption = () => {
             Check for updates
           </Type>
         </TouchableOpacity>
-        <TouchableOpacity onPress={onShare}>
+        <TouchableOpacity onPress={onShare} activeOpacity={0.6}>
           <View
             style={{
               display: 'flex',
