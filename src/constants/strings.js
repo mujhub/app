@@ -1,3 +1,5 @@
+import {BUNDLE_IDENTIFIER} from './info';
+
 export const APP_NAME = 'MUJ HUB';
 export const APP_NAME_CAPS = 'MUJ HUB';
 export const SLUG_IDENTIFIER = '&mhs=';
@@ -108,10 +110,10 @@ export const APP = {
   SUPPORT_EMAIL: {
     SUBJECT: 'Bug%20Report',
     BODY:
-      'Brief Description - \n\nSteps to reproduce it - \n\nSystem Information -',
+      'Brief Description: \n\nSteps to reproduce it: \n\nSystem Information:\n',
   },
   SHARE_APP: {
     TITTLE: 'Wow, did you see that?',
-    MESSAGE: 'MUJ HUB SAYS ELLO MATE',
+    MESSAGE: `Check out MUJ Hub app on Play Store \nhttps://play.google.com/store/apps/details?id=${BUNDLE_IDENTIFIER}`,
   },
 };
