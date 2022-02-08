@@ -45,7 +45,8 @@ const TextCard = ({card, navigation, horizontal}) => {
           ]}
           style={{
             backgroundColor: colors.elevated,
-            padding: 16,
+            padding: height / 48,
+            maxHeight: 'auto',
             borderRadius: 10,
           }}>
           <View
@@ -53,7 +54,6 @@ const TextCard = ({card, navigation, horizontal}) => {
               textAlignVertical: 'center',
               flexDirection: 'row',
               alignItems: 'baseline',
-              // padding: 5,
             }}>
             {data.iconName && (
               <Icon
@@ -71,8 +71,6 @@ const TextCard = ({card, navigation, horizontal}) => {
                 style={{
                   fontSize: width / 24,
                   fontWeight: 'bold',
-                  // paddingLeft: 5,
-                  // marginBottom: 16,
                   textAlignVertical: 'center',
                   color: appearance.textColor,
                 }}>
@@ -84,7 +82,6 @@ const TextCard = ({card, navigation, horizontal}) => {
             <Type
               style={{
                 fontSize: width / 28,
-                // padding: 10,
                 paddingTop: 4,
                 lineHeight: 22,
                 color: appearance.textColor,

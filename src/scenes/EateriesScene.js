@@ -1,53 +1,36 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {
-  FlatList,
-  View,
-  Dimensions,
-  TouchableOpacity,
-  Text,
-  Linking,
-  ToastAndroid,
-  ScrollView,
-  ActivityIndicator,
-} from 'react-native';
-
-import {
-  SceneBuilder,
-  Type,
-  Header,
-  ListItem,
-  ItemSeparator,
-  ListFooter,
-  ThemedModal,
-  ThemeControl,
-} from '../components/Shared';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {Dimensions, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {FlatList, View, ScrollView, Text} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {FOOD, OUTLETS} from '../constants/strings';
-
-import {getEateries, getEateriesComponents} from '../services/firestore';
-import {scoreSort} from '../utils/eateries';
-import FloatingPill from '../components/Eateries/FloatingPill';
-import SearchBox from '../components/Eateries/SearchBox';
-import SearchResults from '../components/Eateries/SearchResults';
-import {logMenuFetch} from '../services/analytics';
-import SDRBuilder from '../components/Eateries/SDRBuilders/SDRBuilders';
-import {VIBRANTS} from '../constants/colors';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 import IonIcon from 'react-native-vector-icons/Ionicons';
 import {useTheme} from 'react-native-paper';
+
+import {logMenuFetch} from '../services/analytics';
+import {getEateries, getEateriesComponents} from '../services/firestore';
+import {VIBRANTS} from '../constants/colors';
+import {scoreSort} from '../utils/eateries';
 import {payUPI, placeCall} from '../utils/misc';
 import {mmkvEateriesCards, mmkvEateriesList} from '../utils/storage';
 
-const {width, height} = Dimensions.get('screen');
+import {SceneBuilder, Type, Header, ListItem} from '../components/Shared';
+import {ItemSeparator, ThemedModal, ThemeControl} from '../components/Shared';
+import {ListFooter} from '../components/Shared';
+import {FOOD, OUTLETS} from '../constants/strings';
+import FloatingPill from '../components/Eateries/FloatingPill';
+import SearchBox from '../components/Eateries/SearchBox';
+import SearchResults from '../components/Eateries/SearchResults';
+import SDRBuilder from '../components/Eateries/SDRBuilders/SDRBuilders';
+import AnimatedMount from '../components/Shared/AnimatedMount';
 
 const EateriesScene = ({navigation}) => {
+  const {width, height} = Dimensions.get('screen');
   const {colors} = useTheme();
   const openRow = useRef([]);
   const [eateries, setEateries] = useState([]);
   const [isSyncing, setIsSyncing] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-
   const [cards, setCards] = useState([]);
 
   const fetchData = async () => {
@@ -275,7 +258,11 @@ const EateriesScene = ({navigation}) => {
         )}
         {/* --> Causes Virtual List nesting warning, try and find another way. */}
         <ScrollView>
-          <SDRBuilder cards={cards} />
+          {cards.length > 0 && (
+            <AnimatedMount maxHeight={height / 6}>
+              <SDRBuilder cards={cards} />
+            </AnimatedMount>
+          )}
           {!isSearching && (
             <FlatList
               ListHeaderComponent={eateriesHeader}

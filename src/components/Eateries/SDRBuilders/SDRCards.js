@@ -15,7 +15,7 @@ const SDRCards = ({cards, navigation}) => {
     <ScrollView
       horizontal={true}
       showsHorizontalScrollIndicator={false}
-      style={{marginTop: 5}}
+      style={{marginTop: 5, maxHeight: height / 6}}
       contentContainerStyle={{alignItems: 'center'}}>
       {sortedCards.length > 0 &&
         sortedCards.map((card, i) => (
