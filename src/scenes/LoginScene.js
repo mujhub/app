@@ -1,5 +1,12 @@
 import React, {useState, useEffect, useContext} from 'react';
-import {View, Text, ToastAndroid, Image, Dimensions} from 'react-native';
+import {
+  View,
+  Text,
+  ToastAndroid,
+  Image,
+  Dimensions,
+  KeyboardAvoidingView,
+} from 'react-native';
 import auth, {firebase} from '@react-native-firebase/auth';
 
 import {UserAuth} from '../contexts/UserAuth';
@@ -14,10 +21,13 @@ import {
 import {validatePhone, validateOTP} from '../utils/validators';
 
 import logo from '../assets/images/logo128.png';
+import {useTheme} from 'react-native-paper';
+import LinearGradient from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('screen');
 
 const LoginScene = ({navigation}) => {
+  const {colors} = useTheme();
   const {user} = useContext(UserAuth);
   const [phone, setPhone] = useState('');
   const [phoneLoading, setPhoneLoading] = useState(false);
@@ -59,10 +69,13 @@ const LoginScene = ({navigation}) => {
           setPhoneLoading(false);
         }
       } else {
-        ToastAndroid.show('Invalid phone number', ToastAndroid.SHORT);
+        ToastAndroid.show(
+          'Please enter a valid phone number',
+          ToastAndroid.SHORT,
+        );
       }
     } else {
-      ToastAndroid.show('Empty phone number', ToastAndroid.SHORT);
+      ToastAndroid.show('Please enter your phone number', ToastAndroid.SHORT);
     }
   };
 
@@ -80,10 +93,10 @@ const LoginScene = ({navigation}) => {
           setConfirmLoading(false);
         }
       } else {
-        ToastAndroid.show('Invalid OTP', ToastAndroid.SHORT);
+        ToastAndroid.show('The OTP entered is incorrect', ToastAndroid.SHORT);
       }
     } else {
-      ToastAndroid.show('Empty OTP', ToastAndroid.SHORT);
+      ToastAndroid.show('Please enter the OTP to continue', ToastAndroid.SHORT);
     }
   };
 
@@ -95,44 +108,102 @@ const LoginScene = ({navigation}) => {
           minWidth: '100%',
           alignItems: 'center',
         }}>
-        <Type style={{fontSize: 25, fontWeight: 'bold', marginVertical: 20}}>
+        <Type style={{fontSize: 25, fontWeight: 'bold', marginTop: 20}}>
           {'Welcome to MUJ HUB'.toUpperCase()}
+        </Type>
+        <Type
+          style={{
+            fontSize: 16,
+            marginVertical: 10,
+            marginHorizontal: 15,
+            textAlign: 'center',
+            color: colors.disabled,
+          }}>
+          {
+            'Your one stop solution for everything in \n Manipal University, Jaipur'
+          }
         </Type>
         <Image
           source={logo}
           style={{height: width / 3, width: width / 3, marginVertical: 45}}
         />
       </View>
-
-      {!confirm && (
-        <>
-          <InputBox
-            value={phone}
-            onChangeText={(value) => setPhone(value)}
-            maxLength={10}
-            label={'Phone Number'}
-            keyboardType="phone-pad"
-            isRequired={true}
-          />
-          <PrimaryButton onPress={signInWithPhoneNumber} loading={phoneLoading}>
-            <Type>Send OTP</Type>
-          </PrimaryButton>
-        </>
-      )}
-      {confirm && (
-        <>
-          <InputBox
-            value={otp}
-            onChangeText={(value) => setOTP(value)}
-            label={'OTP'}
-            keyboardType="numeric"
-            isRequired={true}
-          />
-          <PrimaryButton onPress={confirmCode} loading={confirmLoading}>
-            <Type>Verify</Type>
-          </PrimaryButton>
-        </>
-      )}
+      <KeyboardAvoidingView
+        behavior={'position'}
+        style={{paddingBottom: height / 18}}>
+        <LinearGradient
+          colors={['#0000', colors.background]}
+          locations={[0, 0.4]}>
+          <View style={{paddingHorizontal: height / 40}}>
+            <Type
+              style={{fontSize: 25, marginVertical: 20, fontWeight: 'bold'}}>
+              {`Let's sign you in`}
+            </Type>
+            {!confirm && (
+              <>
+                <Type
+                  style={{
+                    fontSize: 16,
+                    marginVertical: 20,
+                    color: colors.disabled,
+                  }}>
+                  {
+                    'Enter your phone number. We will send you a OTP for verification.'
+                  }
+                </Type>
+                <InputBox
+                  value={phone}
+                  onChangeText={(value) => setPhone(value)}
+                  maxLength={10}
+                  label={'(+91) Phone Number'}
+                  keyboardType="phone-pad"
+                  isRequired={true}
+                  viewStyle={{marginBottom: 10}}
+                />
+                <PrimaryButton
+                  onPress={signInWithPhoneNumber}
+                  loading={phoneLoading}>
+                  <Type>Get OTP</Type>
+                </PrimaryButton>
+              </>
+            )}
+            {confirm && (
+              <>
+                <Type
+                  style={{
+                    fontSize: 16,
+                    marginVertical: 20,
+                    color: colors.disabled,
+                  }}>
+                  {`Enter the OTP sent on ${phone}. `}
+                  <Type
+                    onPress={() => {
+                      setConfirm(null);
+                    }}
+                    style={{
+                      fontSize: 16,
+                      marginVertical: 20,
+                      color: colors.primary,
+                    }}>
+                    {`Change?`}
+                  </Type>
+                </Type>
+                <InputBox
+                  value={otp}
+                  onChangeText={(value) => setOTP(value)}
+                  label={'OTP'}
+                  keyboardType="numeric"
+                  isRequired={true}
+                  viewStyle={{marginBottom: 10}}
+                />
+                <PrimaryButton onPress={confirmCode} loading={confirmLoading}>
+                  <Type>Submit</Type>
+                </PrimaryButton>
+              </>
+            )}
+          </View>
+        </LinearGradient>
+      </KeyboardAvoidingView>
     </SceneBuilder>
   );
 };
