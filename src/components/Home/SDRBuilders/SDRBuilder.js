@@ -1,22 +1,43 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, ActivityIndicator, Dimensions} from 'react-native';
 
 import {Type} from '../../Shared';
 import SDRCards from './SDRCards';
 import SDRModals from './SDRModals';
 
 import {getHomeComponents} from '../../../services/firestore';
+import {mmkvHomeList} from '../../../utils/storage';
+import {useTheme} from 'react-native-paper';
 
 const SDRBuilder = ({navigation}) => {
-  const getData = async () => {
+  const {width, height} = Dimensions.get('screen');
+  const [isSyncing, setIsSyncing] = useState(false);
+  const {colors} = useTheme();
+
+  const fetchData = async () => {
+    let fetched = false;
     try {
-      let res = await getHomeComponents();
-      if (!res.exists) return;
-      if (res.data()) {
-        setData(res.data());
+      setIsSyncing(true);
+      const cachedHome = mmkvHomeList().then((data) => {
+        console.log('local', data);
+        if (!fetched && data.status) {
+          if (typeof data.value === 'object' && data.value !== null) {
+            setData(data.value);
+          }
+        }
+      });
+      const homeComponents = await getHomeComponents();
+      if (homeComponents.exists) {
+        fetched = true;
+        const remoteData = homeComponents.data();
+        console.log('remote', remoteData);
+        setData(remoteData);
+        mmkvHomeList(remoteData);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsSyncing(false);
     }
   };
 
@@ -25,7 +46,7 @@ const SDRBuilder = ({navigation}) => {
   const [modals, setModals] = useState([]);
 
   useEffect(() => {
-    getData();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -36,7 +57,19 @@ const SDRBuilder = ({navigation}) => {
   }, [data]);
 
   return (
-    <View>{cards && <SDRCards cards={cards} navigation={navigation} />}</View>
+    <View>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginTop: 20,
+          marginBottom: 10,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        {isSyncing && <ActivityIndicator color={colors.disabled} />}
+      </View>
+      {cards && <SDRCards cards={cards} navigation={navigation} />}
+    </View>
   );
 };
 

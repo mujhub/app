@@ -68,6 +68,21 @@ export const mmkvDefaultBlock = async (block = null) => {
   }
 };
 
+export const mmkvHomeList = async (array = null) => {
+  try {
+    if (array) {
+      await MMKV.setStringAsync('homeList', JSON.stringify(array));
+      return {status: true};
+    } else {
+      const enc_array = await MMKV.getStringAsync('homeList');
+      return {status: true, value: JSON.parse(enc_array)};
+    }
+  } catch (error) {
+    console.log(error);
+    return {status: false};
+  }
+};
+
 export const mmkvEateriesList = async (array = null) => {
   try {
     if (array) {

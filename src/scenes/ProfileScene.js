@@ -108,7 +108,7 @@ const ProfileScene = ({navigation}) => {
             onChangeText={(value) =>
               setUserProfile({...userProfile, defaultBlock: `${value}`})
             }
-            label={'Default Block'}
+            label={'Hostel Block'}
           />
           <PrimaryButton
             loading={isLoading}

@@ -31,15 +31,16 @@ const MessMenuCard = () => {
   const {colors} = useTheme();
   const contractedCardRef = useRef();
   const expandedCardRef = useRef();
-  const cardHeight = useRef(new Animated.Value(0)).current;
+  const cardHeight = useRef(new Animated.Value(100)).current;
   const textOpacity = useRef(new Animated.Value(0)).current;
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   // ANIMATION
   const ANIMATION_DURATION = 220;
   const [contractedCardHeight, setContractedCardHeight] = useState(0);
   const [expandedCardHeight, setExpandedCardHeight] = useState(0);
   const [hasCardExpanded, setCardExpanded] = useState(false);
+  const [initialRender, setInitialRender] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
@@ -277,6 +278,7 @@ const MessMenuCard = () => {
     setMenuData(data.meals ? data.meals : []);
     setUpdatedAt(data.updatedAt);
     setIsLoading(false);
+    setInitialRender(false);
   };
 
   const refreshTimeHandler = () => {
@@ -285,6 +287,7 @@ const MessMenuCard = () => {
 
   useEffect(() => {
     try {
+      console.log('===== mounted');
       let dt = new Date();
       let currHour = dt.getHours();
       setOngoingMeal(menuData.length > 0 ? menuData.length - 1 : 0);
@@ -305,7 +308,9 @@ const MessMenuCard = () => {
       mmkvMessMenuSubscription().then(({status, value}) => {
         if (status) setIsSubscribed(value === 'true' ? true : false);
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }, [menuData, ongoingMeal]);
 
   useEffect(() => {
@@ -324,6 +329,24 @@ const MessMenuCard = () => {
     }
   }, [isRefreshEnabled]);
 
+  if (initialRender)
+    return (
+      <View
+        style={{
+          width: '100%',
+          minHeight: 100,
+          backgroundColor: colors.elevated,
+          borderRadius: ROUNDNESS,
+          overflow: 'hidden',
+          display: 'flex',
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+        }}>
+        <Type>Fetching...</Type>
+      </View>
+    );
+
   return !isLoading ? (
     <View>
       <Animated.View
@@ -333,7 +356,6 @@ const MessMenuCard = () => {
             backgroundColor: colors.elevated,
             borderRadius: ROUNDNESS,
             overflow: 'hidden',
-            marginTop: 30,
           },
           {height: cardHeight},
         ]}>
@@ -448,7 +470,6 @@ const MessMenuCard = () => {
         backgroundColor: colors.elevated,
         borderRadius: ROUNDNESS,
         overflow: 'hidden',
-        marginTop: 30,
         display: 'flex',
         alignItems: 'center',
       }}>
