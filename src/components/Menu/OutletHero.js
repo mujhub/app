@@ -21,7 +21,6 @@ import {Type, ItemSeparator, PrimaryButton} from '../Shared';
 import {VIBRANTS, PRIMARY} from '../../constants/colors';
 import {isOpen, payUPI} from '../../utils/misc';
 import {OUTLETS} from '../../constants/strings';
-import {logPayment} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 

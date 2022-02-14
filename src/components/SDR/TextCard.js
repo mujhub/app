@@ -8,6 +8,7 @@ import {useTheme} from 'react-native-paper';
 import {cardBehaviorHandler} from '../../utils/SDRHandlers';
 
 import {Type} from '../Shared';
+import {logCardTap} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -27,6 +28,8 @@ const TextCard = ({card, navigation, horizontal}) => {
   };
 
   const handleAction = () => {
+    if (card.data)
+      if (card.data.headingText) logCardTap({title: card.data.headingText});
     cardBehaviorHandler({behavior, navigation});
   };
 

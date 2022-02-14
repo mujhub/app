@@ -22,6 +22,7 @@ import MenuList from '../components/Menu/MenuList';
 import {InputBox, Type, FloatingButton} from '../components/Shared';
 import SearchBox from '../components/Menu/SearchBox';
 import {getEateryBySlug} from '../services/firestore';
+import {logMenuFetch} from '../services/analytics';
 import {PRIMARY, VIBRANTS} from '../constants/colors';
 import {OUTLETS, CART} from '../constants/strings';
 import {logPlaceCall} from '../services/analytics';
@@ -55,6 +56,7 @@ const MenuScene = ({navigation, route}) => {
       const res = await getEateryBySlug(slug);
       if (!res.exists) return;
       let data = res.data();
+      logMenuFetch({name: slug});
       let info = data.info;
       if (info) setOutletInfo(info);
       let menu = data.menu;

@@ -6,6 +6,7 @@ import {useTheme} from 'react-native-paper';
 import {Type} from '../Shared';
 
 import {cardBehaviorHandler} from '../../utils/SDRHandlers';
+import {logCardTap} from '../../services/analytics';
 
 const {width, height} = Dimensions.get('screen');
 
@@ -34,6 +35,8 @@ const ImageCard = ({card, navigation, horizontal}) => {
   }, []);
 
   const handleAction = () => {
+    if (card.data)
+      if (card.data.imageSource) logCardTap({title: card.data.imageSource});
     cardBehaviorHandler({behavior, navigation});
   };
 

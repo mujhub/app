@@ -25,3 +25,7 @@ export const logUniversalSearch = async ({query}) => {
 export const logDMSLogin = async () => {
   await logger.logEvent('dms_logged_in');
 };
+
+export const logCardTap = async ({title}) => {
+  await logger.logEvent('card_tap', {title});
+};

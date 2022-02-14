@@ -183,7 +183,6 @@ const EateriesScene = ({navigation}) => {
         renderRightActions={rightSwipeActions}>
         <TouchableOpacity
           onPress={() => {
-            logMenuFetch({name: item.slug});
             navigation.navigate('MenuScene', {
               info: {...item},
               slug: item.slug,
