@@ -20,7 +20,7 @@ import {
 
 import {validatePhone, validateOTP} from '../utils/validators';
 
-import logo from '../assets/images/logo128.png';
+import logo from '../assets/images/logo256.png';
 import {useTheme} from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -102,35 +102,38 @@ const LoginScene = ({navigation}) => {
 
   return (
     <SceneBuilder>
-      <View
-        style={{
-          display: 'flex',
-          minWidth: '100%',
-          alignItems: 'center',
-        }}>
-        <Type style={{fontSize: 25, fontWeight: 'bold', marginTop: 20}}>
-          {'Welcome to MUJ HUB'.toUpperCase()}
-        </Type>
-        <Type
-          style={{
-            fontSize: 16,
-            marginVertical: 10,
-            marginHorizontal: 15,
-            textAlign: 'center',
-            color: colors.disabled,
-          }}>
-          {
-            'Your one stop solution for everything in \n Manipal University, Jaipur'
-          }
-        </Type>
-        <Image
-          source={logo}
-          style={{height: width / 3, width: width / 3, marginVertical: 45}}
-        />
-      </View>
       <KeyboardAvoidingView
         behavior={'position'}
         style={{paddingBottom: height / 18}}>
+        <View
+          style={{
+            display: 'flex',
+            minWidth: '100%',
+            alignItems: 'center',
+          }}>
+          <Type style={{fontSize: 25, fontWeight: 'bold', marginTop: 20}}>
+            {'Welcome to MUJ HUB'.toUpperCase()}
+          </Type>
+          <Type
+            style={{
+              fontSize: 16,
+              marginVertical: 10,
+              marginHorizontal: 15,
+              textAlign: 'center',
+              color: colors.disabled,
+            }}>
+            {
+              'Your one stop solution for everything in \n Manipal University, Jaipur'
+            }
+          </Type>
+          <Image
+            source={logo}
+            style={{height: width / 3, width: width / 3, marginVertical: 45}}
+          />
+        </View>
+        {/* <KeyboardAvoidingView
+        behavior={'position'}
+        style={{paddingBottom: height / 18}}> */}
         <LinearGradient
           colors={['#0000', colors.background]}
           locations={[0, 0.4]}>
