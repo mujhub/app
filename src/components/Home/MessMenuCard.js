@@ -287,7 +287,6 @@ const MessMenuCard = () => {
 
   useEffect(() => {
     try {
-      console.log('===== mounted');
       let dt = new Date();
       let currHour = dt.getHours();
       setOngoingMeal(menuData.length > 0 ? menuData.length - 1 : 0);

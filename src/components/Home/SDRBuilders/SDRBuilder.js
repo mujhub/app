@@ -19,7 +19,6 @@ const SDRBuilder = ({navigation}) => {
     try {
       setIsSyncing(true);
       const cachedHome = mmkvHomeList().then((data) => {
-        console.log('local', data);
         if (!fetched && data.status) {
           if (typeof data.value === 'object' && data.value !== null) {
             setData(data.value);
@@ -30,7 +29,6 @@ const SDRBuilder = ({navigation}) => {
       if (homeComponents.exists) {
         fetched = true;
         const remoteData = homeComponents.data();
-        console.log('remote', remoteData);
         setData(remoteData);
         mmkvHomeList(remoteData);
       }

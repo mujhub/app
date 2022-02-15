@@ -127,3 +127,12 @@ export const mmkvMessMenuSubscription = async (value = null) => {
     return {status: false};
   }
 };
+
+export const mmkvClearAll = async () => {
+  try {
+    const cleared = await MMKV.clearStore();
+    console.log('Local store cleared', cleared);
+  } catch (error) {
+    console.log(error);
+  }
+};

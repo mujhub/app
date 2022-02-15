@@ -56,8 +56,6 @@ export const placeOrder = async ({uid, slug, data}) => {
     updated_at: firestore.FieldValue.serverTimestamp(),
   };
 
-  console.log(user_data);
-
   try {
     await db
       .collection('orders')

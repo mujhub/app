@@ -1,6 +1,10 @@
 import React, {useState, useCallback, useEffect} from 'react';
 import {Provider as PaperProvider} from 'react-native-paper';
 import auth from '@react-native-firebase/auth';
+import {
+  setJSExceptionHandler,
+  setNativeExceptionHandler,
+} from 'react-native-exception-handler';
 
 import {AppNavigator} from './navigations/';
 import {CustomTheme} from './contexts/CustomTheme';
@@ -9,7 +13,8 @@ import {UserAuth} from './contexts/UserAuth';
 import {subscribeLoggedInUser} from './services/messaging';
 
 import {light, dark, amoled} from './styles/theme';
-import {mmkvCurrentTheme} from './utils/storage';
+import {mmkvClearAll, mmkvCurrentTheme} from './utils/storage';
+import {Alert} from 'react-native';
 
 const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -73,6 +78,24 @@ const App = () => {
       console.log('user unsubscribed');
     }
   };
+
+  setJSExceptionHandler((error, isFatal) => {
+    console.log(
+      ` ===================== MUJHUB Exception Handler (JS Bridge) ===================== \n${error}`,
+      `isFatal: ${isFatal}`,
+    );
+    mmkvClearAll();
+    console.log(` =========== Cleared local storage ========== `);
+    Alert.alert(`There was an error`, `Please restart the app.`);
+  }, true);
+
+  setNativeExceptionHandler((error) => {
+    console.log(
+      ` ===================== MUJHUB Exception Handler (Native Module) ===================== \n${error}`,
+    );
+    mmkvClearAll();
+    console.log(` =========== Cleared local storage ========== `);
+  }, true);
 
   useEffect(() => {
     const unsubscribe = auth().onAuthStateChanged(onAuthStateChanged);
