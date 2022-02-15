@@ -202,6 +202,7 @@ dependencies {
 
     implementation project(':react-native-linear-gradient')
     implementation project(':react-native-camera')
+    compile project(':react-native-exception-handler')
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion

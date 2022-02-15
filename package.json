@@ -24,6 +24,7 @@
     "react": "16.13.1",
     "react-native": "0.63.4",
     "react-native-camera": "^3.43.0",
+    "react-native-exception-handler": "^2.10.10",
     "react-native-fs": "^2.16.6",
     "react-native-gesture-handler": "^1.9.0",
     "react-native-linear-gradient": "^2.5.6",
