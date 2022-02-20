@@ -137,7 +137,7 @@ android {
         applicationId "com.mujhub"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 6 // ROLL OUT UPDATE CHANGES
+        versionCode 7 // ROLL OUT UPDATE CHANGES
         versionName "1.0"
         multiDexEnabled true
         missingDimensionStrategy 'react-native-camera', 'general'
